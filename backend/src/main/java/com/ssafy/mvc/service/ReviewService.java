@@ -15,7 +15,7 @@ public interface ReviewService {
 	Review selectOne(int id);
 
 	// 리뷰 삭제
-	boolean deleteReview(int id,int userid);
+	boolean deleteReview(int id,String userid);
 
 	// 리뷰 업데이트
 	boolean updateReview(Review review);
