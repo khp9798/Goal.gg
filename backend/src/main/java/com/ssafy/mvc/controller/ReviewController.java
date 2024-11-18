@@ -1,10 +1,13 @@
 package com.ssafy.mvc.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,6 +51,30 @@ public class ReviewController {
 		}
 		
 		return new ResponseEntity<>("delete failed",HttpStatus.BAD_REQUEST);
+	}
+	
+	
+	@GetMapping("/match")
+	public ResponseEntity<?> selectReview(@RequestParam int matchId){
+		List<Review> list = rService.selectReviewByMatch(matchId);
+		
+		if(!list.isEmpty() && list!=null) {
+			return new ResponseEntity<>(list,HttpStatus.OK);
+		}
+		return new ResponseEntity<>("이 경기엔 리뷰가 아직 없습니다.",HttpStatus.NO_CONTENT);
+	}
+	
+	
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<?> selectOne(@PathVariable int id){
+		Review review = rService.selectOne(id);
+		
+		if(review!=null) {
+			return new ResponseEntity<>(review,HttpStatus.OK);
+		}
+		
+		return new ResponseEntity<>("잘못된 리뷰 id입니다.",HttpStatus.BAD_REQUEST);
 	}
 	
 }
