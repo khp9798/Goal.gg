@@ -30,8 +30,8 @@ public class ReviewServiceImpl implements ReviewService{
 	}
 
 	@Override
-	public boolean deleteReview(int id) {
-		return dao.deleteReview(id)>0;
+	public boolean deleteReview(int id,int userid) {
+		return dao.deleteReview(id,userid)>0;
 	}
 
 	@Override
