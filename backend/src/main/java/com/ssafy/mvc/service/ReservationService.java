@@ -14,5 +14,8 @@ public interface ReservationService {
 	// 예약 조회
 	List<Reservation> selectListByUser(int userid);
 
+	// 해당되는 매치의 예약들 조회
+	List<Reservation> ListByMatchId(int matchId);
+
 	Reservation selectOne(int id);
 }

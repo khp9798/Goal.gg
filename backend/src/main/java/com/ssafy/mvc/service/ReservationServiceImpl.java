@@ -37,4 +37,10 @@ public class ReservationServiceImpl implements ReservationService{
 		return dao.deleteReservation(id)>0;
 	}
 
+
+	@Override
+	public List<Reservation> ListByMatchId(int matchId) {
+		return dao.ListByMatchId(matchId);
+	}
+
 }

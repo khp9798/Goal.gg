@@ -30,5 +30,11 @@
 		select * from reservations
 		where id = #{id}
 	</select>
+	
+	
+	<select id="ListByMatchId">
+		select * from reservations
+		where match_id = #{matchId}
+	</select>
 </mapper>
 
