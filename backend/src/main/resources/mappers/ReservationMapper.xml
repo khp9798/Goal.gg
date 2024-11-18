@@ -11,15 +11,6 @@
         VALUES (#{userId}, #{matchId}, #{reservationDate});
     </insert>
 
-    <!-- 예약 수정 -->
-    <update id="updateReservation">
-        UPDATE reservations
-        SET user_id = #{userId},
-            match_id = #{matchId},
-            reservation_date = #{reservationDate},
-            updated_at = CURRENT_TIMESTAMP
-        WHERE id = #{id};
-    </update>
 
     <!-- 예약 삭제 -->
     <delete id="deleteReservation">

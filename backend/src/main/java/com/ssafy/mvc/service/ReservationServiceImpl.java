@@ -21,13 +21,9 @@ public class ReservationServiceImpl implements ReservationService{
 		return dao.insertReservation(r)>0;
 	}
 
-	@Override
-	public boolean updateReservation(Reservation r) {
-		return dao.updateReservation(r)>0;
-	}
 
 	@Override
-	public List<Reservation> selectListByUser(String userid) {
+	public List<Reservation> selectListByUser(int userid) {
 		return dao.selectListByUser(userid);
 	}
 
