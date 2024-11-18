@@ -20,18 +20,8 @@ CREATE TABLE users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP -- 생성 시간
 );
 
-CREATE TABLE userstat (
-    id INT AUTO_INCREMENT PRIMARY KEY,           -- 고유 ID
-    user_id INT NOT NULL,                        -- 사용자를 참조하는 ID
-    shoot TINYINT NOT NULL CHECK (shoot BETWEEN 0 AND 100), -- 슛 스탯
-    pass TINYINT NOT NULL CHECK (pass BETWEEN 0 AND 100),   -- 패스 스탯
-    speed TINYINT NOT NULL CHECK (speed BETWEEN 0 AND 100), -- 스피드 스탯
-    stamina TINYINT NOT NULL CHECK (stamina BETWEEN 0 AND 100), -- 체력 스탯
-    dribble TINYINT NOT NULL CHECK (dribble BETWEEN 0 AND 100), -- 드리블 스탯
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- 생성 시간
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, -- 수정 시간
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE -- 사용자 삭제 시 스탯도 삭제
-);
+
+
 
 CREATE TABLE stadium (
     id INT AUTO_INCREMENT PRIMARY KEY,           -- 고유 ID
@@ -53,6 +43,21 @@ CREATE TABLE matches (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- 생성 시간
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, -- 갱신 시간
     FOREIGN KEY (stadium_id) REFERENCES stadium(id) ON DELETE CASCADE -- 경기장 삭제 시 매치도 삭제
+);
+
+CREATE TABLE userstat (
+    id INT AUTO_INCREMENT PRIMARY KEY,           -- 고유 ID
+    user_id VARCHAR(50) NOT NULL,                        -- 사용자를 참조하는 ID
+    shoot TINYINT NOT NULL CHECK (shoot BETWEEN 0 AND 100), -- 슛 스탯
+    pass TINYINT NOT NULL CHECK (pass BETWEEN 0 AND 100),   -- 패스 스탯
+    speed TINYINT NOT NULL CHECK (speed BETWEEN 0 AND 100), -- 스피드 스탯
+    stamina TINYINT NOT NULL CHECK (stamina BETWEEN 0 AND 100), -- 체력 스탯
+    dribble TINYINT NOT NULL CHECK (dribble BETWEEN 0 AND 100), -- 드리블 스탯
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- 생성 시간
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, -- 수정 시간
+    match_id INT,                                 -- 경기를 참조하는 ID
+    FOREIGN KEY (user_id) REFERENCES users(userid) ON DELETE CASCADE, -- 사용자 삭제 시 스탯도 삭제
+    FOREIGN KEY (match_id) REFERENCES matches(id) ON DELETE CASCADE -- 경기 삭제 시 스탯도 삭제
 );
 
 CREATE TABLE reservations (
@@ -79,6 +84,7 @@ CREATE TABLE reviews (
 );
 
 INSERT INTO users (userid, password, email, phone_number, name, role, position, tier) VALUES
+('ssafy', 'ssafy', 'ssafy@example.com', '010-1111-2222', '양명균', 'admin', 'forward', 'bronze'),
 ('john_doe', 'hashedpassword1', 'john@example.com', '010-1111-2222', 'John Doe', 'user', 'forward', 'bronze'),
 ('jane_smith', 'hashedpassword2', 'jane@example.com', '010-2222-3333', 'Jane Smith', 'user', 'midfield', 'silver'),
 ('michael_admin', 'hashedpassword3', 'admin@example.com', '010-3333-4444', 'Michael Admin', 'admin', 'defense', 'gold'),
@@ -89,18 +95,6 @@ INSERT INTO users (userid, password, email, phone_number, name, role, position, 
 ('david_goalkeeper', 'hashedpassword8', 'david@example.com', '010-8888-9999', 'David Goalkeeper', 'user', 'goalkeeper', 'gold'),
 ('oliver_striker', 'hashedpassword9', 'oliver@example.com', '010-9999-0000', 'Oliver Striker', 'user', 'forward', 'platinum'),
 ('amelia_playmaker', 'hashedpassword10', 'amelia@example.com', '010-1010-1111', 'Amelia Playmaker', 'user', 'midfield', 'diamond');
-
-INSERT INTO userstat (user_id, shoot, pass, speed, stamina, dribble) VALUES
-(1, 85, 60, 78, 80, 70), -- John is good at shooting
-(2, 60, 85, 75, 90, 68), -- Jane excels in passing and stamina
-(3, 50, 55, 65, 70, 60), -- Michael focuses on defense
-(4, 45, 60, 50, 85, 40), -- Lucas is a goalkeeper, stamina-heavy
-(5, 90, 75, 85, 88, 92), -- Emily is an all-round forward
-(6, 60, 55, 70, 80, 65), -- Chris is reliable in defense
-(7, 75, 80, 75, 85, 78), -- Sarah is a creative midfielder
-(8, 50, 45, 70, 75, 55), -- David has average stats
-(9, 88, 72, 90, 80, 85), -- Oliver is a fast and strong striker
-(10, 65, 85, 78, 88, 70); -- Amelia shines in playmaking
 
 INSERT INTO stadium (name, address, price, capacity, image) VALUES
 ('Seoul Futbol Stadium', '123 Soccer Lane, Seoul', 50000, 100, 'seoul_stadium.jpg'),
@@ -114,6 +108,7 @@ INSERT INTO stadium (name, address, price, capacity, image) VALUES
 ('Pohang Pitch', '303 Steelworks Ave, Pohang', 52000, 100, 'pohang_pitch.jpg'),
 ('Suwon Sports Complex', '404 Cultural Blvd, Suwon', 50000, 85, 'suwon_sports_complex.jpg');
 
+
 INSERT INTO matches (stadium_id, start_time, end_time, status) VALUES
 (1, '2024-11-19 14:00:00', '2024-11-19 16:00:00', 'approved'),
 (2, '2024-11-20 10:00:00', '2024-11-20 12:00:00', 'pending'),
@@ -125,6 +120,22 @@ INSERT INTO matches (stadium_id, start_time, end_time, status) VALUES
 (8, '2024-11-26 19:00:00', '2024-11-26 21:00:00', 'approved'),
 (9, '2024-11-27 11:00:00', '2024-11-27 13:00:00', 'canceled'),
 (10, '2024-11-28 15:00:00', '2024-11-28 17:00:00', 'approved');
+
+INSERT INTO userstat (user_id, shoot, pass, speed, stamina, dribble, match_id) VALUES
+('ssafy', 85, 60, 78, 80, 70, 1),  -- John with match 1 (Seoul Futbol Stadium)
+('john_doe', 60, 85, 75, 90, 68, 2),  -- Jane with match 2 (Busan Arena)
+('jane_smith', 50, 55, 65, 70, 60, 3),  -- Michael with match 3 (Daegu Grounds)
+('michael_admin', 45, 60, 50, 85, 40, 4),  -- Lucas with match 4 (Incheon Park)
+('lucas_manager', 90, 75, 85, 88, 92, 5),  -- Emily with match 5 (Gwangju Field)
+('emily_forward', 60, 55, 70, 80, 65, 6),  -- Chris with match 6 (Jeju Stadium)
+('chris_defense', 75, 80, 75, 85, 78, 7),  -- Sarah with match 7 (Daejeon Arena)
+('sarah_midfield', 50, 45, 70, 75, 55, 8),  -- David with match 8 (Ulsan Grounds)
+('david_goalkeeper', 88, 72, 90, 80, 85, 9),  -- Oliver with match 9 (Pohang Pitch)
+('oliver_striker', 65, 85, 78, 88, 70, 10); -- Amelia with match 10 (Suwon Sports Complex)
+
+
+
+
 
 INSERT INTO reservations (user_id, match_id, reservation_date) VALUES
 (1, 1, '2024-11-18 09:00:00'), -- John reserved for Seoul match
@@ -149,3 +160,5 @@ INSERT INTO reviews (user_id, match_id, rating, comment) VALUES
 (8, 8, 3, 'The pitch quality was below average.'),
 (9, 9, 2, 'Not enough players showed up. Disorganized.'),
 (10, 10, 1, 'Worst experience. Poor communication.');
+
+select * from users;
