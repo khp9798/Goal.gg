@@ -37,7 +37,7 @@ public class UserController {
 		return new ResponseEntity<>("아이디가 중복된 것 같습니다",HttpStatus.NOT_ACCEPTABLE);
 	}
 	
-	//로그인 dds
+	//로그인 ddss
 	@PostMapping("/login")
 	public ResponseEntity<?> loginUser(@RequestBody User loginUser, HttpSession session){
 		User user = uService.selectUser(loginUser.getUserid());
