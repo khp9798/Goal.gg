@@ -24,6 +24,7 @@ public class UserServiceImpl implements UserService {
 		System.out.println('c');
 		System.out.println('b');
 		
+		System.out.println("aa");
 		return uDao.selectUser(id);
 	}
 	
