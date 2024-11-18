@@ -8,6 +8,7 @@ import lombok.Data;
 public class UserStat {
     private int id; // 고유 식별자
     private String userId; // 유저 아이디
+    private int matchId; // 해당 매
     private int shoot; // 슛 스텟
     private int pass; // 패스 스텟
     private int speed; // 속도 스텟

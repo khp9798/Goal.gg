@@ -9,8 +9,11 @@ public interface UserStatService {
 	
 	List<UserStat> selectUserAllStat(String userId);//유저 스텟 기록 전체 조회
 	
-	boolean registUserStat(String userId); // 유저 스텟 등록
+	boolean registUserStat(UserStat userstat); // 유저 스텟 등록
 	
-	boolean updateUserStat(String userId); // 유저 스텟 업데이트
+	boolean updateUserStat(UserStat userstat); // 유저 스텟 업데이트
+	
+	UserStat selectUserMatchStat(String userId, int matchId); //해당 경기 해당 유저 스텟 조회
+
 
 }

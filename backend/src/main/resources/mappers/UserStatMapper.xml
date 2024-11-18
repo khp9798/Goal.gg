@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace = "com.ssafy.mvc.dao.UserStatDao">
+
+	<select id="selectUserAllStat">
+		SELECT * 
+		FROM userstat WHERE user_id=#{userId}
+	</select>
+	
+	<insert id="registUserStat">
+		INSERT INTO userstat (user_id, match_Id, shoot, pass, speed, stamina, dribble)
+		VALUES(#{userId},#{matchId},#{shoot}, #{pass},#{speed},#{stamina},#{dribble})
+	</insert>
+	
+	<update id="updateUserStat">
+		UPDATE userstat
+		SET shoot=#{shoot}, pass=#{pass}, speed=#{speed}, stamina=#{stamina}, dribble=#{dribble})
+		WHERE user_id=#{userId} AND match_id=#{matchId}
+	</update>
+	
+	<select id="selectUserMatchStat">
+		SELECT * 
+		FROM userstat WHERE user_id=#{userId} AND match_id=#{matchId}
+	</select>
+	
+	
+</mapper>

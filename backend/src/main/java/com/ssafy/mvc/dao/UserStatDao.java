@@ -10,8 +10,10 @@ public interface UserStatDao {
 	
 	// 유저 평균 스텟 기록을 가져오는 건 기록 전체 조회(selectUserAllStat)한 다음에 계산해서 반환해야할
 	
-	int registUserStat(String userId); // 유저 스텟 등
+	int registUserStat(UserStat userstat); // 유저 스텟 등
 	
-	int updateUserStat(String userId); // 유저 스텟 업데이트
+	int updateUserStat(UserStat userstat); // 유저 스텟 업데이트
+	
+	UserStat selectUserMatchStat(String userId, int matchId); //해당 경기 해당 유저 스텟 조회
 
 }

@@ -20,15 +20,20 @@ public class UserStatServieImpl implements UserStatService {
 	}
 
 	@Override
-	public boolean registUserStat(String userId) {
-		int result = userstatdao.registUserStat(userId);
+	public boolean registUserStat(UserStat userstat) {
+		int result = userstatdao.registUserStat(userstat);
 		return result>0;
 	}
 
 	@Override
-	public boolean updateUserStat(String userId) {
-		int result = userstatdao.updateUserStat(userId);
+	public boolean updateUserStat(UserStat userstat) {
+		int result = userstatdao.updateUserStat(userstat);
 		return result>0;
+	}
+
+	@Override
+	public UserStat selectUserMatchStat(String userId, int matchId) {
+		return userstatdao.selectUserMatchStat(userId, matchId);
 	}
 
 }
