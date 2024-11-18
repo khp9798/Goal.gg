@@ -3,7 +3,7 @@ package com.ssafy.mvc.service;
 import java.util.List;
 
 import com.ssafy.mvc.dto.Match;
-import com.ssafy.mvc.dto.MatchSearch;
+import com.ssafy.mvc.dto.SearchCondition;
 
 public interface MatchService {
 
@@ -17,7 +17,7 @@ public interface MatchService {
 	boolean deleteMatch(int id);
 
 	// 경기 목록 조회
-	List<Match> searchByCondition(MatchSearch matchSearch);
+	List<Match> searchByCondition(SearchCondition condition);
 
 	// 특정 경기 세부 정보 조회
 	Match selectOne(int id);
