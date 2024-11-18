@@ -21,6 +21,9 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User selectUser(String id) {
 		System.out.println(id);
+		System.out.println('c');
+		System.out.println('b');
+		
 		return uDao.selectUser(id);
 	}
 	
