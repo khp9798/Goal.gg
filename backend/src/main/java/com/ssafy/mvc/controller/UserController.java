@@ -64,14 +64,18 @@ public class UserController {
 		/*
 		 * 관리자나 매니저는 user 정보 볼 수 있긴 한데 일부 정보만 주도록 수정 필요해보임
 		 */
+		if(user!=null) {
+			return new ResponseEntity<>(user,HttpStatus.OK);
+		} //-> 현재 테스트용
 		
-		if(role.equals("admin")||role.equals("manager")) {
-			return new ResponseEntity<>(user,HttpStatus.OK);
-		} else if(user != null && user.getUserid().equals(loginUserId)) {
-			return new ResponseEntity<>(user,HttpStatus.OK);
-		} else if(user==null) {
-			return new ResponseEntity<>("유저 정보가 없습니다", HttpStatus.BAD_REQUEST);
-		}
+		// 실제 들어갈 코드
+//		if(role.equals("admin")||role.equals("manager")) {
+//			return new ResponseEntity<>(user,HttpStatus.OK);
+//		} else if(user != null && user.getUserid().equals(loginUserId)) {
+//			return new ResponseEntity<>(user,HttpStatus.OK);
+//		} else if(user==null) {
+//			return new ResponseEntity<>("유저 정보가 없습니다", HttpStatus.BAD_REQUEST);
+//		}
 		return new ResponseEntity<>("권한이 없는 것 같습니다",HttpStatus.NOT_FOUND);
 		
 	}
