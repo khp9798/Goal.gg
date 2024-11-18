@@ -52,7 +52,7 @@ public class ReservationController {
 	
 	
 	@GetMapping
-	public ResponseEntity<?> selectAll(@RequestParam int userid){
+	public ResponseEntity<?> selectAll(@RequestParam String userid){
 		List<Reservation> list = service.selectListByUser(userid);
 		
 		if(!list.isEmpty() && list!=null) {

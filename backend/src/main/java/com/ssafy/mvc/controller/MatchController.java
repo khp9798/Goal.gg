@@ -13,11 +13,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.mvc.dto.Match;
-import com.ssafy.mvc.dto.MatchSearch;
+import com.ssafy.mvc.dto.SearchCondition;
 import com.ssafy.mvc.service.MatchService;
 
 @RestController
@@ -71,7 +70,7 @@ public class MatchController {
 	
 	
 	@GetMapping
-	public ResponseEntity<?> search(@ModelAttribute MatchSearch search){
+	public ResponseEntity<?> search(@ModelAttribute SearchCondition search){
 		List<Match> list = mService.searchByCondition(search);
 		
 		if(!list.isEmpty() && list!=null) {

@@ -39,8 +39,8 @@ public class ReviewController {
 	
 	
 	@DeleteMapping
-	public ResponseEntity<?> deleteReview(@RequestParam int id, @RequestParam int userid){
-		if(id==0 || userid==0) {
+	public ResponseEntity<?> deleteReview(@RequestParam int id, @RequestParam String userid){
+		if(id==0 || userid==null) {
 			return new ResponseEntity<>("id 또는 userid가 null입니다.",HttpStatus.BAD_REQUEST);
 		}
 		

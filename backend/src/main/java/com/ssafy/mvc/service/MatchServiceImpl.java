@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.ssafy.mvc.dao.MatchDao;
 import com.ssafy.mvc.dto.Match;
-import com.ssafy.mvc.dto.MatchSearch;
+import com.ssafy.mvc.dto.SearchCondition;
 
 @Service
 public class MatchServiceImpl implements MatchService{
@@ -31,8 +31,8 @@ public class MatchServiceImpl implements MatchService{
 	}
 
 	@Override
-	public List<Match> searchByCondition(MatchSearch matchSearch) {
-		return dao.searchByCondition(matchSearch);
+	public List<Match> searchByCondition(SearchCondition condition) {
+		return dao.searchByCondition(condition);
 	}
 
 	@Override

@@ -23,7 +23,7 @@ public class ReservationServiceImpl implements ReservationService{
 
 
 	@Override
-	public List<Reservation> selectListByUser(int userid) {
+	public List<Reservation> selectListByUser(String userid) {
 		return dao.selectListByUser(userid);
 	}
 

@@ -10,6 +10,5 @@ public interface UserDao {
 	User selectUser(String id); // 유저 조회(로그인, 유저조회, 삭제)
 	
 	
-	
 
 }
