@@ -31,11 +31,11 @@
     <select id="searchByCondition">
         SELECT * FROM matches
         <where>
-            <if test="key != null and key != 'none'">
+            <if test="key != 'none'">
                 ${key} LIKE CONCAT('%', #{word}, '%')
             </if>
         </where>
-        <if test="order != null and order != 'none'">
+        <if test="order != 'none'">
             ORDER BY ${order} ${orderDir}
         </if>
     </select>
