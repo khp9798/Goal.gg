@@ -23,7 +23,7 @@
 	
 	<delete id="deleteReview">
 		delete from reviews
-		where id = #{id}
+		where id = #{id} and user_id = #{userid}
 	</delete>
 	
 	
@@ -33,7 +33,6 @@
 		match_id = #{matchId},
 		rating = #{rating},
 		comment = #{comment},
-		updated_at = CURRENT_TIMESTAMP
 		where id = #{id}
 	</update>
 </mapper>
