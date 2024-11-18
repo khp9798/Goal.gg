@@ -62,24 +62,24 @@ CREATE TABLE userstat (
 
 CREATE TABLE reservations (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,                        -- 예약한 사용자 ID
+    user_id VARCHAR(50) NOT NULL,                        -- 예약한 사용자 ID
     match_id INT NOT NULL,                       -- 예약한 경기 ID
     reservation_date DATETIME NOT NULL,          -- 예약 날짜 및 시간
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- 생성 시간
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, -- 갱신 시간
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,  -- 사용자 삭제 시 예약도 삭제
+    FOREIGN KEY (user_id) REFERENCES users(userid) ON DELETE CASCADE,  -- 사용자 삭제 시 예약도 삭제
     FOREIGN KEY (match_id) REFERENCES matches(id) ON DELETE CASCADE -- 매치 삭제 시 예약도 삭제
 );
 
 CREATE TABLE reviews (
     id INT AUTO_INCREMENT PRIMARY KEY,           -- 고유 ID
-    user_id INT NOT NULL,                        -- 리뷰를 작성한 사용자 ID
+    user_id VARCHAR(50) NOT NULL,                        -- 리뷰를 작성한 사용자 ID
     match_id INT NOT NULL,                       -- 리뷰 대상 경기 ID
     rating TINYINT NOT NULL CHECK (rating BETWEEN 1 AND 5), -- 별점 (1~5)
     comment TEXT,                                -- 리뷰 내용
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- 생성 시간
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, -- 갱신 시간
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,  -- 사용자 삭제 시 리뷰 삭제
+    FOREIGN KEY (user_id) REFERENCES users(userid) ON DELETE CASCADE,  -- 사용자 삭제 시 리뷰 삭제
     FOREIGN KEY (match_id) REFERENCES matches(id) ON DELETE CASCADE -- 매치 삭제 시 리뷰 삭제
 );
 
@@ -138,27 +138,29 @@ INSERT INTO userstat (user_id, shoot, pass, speed, stamina, dribble, match_id) V
 
 
 INSERT INTO reservations (user_id, match_id, reservation_date) VALUES
-(1, 1, '2024-11-18 09:00:00'), -- John reserved for Seoul match
-(2, 2, '2024-11-18 10:00:00'), -- Jane reserved for Busan match
-(3, 3, '2024-11-18 11:00:00'), -- Michael reserved for Daegu match
-(4, 4, '2024-11-18 12:00:00'), -- Lucas reserved for Incheon match
-(5, 5, '2024-11-18 13:00:00'), -- Emily reserved for Gwangju match
-(6, 6, '2024-11-18 14:00:00'), -- Chris reserved for Jeju match
-(7, 7, '2024-11-18 15:00:00'), -- Sarah reserved for Daejeon match
-(8, 8, '2024-11-18 16:00:00'), -- David reserved for Ulsan match
-(9, 9, '2024-11-18 17:00:00'), -- Oliver reserved for Pohang match
-(10, 10, '2024-11-18 18:00:00'); -- Amelia reserved for Suwon match
+('ssafy', 1, '2024-11-18 09:00:00'),       -- ssafy reserved for Seoul match
+('john_doe', 2, '2024-11-18 10:00:00'),    -- john_doe reserved for Busan match
+('jane_smith', 3, '2024-11-18 11:00:00'),  -- jane_smith reserved for Daegu match
+('michael_admin', 4, '2024-11-18 12:00:00'), -- michael_admin reserved for Incheon match
+('lucas_manager', 5, '2024-11-18 13:00:00'), -- lucas_manager reserved for Gwangju match
+('emily_forward', 6, '2024-11-18 14:00:00'), -- emily_forward reserved for Jeju match
+('chris_defense', 7, '2024-11-18 15:00:00'), -- chris_defense reserved for Daejeon match
+('sarah_midfield', 8, '2024-11-18 16:00:00'), -- sarah_midfield reserved for Ulsan match
+('david_goalkeeper', 9, '2024-11-18 17:00:00'), -- david_goalkeeper reserved for Pohang match
+('oliver_striker', 10, '2024-11-18 18:00:00'); -- oliver_striker reserved for Suwon match
+
 
 INSERT INTO reviews (user_id, match_id, rating, comment) VALUES
-(1, 1, 5, 'Amazing experience! The game was thrilling.'), 
-(2, 2, 4, 'Great match but the facilities could be better.'),
-(3, 3, 3, 'Decent game, but the weather was bad.'),
-(4, 4, 2, 'Disappointing organization. Too chaotic.'),
-(5, 5, 1, 'Terrible experience. The match got canceled.'),
-(6, 6, 5, 'Perfectly arranged match. Highly recommend!'),
-(7, 7, 4, 'Fun game with a slight delay in starting.'),
-(8, 8, 3, 'The pitch quality was below average.'),
-(9, 9, 2, 'Not enough players showed up. Disorganized.'),
-(10, 10, 1, 'Worst experience. Poor communication.');
+('ssafy', 1, 5, 'Amazing experience! The game was thrilling.'), 
+('john_doe', 2, 4, 'Great match but the facilities could be better.'),
+('jane_smith', 3, 3, 'Decent game, but the weather was bad.'),
+('michael_admin', 4, 2, 'Disappointing organization. Too chaotic.'),
+('lucas_manager', 5, 1, 'Terrible experience. The match got canceled.'),
+('emily_forward', 6, 5, 'Perfectly arranged match. Highly recommend!'),
+('chris_defense', 7, 4, 'Fun game with a slight delay in starting.'),
+('sarah_midfield', 8, 3, 'The pitch quality was below average.'),
+('david_goalkeeper', 9, 2, 'Not enough players showed up. Disorganized.'),
+('oliver_striker', 10, 1, 'Worst experience. Poor communication.');
+
 
 select * from users;
