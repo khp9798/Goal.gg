@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.mvc.dao.ReviewDao">
+
+	<insert id="insertReivew">
+		insert into reviews (user_id, match_id, rating, comment)
+		values
+		(#{userId},#{matchId},#{rating},#{comment})
+	</insert>
+
+	<select id="selectReviewByMatch">
+		select * from reviews
+		where match_id = #{mid}
+	</select>
+	
+	<select id="selectOne">
+		select * from reviews
+		where id = #{id}
+	</select>
+	
+	
+	<delete id="deleteReview">
+		delete from reviews
+		where id = #{id}
+	</delete>
+	
+	
+	<update id="updateReview">
+		update reviews set
+		user_id = #{userId},
+		match_id = #{matchId},
+		rating = #{rating},
+		comment = #{comment},
+		updated_at = CURRENT_TIMESTAMP
+		where id = #{id}
+	</update>
+</mapper>
