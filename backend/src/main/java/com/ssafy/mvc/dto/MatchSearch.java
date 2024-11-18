@@ -4,8 +4,8 @@ import lombok.Data;
 
 @Data
 public class MatchSearch {
-	String key;
+	String key = "none";
 	String word;
-	String order;
-	String orderDir;
+	String order = "none";
+	String orderDir = "asc";
 }
