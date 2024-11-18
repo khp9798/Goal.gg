@@ -2,23 +2,32 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace = "com.ssafy.mvc.dao.StadiumDao">
+<mapper namespace="com.ssafy.mvc.dao.StadiumDao">
 
-<!-- 	//모든 경기장 조회
-	List<Stadium> SelectAllStadium();
-	
-	//특정 경기장 조회
-	Stadium SelectStadium(int id); -->
+	<!-- //모든 경기장 조회 List<Stadium> SelectAllStadium(); //특정 경기장 조회 Stadium SelectStadium(int 
+		id); -->
 
 	<select id="selectAllStadium">
-		SELECT * 
+		SELECT *
 		FROM stadium
 	</select>
-	
+
 	<select id="selectStadium">
-		SELECT * 
+		SELECT *
 		FROM stadium WHERE id=#{id}
 	</select>
-	
-	
+
+	<select id="searchByCondition">
+		SELECT * FROM stadium
+		<where>
+			<if test="key != 'none'">
+				${key} LIKE CONCAT('%', #{word}, '%')
+			</if>
+		</where>
+		<if test="order != 'none'">
+			ORDER BY ${order} ${orderDir}
+		</if>
+	</select>
+
+
 </mapper>

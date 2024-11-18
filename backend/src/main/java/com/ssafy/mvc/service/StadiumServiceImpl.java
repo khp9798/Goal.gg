@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.mvc.dao.StadiumDao;
+import com.ssafy.mvc.dto.SearchCondition;
 import com.ssafy.mvc.dto.Stadium;
 
 @Service
@@ -22,6 +23,11 @@ public class StadiumServiceImpl implements StadiumService{
 	@Override
 	public Stadium selectStadium(int id) {
 		return stadiumdao.selectStadium(id);
+	}
+
+	@Override
+	public List<Stadium> searchByCondition(SearchCondition condition) {
+		return stadiumdao.searchByCondition(condition);
 	}
 
 }
