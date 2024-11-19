@@ -26,6 +26,7 @@ public class ReviewController {
 	private ReviewService rService;
 	
 	
+	//리뷰 등록
 	@PostMapping
 	public ResponseEntity<?> createReview(@RequestBody Review review){
 		boolean isCreated = rService.insertReview(review);
@@ -38,6 +39,8 @@ public class ReviewController {
 	}
 	
 	
+	
+	//리뷰 삭제
 	@DeleteMapping
 	public ResponseEntity<?> deleteReview(@RequestParam int id, @RequestParam String userid){
 		if(id==0 || userid==null) {
@@ -54,6 +57,8 @@ public class ReviewController {
 	}
 	
 	
+	
+	//특정 매치의 리뷰 조회
 	@GetMapping("/match")
 	public ResponseEntity<?> selectReview(@RequestParam int matchId){
 		List<Review> list = rService.selectReviewByMatch(matchId);
@@ -66,6 +71,8 @@ public class ReviewController {
 	
 	
 	
+	
+	//특정 리뷰 조회
 	@GetMapping("/{id}")
 	public ResponseEntity<?> selectOne(@PathVariable int id){
 		Review review = rService.selectOne(id);

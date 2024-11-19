@@ -56,6 +56,7 @@ public class MatchController {
 	
 	
 	
+	//특정 매치 삭제하기
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deleteMatch(@PathVariable int id){
 		boolean isDeleted = mService.deleteMatch(id);
@@ -69,6 +70,7 @@ public class MatchController {
 	
 	
 	
+	//매치 검색
 	@GetMapping
 	public ResponseEntity<?> search(@ModelAttribute SearchCondition search){
 		List<Match> list = mService.searchByCondition(search);
@@ -81,6 +83,7 @@ public class MatchController {
 	}
 	
 	
+	//특정 매치 조회
 	@GetMapping("/{id}")
 	public ResponseEntity<?> selectOne(@PathVariable int id){
 		Match match = mService.selectOne(id);

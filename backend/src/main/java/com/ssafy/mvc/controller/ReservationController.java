@@ -25,6 +25,7 @@ public class ReservationController {
 	private ReservationService service;
 	
 	
+	//예약 생성
 	@PostMapping
 	public ResponseEntity<?> create(@RequestBody Reservation r){
 		boolean isCreated = service.insertReservation(r);
@@ -38,6 +39,7 @@ public class ReservationController {
 	
 	
 	
+	//예약 삭제
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable int id){
 		boolean isDeleted = service.deleteReservation(id);
@@ -51,6 +53,7 @@ public class ReservationController {
 	
 	
 	
+	//특정 유저의 모든 예약 조회
 	@GetMapping
 	public ResponseEntity<?> selectAll(@RequestParam String userid){
 		List<Reservation> list = service.selectListByUser(userid);
@@ -62,6 +65,8 @@ public class ReservationController {
 	}
 	
 	
+	
+	//특정 예약 조회
 	@GetMapping("/{id}")
 	public ResponseEntity<?> selectOne(@PathVariable int id){
 		Reservation reservation = service.selectOne(id);
