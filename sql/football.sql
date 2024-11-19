@@ -32,7 +32,7 @@ CREATE TABLE stadium (
     address VARCHAR(255) NOT NULL,               -- 경기장 주소
     price INT DEFAULT NULL,                      -- 대여 비용
     capacity INT NOT NULL,                       -- 수용 인원
-    image VARCHAR(255) DEFAULT NULL,             -- 경기장 이미지 URL
+    image TEXT DEFAULT NULL,             -- 경기장 이미지 URL
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- 생성 시간
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP -- 갱신 시간
 );
@@ -101,16 +101,25 @@ INSERT INTO users (userid, password, email, phone_number, name, role, position, 
 ('amelia_playmaker', 'hashedpassword10', 'amelia@example.com', '010-1010-1111', 'Amelia Playmaker', 'user', 'midfield', 'diamond', '충청권', '대전', '유성구');
 
 INSERT INTO stadium (name, address, price, capacity, image) VALUES
-('Seoul Futbol Stadium', '123 Soccer Lane, Seoul', 50000, 100, 'seoul_stadium.jpg'),
-('Busan Arena', '45 Beach Road, Busan', 40000, 80, 'busan_arena.jpg'),
-('Daegu Grounds', '789 Hilltop Drive, Daegu', 45000, 90, 'daegu_grounds.jpg'),
-('Incheon Park', '135 Lakeview St, Incheon', 60000, 120, 'incheon_park.jpg'),
-('Gwangju Field', '246 Riverbank Blvd, Gwangju', 30000, 70, 'gwangju_field.jpg'),
-('Jeju Stadium', '369 Island Way, Jeju', 35000, 75, 'jeju_stadium.jpg'),
-('Daejeon Arena', '101 City Center, Daejeon', 55000, 110, 'daejeon_arena.jpg'),
-('Ulsan Grounds', '202 Industrial Rd, Ulsan', 48000, 95, 'ulsan_grounds.jpg'),
-('Pohang Pitch', '303 Steelworks Ave, Pohang', 52000, 100, 'pohang_pitch.jpg'),
-('Suwon Sports Complex', '404 Cultural Blvd, Suwon', 50000, 85, 'suwon_sports_complex.jpg');
+('대전 삼정 풋살파크', '대전 유성구 한밭대로371번길 25-4 삼정풋살파크', 50000, 100, 'https://d31wz4d3hgve8q.cloudfront.net/media/dg_sj_coner_1.jpeg?w=1920'),
+('대전 바우풋살클럽', '대전 대덕구 신탄진로115번안길 39', 40000, 80, 'https://d31wz4d3hgve8q.cloudfront.net/media/dj_bow_center.jpeg?w=1920'),
+('대전 남대전 풋살장', '대전 동구 이사로 43-33', 45000, 90, 'https://cdn.pixabay.com/photo/2013/09/11/19/03/stadium-181457_1280.jpg'),
+('대전 가장 풋살구장', '대전 서구 유등로 451', 60000, 120, 'https://d31wz4d3hgve8q.cloudfront.net/media/IMG_0755.jpg?w=1920'),
+('대전 가오 풋살장', '대전광역시 동구 가오동 7-9, Gwangju', 30000, 70, 'https://cdn.pixabay.com/photo/2015/04/06/11/54/stadium-709180_1280.jpg'),
+('대전 시리우스 스타디움', '대전 중구 유등천동로 762', 35000, 75, 'https://d31wz4d3hgve8q.cloudfront.net/media/IMG_0605.JPG?w=1920'),
+('대전 도안 풋살구장', '대전광역시 서구 월드컵대로484번길 148-13', 55000, 110, 'https://cdn.pixabay.com/photo/2020/01/12/16/57/stadium-4760441_1280.jpg'),
+('대전 S루프탑 풋살파크', '대전 서구 대덕대로185번길 46', 48000, 95, 'https://d31wz4d3hgve8q.cloudfront.net/media/dj_srooftop_coner.jpeg?w=1920'),
+('대전 유성 풋살구장', '대전 유성구 유성대로713번길 83', 52000, 100, 'https://d31wz4d3hgve8q.cloudfront.net/media/dgys_coner.jpg?w=1920'),
+('대전 하나 풋살장', '대전 유성구 노은로367번길 108', 50000, 85, 'https://d31wz4d3hgve8q.cloudfront.net/media/KakaoTalk_Photo_2024-10-21-17-05-12_001.jpeg?w=1920'),
+('대전 S가수원 풋살파크','대전광역시 서구 도안동 2069',30000,50,'https://d31wz4d3hgve8q.cloudfront.net/media/KakaoTalk_Photo_2023-11-14-16-43-58_001.jpeg?w=1920'),
+('대전 S루프탑 신탄진 풋살파크','신탄진동 118-5번지 옥상층',30000,50,'https://cdn.pixabay.com/photo/2024/10/09/23/53/ai-generated-9109557_1280.jpg'),
+('대전 대덕비즈센터 루프탑 풋살장','대전광역시 유성구 테크노4로 17',30000,50,'https://cdn.pixabay.com/photo/2017/08/01/19/48/donbass-2567563_1280.jpg'),
+('대전 스마트 풋살장','대전 유성구 엑스포로 213',30000,50,'https://cdn.pixabay.com/photo/2013/02/24/22/36/fc-red-bull-arena-85865_1280.jpg'),
+('대전 위너스 풋살파크','대전 유성구 원신흥동 576-2',30000,50,'https://d31wz4d3hgve8q.cloudfront.net/media/dg_winners_goal.jpeg?w=1920'),
+('대전도안아이파크아파트풋살장','대전광역시 서구 도안동 1362',30000,50,'https://cdn.pixabay.com/photo/2020/02/09/11/58/sports-arena-4832845_1280.jpg'),
+('대전전천후게이트볼경기장축구장','대전광역시 유성구 원촌동 4',30000,50,'https://cdn.pixabay.com/photo/2014/05/17/10/26/brazil-346129_1280.jpg'),
+('대전한국생명공학연구원풋살장','대전광역시 유성구 어은동53한국생명공학연구원풋살장',30000,50,'https://cdn.pixabay.com/photo/2016/08/31/16/28/stadium-1634035_1280.jpg');
+
 
 
 INSERT INTO matches (name, stadium_id, start_time, end_time, status) VALUES
