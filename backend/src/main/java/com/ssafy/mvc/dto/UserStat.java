@@ -15,6 +15,7 @@ public class UserStat {
     private int stamina; // 체력 스텟
     private int dribble; // 드리블 스텟
     private LocalDateTime createdAt; // 생성 시간
+    private LocalDateTime updatedAt; // 생성 시간
     
     
 

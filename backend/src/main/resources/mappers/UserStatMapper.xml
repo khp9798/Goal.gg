@@ -16,7 +16,7 @@
 	
 	<update id="updateUserStat">
 		UPDATE userstat
-		SET shoot=#{shoot}, pass=#{pass}, speed=#{speed}, stamina=#{stamina}, dribble=#{dribble})
+		SET shoot=#{shoot}, pass=#{pass}, speed=#{speed}, stamina=#{stamina}, dribble=#{dribble}
 		WHERE user_id=#{userId} AND match_id=#{matchId}
 	</update>
 	

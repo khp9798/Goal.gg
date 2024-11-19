@@ -41,7 +41,7 @@ public class UserStatController {
 	public ResponseEntity<?> selectUserAllStat(@RequestParam String userId){
 		List<UserStat> list = userstatservice.selectUserAllStat(userId);
 		if(list!=null) {
-			return new ResponseEntity<>("스텟 전체 조회에 성공했습니다",HttpStatus.OK);
+			return new ResponseEntity<>(list,HttpStatus.OK);
 		}
 		return new ResponseEntity<>("스텟 전체 조회에 실패했습니다",HttpStatus.NOT_FOUND);
 	}
