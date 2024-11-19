@@ -4,6 +4,7 @@
      
     <HeaderNav/>
     <RegionTest/>
+
     <RouterView/>
   </div>
 </template>
@@ -12,8 +13,6 @@
 
 import { RouterView } from 'vue-router/dist/vue-router';
 import HeaderNav from './components/HeaderNav.vue';
-import TestView from './testView.vue';
-import RegionTest from './views/RegionTest.vue';
 
 </script>
 

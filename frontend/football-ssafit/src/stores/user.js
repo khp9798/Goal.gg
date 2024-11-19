@@ -36,6 +36,7 @@ export const useUserStore = defineStore('user', () => {
   }
 
   const trySignup = function(trySignupUser){ // 유저 로그인
+    console.log(trySignupUser)
     axios({
       url : REST_USER_API+'/regist',
       method : "POST",

@@ -22,12 +22,13 @@
         <input type="text" id="name" v-model="trySignupUser.name" />
         <hr>
         <!-- Position 선택 -->
-        <label for="position">선호 포지션:</label>
+        <label for="position">선호 포지션</label>
         <select id="position" v-model="trySignupUser.position">
             <option value="" disabled>-- 선택하세요 --</option>
-            <option v-for="position in positions" :key="position" :value="position">
-                {{ position }}
-            </option>
+            <option value="forward">공격수</option>
+            <option value="midfield">미드필더</option>
+            <option value="defense">수비수</option>
+            <option value="goalkeeper">골키퍼</option>
         </select>
         <hr>
 
@@ -61,21 +62,10 @@ import { useUserStore } from '@/stores/user'; //유저 스토어 임포트
 import { ref, computed } from 'vue';
 const userstore = useUserStore() // 유저 스토어 사용
 
-const positions = ref(["forward", "midfield", "defense", "goalkeeper"]);
-const trySignupUser = ref({ // 입력된 로그인 정보
-    userid: '',
-    password: '',
-    passwordcheck: '',
-    email: '',
-    phoneNumber: '',
-    name: '',
-    position: ''
-})
 
-function trySignup() { // 로그인 시도
-    userstore.trySignup(trySignupUser.value)
-}
-// 데이터
+
+
+// 지역 데이터
 const regiondata = {
     //
     수도권: {
@@ -141,6 +131,22 @@ const updateProvinces = () => {
 const updateDistricts = () => {
     selectedDistrict.value = "";
 };
+
+const trySignupUser = ref({ // 입력된 회원가입 정보
+    userid: '',
+    password: '',
+    passwordcheck: '',
+    email: '',
+    phoneNumber: '',
+    name: '',
+    position: '',
+    region: computed(() => selectedRegion.value),
+    province: computed(() => selectedProvince.value),
+    district: computed(() => selectedDistrict.value)
+})
+function trySignup() { // 로그인 시도
+    userstore.trySignup(trySignupUser.value)
+}
 
 </script>
 
