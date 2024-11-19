@@ -9,7 +9,6 @@
         <RouterLink :to="{name : 'loginview'}" v-if="!userstore.loginUser.name">로그인</RouterLink>
         <a @click="tryLogout" v-if="userstore.loginUser.name">로그아웃</a>
     </div>
-    <RouterView/>
 </template>
 
 <script setup>
