@@ -3,13 +3,17 @@
     앱뷰입니다.
     <!-- 헤더뷰,라우터뷰 -->
     <HeaderNav/>
+    <RegionTest/>
+    <!-- <RouterView/> -->
   </div>
 </template>
 
 <script setup>
 
+import { RouterView } from 'vue-router/dist/vue-router';
 import HeaderNav from './components/HeaderNav.vue';
 import TestView from './testView.vue';
+import RegionTest from './views/RegionTest.vue';
 
 </script>
 

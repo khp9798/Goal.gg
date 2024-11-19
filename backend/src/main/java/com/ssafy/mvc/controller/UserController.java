@@ -3,6 +3,7 @@ package com.ssafy.mvc.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,6 +18,7 @@ import jakarta.servlet.http.HttpSession;
 
 @RestController
 @RequestMapping("/users")
+@CrossOrigin("*")
 public class UserController {
 	
 	@Autowired
@@ -25,12 +27,13 @@ public class UserController {
 	//회원가입
 	@PostMapping("/regist")
 	public ResponseEntity<?> registUser(@RequestBody User user){
+		System.out.println(user);
 		if(user.getUserid() == null || user.getPassword() == null ||user.getName() == null ||
-				user.getEmail()==null || user.getPhoneNumber()==null || user.getRole() ==null||
-				user.getTier()==null||user.getCreatedAt()==null) {
+				user.getEmail()==null || user.getPhoneNumber()==null) {
 			return new ResponseEntity<>("유저 정보 중 하나가 빠져있는 것 같습니다", HttpStatus.BAD_REQUEST);
 		}
 		boolean success = uService.registUser(user);
+		System.out.println(success);
 		if(success) {
 			return new ResponseEntity<>("유저 생성에 성공했습니다", HttpStatus.CREATED);
 		}
@@ -40,6 +43,7 @@ public class UserController {
 	//로그인 ddss
 	@PostMapping("/login")
 	public ResponseEntity<?> loginUser(@RequestBody User loginUser, HttpSession session){
+		System.out.println(loginUser);
 		User user = uService.selectUser(loginUser.getUserid());
 		if(user != null && user.getUserid().equals(loginUser.getUserid())
 				&& user.getPassword().equals(loginUser.getPassword())) {

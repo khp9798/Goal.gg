@@ -1,13 +1,47 @@
+import StadiumDetail from '@/components/stadium/StadiumDetail.vue'
+import StadiumList from '@/components/stadium/StadiumList.vue'
+import LoginView from '@/views/LoginView.vue'
+import MatchView from '@/views/MatchView.vue'
+import StadiumView from '@/views/StadiumView.vue'
+import UserView from '@/views/UserView.vue'
 import MatchDetail from '@/components/match/MatchDetail.vue'
 import MatchList from '@/components/match/MatchList.vue'
 import HomeView from '@/views/HomeView.vue'
-import MatchView from '@/views/MatchView.vue'
 import ReservationView from '@/views/ReservationView.vue'
 import { createRouter, createWebHistory } from 'vue-router'
+import SignupView from '@/views/SignupView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    {
+      path : '/user',
+      name : 'userview',
+      component : UserView
+    },
+    {
+      path : '/stadium',
+      name : 'stadiumview',
+      component : StadiumView,
+      // redirect : '/stadium/list',
+      children : [
+        {
+          path : '',
+          name : 'stadiumlist',
+          component : StadiumList
+        }
+      ]
+    },
+    {
+      path: '/stadium/:id',
+      name : 'stadiumdetail',
+      component : StadiumDetail
+    },
+    {
+      path : '/login',
+      name : 'loginview',
+      component : LoginView
+    },
     {
       path: '/',
       name : 'home',
@@ -28,8 +62,12 @@ const router = createRouter({
       path : '/reservation',
       name : 'reservation',
       component : ReservationView
+    },
+    {
+      path : '/signup',
+      name : 'signup',
+      component : SignupView
     }
-    
   ],
 })
 
