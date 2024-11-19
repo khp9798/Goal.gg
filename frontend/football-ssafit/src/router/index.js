@@ -7,7 +7,6 @@ import UserView from '@/views/UserView.vue'
 import MatchDetail from '@/components/match/MatchDetail.vue'
 import ReservationDetail from '@/components/reservation/ReservationDetail.vue'
 import HomeView from '@/views/HomeView.vue'
-import MatchView from '@/views/MatchView.vue'
 import ReservationView from '@/views/ReservationView.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 

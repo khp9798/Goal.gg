@@ -1,6 +1,5 @@
 <template>
     <div>
-<<<<<<< HEAD
         헤더네비게이션 입니다
         <RouterLink :to="{name : 'home'}">로고</RouterLink>|
         <RouterLink :to="{name : 'stadiumlist'}">경기장</RouterLink>|
