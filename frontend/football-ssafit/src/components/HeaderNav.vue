@@ -1,10 +1,22 @@
 <template>
     <div>
         헤더네비게이션 입니다
+        <RouterLink :to="{name : 'homeview'}">로고</RouterLink>|
+        <RouterLink :to="{name : 'stadiumlist'}">경기장</RouterLink>|
+        <RouterLink :to="{name : 'userview'}">유저 정보</RouterLink>|
+        <RouterLink :to="{name : 'loginview'}" v-if="!userstore.loginUser.name">로그인</RouterLink>
+        <a @click="tryLogout" v-if="userstore.loginUser.name">로그아웃</a>
     </div>
 </template>
 
 <script setup>
+
+import { RouterLink } from 'vue-router/dist/vue-router';
+import { useUserStore } from '@/stores/user';
+const userstore = useUserStore()
+function tryLogout(){
+    userstore.tryLogout()
+}
 
 </script>
 
