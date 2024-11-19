@@ -5,6 +5,7 @@
         <vue-cal style="height: 600px;" :time-from="8 * 60" :time-to="24 * 60"  active-view="month"
             :disable-views="['years', 'year', 'week']" locale="ko" :events="events"
             @event-click="onEventClick">
+            
             <template #arrow-prev>
                 <i class="icon material-icons">&lt;</i>
             </template>
@@ -58,7 +59,7 @@ const onEventClick = (event) => {
 
 <style>
 /* 스타디움 아이디로 다른 클래스 준 것으로 백그라운드 컬러 넣기 */
-.class3{
+/* .class3{
     background-color: rgb(241, 241, 219);
     
 }
@@ -70,5 +71,5 @@ const onEventClick = (event) => {
 }
 .class6{
     background-color: aquamarine;
-}
+} */
 </style>
