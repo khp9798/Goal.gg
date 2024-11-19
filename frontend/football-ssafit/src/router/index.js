@@ -1,14 +1,14 @@
 import StadiumDetail from '@/components/stadium/StadiumDetail.vue'
-import StadiumList from '@/components/stadium/StadiumList.vue'
 import LoginView from '@/views/LoginView.vue'
 import MatchView from '@/views/MatchView.vue'
-import StadiumView from '@/views/StadiumView.vue'
 import UserView from '@/views/UserView.vue'
 import MatchDetail from '@/components/match/MatchDetail.vue'
 import HomeView from '@/views/HomeView.vue'
 import ReservationView from '@/views/ReservationView.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import SignupView from '@/views/SignupView.vue'
+import StadiumView from '@/views/StadiumVIew.vue'
+import StadiumList from '@/components/stadium/StadiumLIst.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
