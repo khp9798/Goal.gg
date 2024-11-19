@@ -1,7 +1,8 @@
 <template>
   <div>
-    <h1>Hello</h1>
-    <TestView/>
+    앱뷰입니다.
+    <!-- 헤더뷰,라우터뷰 -->
+
   </div>
 </template>
 
