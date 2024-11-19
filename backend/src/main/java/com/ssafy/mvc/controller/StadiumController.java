@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,8 +34,8 @@ public class StadiumController {
 		return new ResponseEntity<>("조회에 실패했습니다",HttpStatus.NOT_FOUND);
 	}
 	
-	@GetMapping
-	public ResponseEntity<?> selectStadium(@RequestParam int id){
+	@GetMapping("/{id}")
+	public ResponseEntity<?> selectStadium(@PathVariable int id){
 		Stadium stadium = stadiumservice.selectStadium(id);
 		if(stadium!=null) {
 			return new ResponseEntity<>(stadium,HttpStatus.OK);
@@ -42,7 +43,7 @@ public class StadiumController {
 		return new ResponseEntity<>("조회에 실패했습니다",HttpStatus.NOT_FOUND);
 	}
 	
-	@GetMapping
+	@GetMapping("/search")
 	public ResponseEntity<?> searchByCondition(@ModelAttribute SearchCondition condition){
 		List<Stadium> list = stadiumservice.searchByCondition(condition);
 		if(!list.isEmpty()) {
