@@ -1,6 +1,5 @@
 import MatchDetail from '@/components/match/MatchDetail.vue'
 import MatchList from '@/components/match/MatchList.vue'
-import ReservationDetail from '@/components/reservation/ReservationDetail.vue'
 import HomeView from '@/views/HomeView.vue'
 import MatchView from '@/views/MatchView.vue'
 import ReservationView from '@/views/ReservationView.vue'
@@ -17,7 +16,8 @@ const router = createRouter({
     {
       path : '/match',
       name : 'match',
-      component : MatchView
+      component : MatchView,
+      
     },
     {
       path : '/match/:id',
@@ -28,11 +28,6 @@ const router = createRouter({
       path : '/reservation',
       name : 'reservation',
       component : ReservationView
-    },
-    {
-      path : '/reservation/:id',
-      name : 'reservationDetail',
-      component : ReservationDetail
     }
     
   ],

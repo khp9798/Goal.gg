@@ -1,0 +1,74 @@
+<!-- https://antoniandre.github.io/vue-cal/         vue-cal 공식문서 -->
+
+<template>
+    <div>
+        <vue-cal style="height: 600px;" :time-from="8 * 60" :time-to="24 * 60"  active-view="month"
+            :disable-views="['years', 'year', 'week']" locale="ko" :events="events"
+            @event-click="onEventClick">
+            <template #arrow-prev>
+                <i class="icon material-icons">&lt;</i>
+            </template>
+            <template #arrow-next>
+                <i class="icon material-icons">&gt;</i>
+            </template>
+        </vue-cal>
+
+    </div>
+</template>
+
+<script setup>
+import VueCal from 'vue-cal';
+import 'vue-cal/dist/vuecal.css';
+import { onMounted, ref, watch } from 'vue';
+import { useMatchStore } from '@/stores/match';
+import router from '@/router';
+
+const matchStore = useMatchStore();
+
+// vue-cal에 맞는 형식으로 변환
+const events = ref([]);
+
+onMounted(() => {
+    matchStore.getMatchList();
+});
+
+watch(
+    () => matchStore.matchList,
+    (newValue) => {
+        events.value = newValue.map((item) => ({
+            start: item.startTime.replace('T', ' ').slice(0, 16), // 'T'를 ' '로 변환하고 시간 초단위 제거
+            end: item.endTime.replace('T', ' ').slice(0, 16),
+            title: item.name,
+            content: `<i class="icon material-icons">${item.stadiumName}</i>`,
+            class: `class${item.id}`, //스타디움 아이디로 스타디움 마다 다른 클래스 주기
+            matchId : item.id
+        }));
+        console.log('변환된 Events:', events.value);
+    }
+);
+
+// 이벤트 클릭 핸들러
+const onEventClick = (event) => {
+    console.log('클릭된 이벤트:', event);
+    // 다른 페이지로 이동 (예: /event/:id)
+    router.push({name:'matchDetail',params : {id : event.matchId}});
+};
+</script>
+
+
+<style>
+/* 스타디움 아이디로 다른 클래스 준 것으로 백그라운드 컬러 넣기 */
+.class3{
+    background-color: rgb(241, 241, 219);
+    
+}
+.class4{
+    background-color: red;
+}
+.class5{
+    background-color: blue;
+}
+.class6{
+    background-color: aquamarine;
+}
+</style>

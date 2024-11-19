@@ -36,6 +36,7 @@ CREATE TABLE stadium (
 
 CREATE TABLE matches (
     id INT AUTO_INCREMENT PRIMARY KEY,           -- 고유 ID
+    name varchar(50) not null,
     stadium_id INT NOT NULL,                     -- 경기장이 매핑된 ID
     start_time DATETIME NOT NULL,                -- 경기 시작 시간
     end_time DATETIME NOT NULL,                  -- 경기 종료 시간
@@ -109,17 +110,18 @@ INSERT INTO stadium (name, address, price, capacity, image) VALUES
 ('Suwon Sports Complex', '404 Cultural Blvd, Suwon', 50000, 85, 'suwon_sports_complex.jpg');
 
 
-INSERT INTO matches (stadium_id, start_time, end_time, status) VALUES
-(1, '2024-11-19 14:00:00', '2024-11-19 16:00:00', 'approved'),
-(2, '2024-11-20 10:00:00', '2024-11-20 12:00:00', 'pending'),
-(3, '2024-11-21 18:00:00', '2024-11-21 20:00:00', 'rejected'),
-(4, '2024-11-22 13:00:00', '2024-11-22 15:00:00', 'canceled'),
-(5, '2024-11-23 09:00:00', '2024-11-23 11:00:00', 'approved'),
-(6, '2024-11-24 16:00:00', '2024-11-24 18:00:00', 'pending'),
-(7, '2024-11-25 14:00:00', '2024-11-25 16:00:00', 'approved'),
-(8, '2024-11-26 19:00:00', '2024-11-26 21:00:00', 'approved'),
-(9, '2024-11-27 11:00:00', '2024-11-27 13:00:00', 'canceled'),
-(10, '2024-11-28 15:00:00', '2024-11-28 17:00:00', 'approved');
+INSERT INTO matches (name, stadium_id, start_time, end_time, status) VALUES
+('Championship Match', 1, '2024-11-19 14:00:00', '2024-11-19 16:00:00', 'approved'),
+('Friendly Game', 2, '2024-11-20 10:00:00', '2024-11-20 12:00:00', 'pending'),
+('League Match', 3, '2024-11-21 18:00:00', '2024-11-21 20:00:00', 'rejected'),
+('Semi-Finals', 4, '2024-11-21 13:00:00', '2024-11-21 15:00:00', 'canceled'),
+('Quarter-Finals', 5, '2024-11-21 09:00:00', '2024-11-21 11:00:00', 'approved'),
+('Training Session', 6, '2024-11-22 09:00:00', '2024-11-22 11:00:00', 'approved'),
+('Exhibition Game', 7, '2024-11-23 14:00:00', '2024-11-23 16:00:00', 'pending'),
+('Youth Match', 8, '2024-11-24 19:00:00', '2024-11-24 21:00:00', 'approved'),
+('Veterans Match', 9, '2024-11-25 11:00:00', '2024-11-25 13:00:00', 'canceled'),
+('Final Match', 10, '2024-11-26 15:00:00', '2024-11-26 17:00:00', 'approved');
+
 
 INSERT INTO userstat (user_id, shoot, pass, speed, stamina, dribble, match_id) VALUES
 ('ssafy', 85, 60, 78, 80, 70, 1),  -- John with match 1 (Seoul Futbol Stadium)
@@ -146,8 +148,8 @@ INSERT INTO reservations (user_id, match_id, reservation_date) VALUES
 ('emily_forward', 6, '2024-11-18 14:00:00'), -- emily_forward reserved for Jeju match
 ('chris_defense', 7, '2024-11-18 15:00:00'), -- chris_defense reserved for Daejeon match
 ('sarah_midfield', 8, '2024-11-18 16:00:00'), -- sarah_midfield reserved for Ulsan match
-('david_goalkeeper', 9, '2024-11-18 17:00:00'), -- david_goalkeeper reserved for Pohang match
-('oliver_striker', 10, '2024-11-18 18:00:00'); -- oliver_striker reserved for Suwon match
+('ssafy', 9, '2024-11-18 17:00:00'), -- david_goalkeeper reserved for Pohang match
+('ssafy', 10, '2024-11-18 18:00:00'); -- oliver_striker reserved for Suwon match
 
 
 INSERT INTO reviews (user_id, match_id, rating, comment) VALUES
@@ -164,3 +166,8 @@ INSERT INTO reviews (user_id, match_id, rating, comment) VALUES
 
 
 select * from users;
+
+
+        SELECT r.id, r.user_id, r.reservation_date, r.created_at, r.updated_at, m.id
+        FROM reservations r, matches m
+        WHERE r.user_id =  "ssafy" and  m.id = r.match_id;

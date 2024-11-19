@@ -1,7 +1,10 @@
 <template>
     <div>
         <li @click="goDetail">
-            예약 아이템입니다.
+            {{ props.reservation.name }}
+            {{ props.reservation.reservationDate.replace('T', ' ').slice(0, 16) }}
+            경기 타임 : {{ props.reservation.startTime.replace('T', ' ').slice(0, 16) }} ~ 
+            {{ props.reservation.endTime.replace('T', ' ').slice(0, 16) }}
         </li>
     </div>
 </template>
@@ -9,13 +12,17 @@
 <script setup>
 import router from '@/router';
 
-
+const props =  defineProps({
+    reservation : Object
+})
 
 const goDetail = function(){
-    router.push({name:'reservationDetail',params : {id : 2}})
+    router.push({name:'matchDetail',params : {id : props.reservation.matchId}})
 }
 </script>
 
 <style scoped>
-
+li{
+    
+}
 </style>

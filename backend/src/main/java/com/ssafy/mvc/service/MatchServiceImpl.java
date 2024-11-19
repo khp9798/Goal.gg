@@ -39,6 +39,12 @@ public class MatchServiceImpl implements MatchService{
 	public Match selectOne(int id) {
 		return dao.selectOne(id);
 	}
+
+	@Override
+	public List<Match> selectAll() {
+		
+		return dao.selectAll();
+	}
 	
 	
 

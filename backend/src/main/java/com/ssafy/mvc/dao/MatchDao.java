@@ -25,4 +25,6 @@ public interface MatchDao {
 	//특정 경기 세부 정보 조회
 	Match selectOne (int id);
 	
+	List<Match> selectAll();
+	
 }
