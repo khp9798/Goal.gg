@@ -27,12 +27,13 @@ public class UserController {
 	//회원가입
 	@PostMapping("/regist")
 	public ResponseEntity<?> registUser(@RequestBody User user){
+		System.out.println(user);
 		if(user.getUserid() == null || user.getPassword() == null ||user.getName() == null ||
-				user.getEmail()==null || user.getPhoneNumber()==null || user.getRole() ==null||
-				user.getTier()==null||user.getCreatedAt()==null) {
+				user.getEmail()==null || user.getPhoneNumber()==null) {
 			return new ResponseEntity<>("유저 정보 중 하나가 빠져있는 것 같습니다", HttpStatus.BAD_REQUEST);
 		}
 		boolean success = uService.registUser(user);
+		System.out.println(success);
 		if(success) {
 			return new ResponseEntity<>("유저 생성에 성공했습니다", HttpStatus.CREATED);
 		}

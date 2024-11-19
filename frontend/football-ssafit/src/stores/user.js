@@ -21,7 +21,7 @@ export const useUserStore = defineStore('user', () => {
       console.log(response)
       loginUser.value.userid = tryLoginUser.userid // 현재 로그인 된 유저 아이디 업데이트
       loginUser.value.name = response.data // 현재 로그인 된 유저 이름 업데이트
-      router.replace({name : 'homeview'}) // 로그인 성공 시 홈으로(뒤로가기로?)
+      router.replace({name : 'home'}) // 로그인 성공 시 홈으로(뒤로가기로?)
     }).catch((err)=>{
       console.log("로그인 실패")
       console.log(err)
@@ -34,7 +34,23 @@ export const useUserStore = defineStore('user', () => {
     loginUser.value.name = ''
     console.log("로그아웃 성공")
   }
+
+  const trySignup = function(trySignupUser){ // 유저 로그인
+    axios({
+      url : REST_USER_API+'/regist',
+      method : "POST",
+      data : trySignupUser
+    }).then((response)=>{
+      console.log("회원가입 성공")
+      console.log(response)
+      router.replace({name : 'home'}) // 로그인 성공 시 홈으로(뒤로가기로?)
+    }).catch((err)=>{
+      console.log("회원가입 실패")
+      console.log(err)
+      window.alert("회원가입 실패했습니다")
+    })
+  }
   
 
-  return {loginUser, tryLogin, tryLogout   }
+  return {loginUser, tryLogin, tryLogout, trySignup   }
 })
