@@ -14,6 +14,9 @@ public class User {
     private String name; // 사용자 이름
     private String role; // 사용자 역할(권한지정)
     private String position; // 사용자 포지
-    private String tier; // 사용자 티
+    private String tier; // 사용자 티어
+    private String region; // 사용자 지역 -> ex)수도권
+    private String province; // 사용자 지역 -> ex)서울
+    private String district; // 사용자 지역 -> ex)관악구
     private LocalDateTime createdAt; // 생성 시간
 }
