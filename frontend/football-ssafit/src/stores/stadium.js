@@ -1,6 +1,7 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import axios from 'axios'
+import router from '@/router'
 const REST_STADIUM_API_URL = "http://localhost:8080/stadium"
 
 
@@ -36,7 +37,20 @@ export const useStadiumStore = defineStore('stadium', () => {
       // console.log(err)
     })
   }
+
+
+  function searchList(condition){
+    axios({
+      url : REST_STADIUM_API_URL+"/search",
+      params : condition
+    })
+    .then((res)=>{
+      stadiumlist.value = res.data
+      console.log(stadiumlist.value)
+      router.push({name:'stadiumlist'})
+    })
+  }
   
 
-  return {stadiumlist, stadium, getStadiumList,getStadium,  }
+  return {stadiumlist, stadium, getStadiumList,getStadium, searchList }
 })

@@ -7,7 +7,7 @@
         <input type="text" id="userid" v-model="tryLoginUser.userid"/>
         <hr>
         <label for="password">비밀번호</label>
-        <input type="text" id="password" v-model="tryLoginUser.password"/>
+        <input type="password" id="password" v-model="tryLoginUser.password"/>
         <hr>
         <button type="submit">로그인</button>
     </form>

@@ -26,7 +26,7 @@ onMounted(async () => {
     new Chart(ctx, {
         type: "radar",
         data: {
-            labels: ["Shoot", "Pass", "Speed", "Stamina", "Dribble"],
+            labels: ["Pass", "Stamina", "Dribble", "Shoot", "Speed"],
             datasets: [
                 {
                     label: "User Stats",

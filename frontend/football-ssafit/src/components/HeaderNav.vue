@@ -42,11 +42,23 @@
 
 
 
-                    <form class="d-flex" role="search" @submit.prevent="search">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
-                            v-model="condition.word">
+                    <form class="d-flex align-items-center gap-3" role="search" @submit.prevent="search">
+                        <select class="form-select" v-model="condition.key" id="floatingSelect">
+
+                            <option value="name">이름</option>
+                            <option value="address">주소</option>
+                        </select>
+
+                        <!-- 검색 입력 필드 -->
+                        <input id="searchField" class="form-control" type="search" placeholder="찾고 싶은 구장을 입력하세요."
+                            aria-label="Search" v-model="condition.word" />
+
+                        <!-- 검색 버튼 -->
                         <button class="btn btn-outline-light" type="submit">Search</button>
                     </form>
+
+
+
 
                 </div>
             </div>
@@ -60,6 +72,7 @@ import { RouterLink } from 'vue-router/dist/vue-router';
 import { useUserStore } from '@/stores/user';
 import { useMatchStore } from '@/stores/match';
 import { ref } from 'vue';
+import { useStadiumStore } from '@/stores/stadium';
 
 const userstore = useUserStore();
 
@@ -68,14 +81,17 @@ function tryLogout() {
 }
 
 const condition = ref({
-    key: "",
+    key: "name",
     word: "",
     order: "",
     orderDir: ""
 })
-const matchStore = useMatchStore()
+const stadiumstore = useStadiumStore()
 const search = function () {
-    matchStore.search(condition.value)
+    stadiumstore.searchList(condition.value)
+    condition.value = {}
+    condition.value.key = "name"
+
 }
 
 
@@ -92,5 +108,32 @@ const search = function () {
 .nav-link:hover {
     color: #adb5bd;
     /* 호버 시 색상 */
+}
+
+form .form-control {
+    flex: 1;
+    /* 남은 공간 차지 */
+    min-width: 300px;
+    /* 입력 필드 최소 너비 설정 */
+}
+
+form .form-select {
+    background-color: #212529;
+    /* 검정색 배경 */
+    color: white;
+    /* 흰색 텍스트 */
+    border-color: #495057;
+    /* 테두리 색 */
+}
+
+form .form-select:focus {
+    background-color: #212529;
+    /* 포커스 시 검정색 유지 */
+    color: white;
+    /* 포커스 시 텍스트 흰색 유지 */
+    border-color: #6c757d;
+    /* 포커스 시 테두리 색 */
+    box-shadow: none;
+    /* 포커스 시 그림자 제거 */
 }
 </style>

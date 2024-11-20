@@ -48,6 +48,7 @@ public class StadiumController {
 	
 	@GetMapping("/search")
 	public ResponseEntity<?> searchByCondition(@ModelAttribute SearchCondition condition){
+		System.out.println(condition);
 		List<Stadium> list = stadiumservice.searchByCondition(condition);
 		if(!list.isEmpty()) {
 			return new ResponseEntity<>(list,HttpStatus.OK);
