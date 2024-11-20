@@ -8,6 +8,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -21,6 +22,7 @@ import com.ssafy.mvc.service.UserStatService;
 
 @RestController
 @RequestMapping("/userstat")
+@CrossOrigin("*")
 public class UserStatController {
 	
 	@Autowired
@@ -80,6 +82,7 @@ public class UserStatController {
 			stat.put("speed",speed/=size);
 			stat.put("stamina",stamina/=size);
 			stat.put("dribble",dribble/=size);
+			System.out.println(stat);
 			return new ResponseEntity<>(stat,HttpStatus.OK);
 		}
 		return new ResponseEntity<>("스텟 전체 조회에 실패했습니다",HttpStatus.NOT_FOUND);

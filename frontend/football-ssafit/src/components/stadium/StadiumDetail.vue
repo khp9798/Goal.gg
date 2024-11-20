@@ -1,8 +1,8 @@
 <template>
-    <div>
+    <div class="container">
         경기장 상세입니다
         <div>경기장 이미지</div>
-        <img :src="stadiumstore.stadium.image" class="card-img-top" alt="..." width="300" height="200">
+        <img :src="stadiumstore.stadium.image" class="card-img-top" alt="..." width="300px">
         <div>경기장 이름</div>
         {{ stadiumstore.stadium.name }}
         <hr>

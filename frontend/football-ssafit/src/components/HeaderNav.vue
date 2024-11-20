@@ -27,19 +27,27 @@
                         <li class="nav-item me-3"> <!-- 간격 추가 -->
                             <RouterLink :to="{ name: 'reservation' }" class="nav-link">예약 확인</RouterLink>
                         </li>
+                        <li class="nav-item me-3">
+                            <RouterLink :to="{ name: 'loginview' }" class="nav-link d-flex"
+                                v-if="!userstore.loginUser.name">로그인</RouterLink>
+
+                        </li>
+                        <li class="nav-link me-3" v-if="userstore.loginUser.name">{{ userstore.loginUser.name }}님
+                            반갑습니다</li>
+                        <li class="nav-link me-3" v-if="userstore.loginUser.name" @click="tryLogout">로그아웃</li>
                     </ul>
                     <!-- 검색 폼 -->
 
 
-                    <div class="navbar-nav me-auto mb-2">
-                        <form class="d-flex" role="search" @submit.prevent="search">
-                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" v-model="condition.word">
-                            <button class="btn btn-outline-light" type="submit">Search</button>
-                        </form>
-                        <RouterLink :to="{name : 'loginview'}" class="nav-link d-flex" v-if="!userstore.loginUser.name">로그인</RouterLink>
-                        <a class="nav-link d-flex" v-if="userstore.loginUser.name">{{userstore.loginUser.name}}님 반갑습니다</a>
-                        <a class="nav-link d-flex" v-if="userstore.loginUser.name" @click="tryLogout">로그아웃</a>
-                    </div>
+
+
+
+                    <form class="d-flex" role="search" @submit.prevent="search">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
+                            v-model="condition.word">
+                        <button class="btn btn-outline-light" type="submit">Search</button>
+                    </form>
+
                 </div>
             </div>
         </nav>
@@ -60,13 +68,13 @@ function tryLogout() {
 }
 
 const condition = ref({
-    key : "",
-    word : "",
-    order : "",
-    orderDir : ""
+    key: "",
+    word: "",
+    order: "",
+    orderDir: ""
 })
 const matchStore = useMatchStore()
-const search = function(){
+const search = function () {
     matchStore.search(condition.value)
 }
 
