@@ -101,5 +101,18 @@ public class MatchController {
 
 		return new ResponseEntity<>("그런 아이디를 가진 match는 없습니다.", HttpStatus.NOT_FOUND);
 	}
+	
+	// 특정 경기장 매치 조회
+	@GetMapping("/match/{id}")
+	public ResponseEntity<?> selectStadiumMatch(@PathVariable int id) {
+		List<Match> list = mService.selectStadiumMatch(id);
+		System.out.println(id);
+		System.out.println(list);
+		if (list != null) {
+			return new ResponseEntity<>(list, HttpStatus.OK);
+		}
+
+		return new ResponseEntity<>("해당 경기장에 매치가 없습니다.", HttpStatus.NOT_FOUND);
+	}
 
 }

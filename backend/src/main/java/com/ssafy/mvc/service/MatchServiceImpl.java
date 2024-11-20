@@ -45,6 +45,11 @@ public class MatchServiceImpl implements MatchService{
 		
 		return dao.selectAll();
 	}
+
+	@Override
+	public List<Match> selectStadiumMatch(int id) {
+		return dao.selectStadiumMatch(id);
+	}
 	
 	
 

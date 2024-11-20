@@ -52,5 +52,11 @@
     	from matches m, stadium s
     	where m.stadium_id = s.id;
     </select>
+    
+    <select id="selectStadiumMatch">
+    	SELECT *
+    	FROM matches
+    	WHERE stadium_id = #{id}
+    </select>
 
 </mapper>

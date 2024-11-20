@@ -23,4 +23,6 @@ public interface MatchService {
 	Match selectOne(int id);
 	
 	List<Match> selectAll();
+
+	List<Match> selectStadiumMatch(int id);
 }
