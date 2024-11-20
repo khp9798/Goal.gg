@@ -13,5 +13,6 @@ public class Match {
     private LocalDateTime startTime;  // 경기 시작 시간
     private LocalDateTime endTime;    // 경기 종료 시간
     private String status;         // 경기 상태 (pending, approved, rejected, canceled)
+    private String image; // 경기장 이미
 	
 }
