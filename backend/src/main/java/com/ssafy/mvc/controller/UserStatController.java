@@ -8,6 +8,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -21,6 +22,7 @@ import com.ssafy.mvc.service.UserStatService;
 
 @RestController
 @RequestMapping("/userstat")
+@CrossOrigin("*")
 public class UserStatController {
 	
 	@Autowired
@@ -59,7 +61,9 @@ public class UserStatController {
 	// 스텟 평균 조회
 	@GetMapping("/avg")
 	public ResponseEntity<?> selectUserAvgStat(@RequestParam String userId){
+		System.out.println(userId);
 		List<UserStat> list = userstatservice.selectUserAllStat(userId);
+		System.out.println(list);
 		int size = list.size();
 		int shoot = 0;
 		int pass = 0;

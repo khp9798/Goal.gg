@@ -53,7 +53,8 @@ public class UserController {
 			/*
 			 * 인증 관리 추가해야
 			 */
-			return new ResponseEntity<>(user.getName(),HttpStatus.ACCEPTED);
+			user.setPassword(null);
+			return new ResponseEntity<>(user,HttpStatus.ACCEPTED);
 		}
 		return new ResponseEntity<>("로그인 실패",HttpStatus.BAD_REQUEST);
 		

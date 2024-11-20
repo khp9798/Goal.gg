@@ -3,13 +3,13 @@ import { defineStore } from 'pinia'
 import axios from 'axios' // axios 임포트
 import router from '@/router'
 const REST_USER_API = 'http://localhost:8080/users' //user API 주소
+const REST_USERSTAT_API = 'http://localhost:8080/userstat' 
 
 
 export const useUserStore = defineStore('user', () => {
-  const loginUser = ref({ // 현재 로그인 되어있는 유저
-    userid : '',
-    name : ''
-  })
+  const loginUser = ref({}) // 현재 로그인 되어있는 유저
+
+  const loginUserStat = ref({})
 
   const tryLogin = function(tryLoginUser){ // 유저 로그인
     axios({
@@ -19,8 +19,7 @@ export const useUserStore = defineStore('user', () => {
     }).then((response)=>{
       console.log("로그인 성공")
       console.log(response)
-      loginUser.value.userid = tryLoginUser.userid // 현재 로그인 된 유저 아이디 업데이트
-      loginUser.value.name = response.data // 현재 로그인 된 유저 이름 업데이트
+      loginUser.value = response.data // 현재 로그인 된 유저 아이디 업데이트
       router.replace({name : 'home'}) // 로그인 성공 시 홈으로(뒤로가기로?)
     }).catch((err)=>{
       console.log("로그인 실패")
@@ -51,7 +50,23 @@ export const useUserStore = defineStore('user', () => {
       window.alert("회원가입 실패했습니다")
     })
   }
+
+  const getUserstat = function(userid){
+    axios({
+      url : REST_USERSTAT_API+'/avg',
+      method : 'GET',
+      params : {userId : userid}
+    }).then((response)=>{
+      console.log("성공")
+      console.log(response)
+      loginUserStat.value = response.data
+    }).catch((err)=>{
+      console.log(err)
+    })
+
+
+  }
   
 
-  return {loginUser, tryLogin, tryLogout, trySignup   }
+  return {loginUser, tryLogin, tryLogout, trySignup, getUserstat, loginUserStat   }
 })

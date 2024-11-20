@@ -132,7 +132,8 @@ INSERT INTO matches (name, stadium_id, start_time, end_time, status) VALUES
 ('Exhibition Game', 7, '2024-11-23 14:00:00', '2024-11-23 16:00:00', 'pending'),
 ('Youth Match', 8, '2024-11-24 19:00:00', '2024-11-24 21:00:00', 'approved'),
 ('Veterans Match', 9, '2024-11-25 11:00:00', '2024-11-25 13:00:00', 'canceled'),
-('Final Match', 10, '2024-11-26 15:00:00', '2024-11-26 17:00:00', 'approved');
+('Final Match', 10, '2024-11-26 15:00:00', '2024-11-26 17:00:00', 'approved'),
+('asdf', 1, '2024-11-26 15:00:00', '2024-11-26 17:00:00', 'approved');
 
 
 INSERT INTO userstat (user_id, shoot, pass, speed, stamina, dribble, match_id) VALUES
