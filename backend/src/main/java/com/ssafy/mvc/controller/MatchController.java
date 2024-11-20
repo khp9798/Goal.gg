@@ -89,6 +89,20 @@ public class MatchController {
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 
 	}
+	
+	
+	//모든 예약 가능한 매치 정보 가져오기
+	@GetMapping("list")
+	public ResponseEntity<?> selectList(){
+		
+		List<Match> list = mService.selectcanList();
+		
+		if(!list.isEmpty() && list!=null) {
+			return new ResponseEntity<>(list,HttpStatus.OK);
+		}
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		
+	}
 
 	// 특정 매치 조회
 	@GetMapping("/{id}")

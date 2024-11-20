@@ -1,13 +1,14 @@
 <template>
-    <div>
-        <div>
-            <img :src="store.match.image" alt="" width="100%">
+    <div class="container">
+        <div class="card mb-3">
+            <img :src="store.match.image" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">{{ store.match }}</p>
+            </div>
         </div>
-        
-        {{ route.params.id }}번 매치의 디테일입니다.
-
-        {{ store.match }}
     </div>
+
 </template>
 
 <script setup>
@@ -17,13 +18,11 @@ import { useRoute } from 'vue-router';
 
 const route = useRoute()
 
-const store =  useMatchStore()
+const store = useMatchStore()
 
-onMounted(()=>{
+onMounted(() => {
     store.getMatch(route.params.id)
 })
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

@@ -40,8 +40,8 @@ watch(
             start: item.startTime.replace('T', ' ').slice(0, 16), // 'T'를 ' '로 변환하고 시간 초단위 제거
             end: item.endTime.replace('T', ' ').slice(0, 16),
             title: item.name,
-            content: `<i class="icon material-icons">${item.stadiumName}</i>`,
-            class: `class${item.id}`, //스타디움 아이디로 스타디움 마다 다른 클래스 주기
+            content: `${item.stadiumName} <i class="icon material-icons" style="color : ${item.status === "마감 임박" ? 'red' : 'black'};">${item.status}</i>`,
+            class: item.status === "신청 마감" ? "end" : item.status === "경기 취소" ? "cancle" : "",
             matchId : item.id
         }));
         console.log('변환된 Events:', events.value);
@@ -58,18 +58,23 @@ const onEventClick = (event) => {
 
 
 <style>
-/* 스타디움 아이디로 다른 클래스 준 것으로 백그라운드 컬러 넣기 */
-/* .class3{
-    background-color: rgb(241, 241, 219);
-    
+
+
+
+/* 매치 상태로 백그라운드 컬러를 다르게 설정 */
+.end{
+    background-color: #FF6B6B !important; /* 밝은 빨강 */
+  color: white !important;            /* 텍스트 흰색 */
+  opacity: 0.8;                       /* 투명도 */
+  border: 1px solid #FF4444;          /* 테두리 색상 */
+  text-decoration: none;              /* 밑줄 제거 */
 }
-.class4{
-    background-color: red;
+
+.cancle {
+    background-color: #9E9E9E !important; /* 회색 */
+  color: #FFFFFF !important;            /* 텍스트 흰색 */
+  opacity: 0.5;                         /* 더 강한 투명도 */
+  border: 1px dashed #757575;           /* 점선 테두리 */
+  text-decoration: line-through;        /* 취소선 */
 }
-.class5{
-    background-color: blue;
-}
-.class6{
-    background-color: aquamarine;
-} */
 </style>

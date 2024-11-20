@@ -31,13 +31,10 @@
     <select id="searchByCondition">
         SELECT * FROM matches
         <where>
-            <if test="key != 'none'">
-                ${key} LIKE CONCAT('%', #{word}, '%')
+            <if test="word != 'none'">
+                name LIKE CONCAT('%', #{word}, '%')
             </if>
         </where>
-        <if test="order != 'none'">
-            ORDER BY ${order} ${orderDir}
-        </if>
     </select>
     
     
@@ -51,6 +48,13 @@
     	select m.id, m.name, s.id, m.start_time, m.end_time, m.status, s.name as stadiumName, s.image
     	from matches m, stadium s
     	where m.stadium_id = s.id;
+    </select>
+    
+    <select id="selectcanList">
+    	select m.id, m.name, s.id, m.start_time, m.end_time, m.status, s.name as stadiumName, s.image
+    	from matches m, stadium s
+    	where m.stadium_id = s.id
+    	and m.status in ("마감 임박","신청 가능");
     </select>
 
 </mapper>

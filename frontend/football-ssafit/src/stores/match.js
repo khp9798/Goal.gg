@@ -7,6 +7,7 @@ const REST_MATCH_API_URL = "http://localhost:8080/matches"
 export const useMatchStore = defineStore('match', () => {
   const matchList = ref([])
 
+  
   const match = ref({})
 
   const getMatchList = function(){
@@ -26,5 +27,15 @@ export const useMatchStore = defineStore('match', () => {
       console.log(err.response.data)
     })
   }
-  return { matchList,getMatchList , match, getMatch }
+
+
+  const search = function(condition){
+    axios({
+      url : REST_MATCH_API_URL+"/search",
+      params : condition
+    }).then((res)=>{
+      console.log(res)
+    })
+  }
+  return { matchList,getMatchList , match, getMatch,search }
 })

@@ -25,6 +25,12 @@ public interface MatchDao {
 	//특정 경기 세부 정보 조회
 	Match selectOne (int id);
 	
+	
+	//모든 매치 목록 가져오기
 	List<Match> selectAll();
+	
+	
+	//신청 가능한 매치 목록 가져오기
+	List<Match> selectcanList();
 	
 }

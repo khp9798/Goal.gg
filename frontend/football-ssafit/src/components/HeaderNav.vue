@@ -27,8 +27,8 @@
                         </li>
                     </ul>
                     <!-- 검색 폼 -->
-                    <form class="d-flex" role="search">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <form class="d-flex" role="search" @submit.prevent="search">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" v-model="condition.word">
                         <button class="btn btn-outline-light" type="submit">Search</button>
                     </form>
                 </div>
@@ -41,12 +41,27 @@
 <script setup>
 import { RouterLink } from 'vue-router/dist/vue-router';
 import { useUserStore } from '@/stores/user';
+import { useMatchStore } from '@/stores/match';
+import { ref } from 'vue';
 
 const userstore = useUserStore();
 
 function tryLogout() {
     userstore.tryLogout();
 }
+
+const condition = ref({
+    key : "",
+    word : "",
+    order : "",
+    orderDir : ""
+})
+const matchStore = useMatchStore()
+const search = function(){
+    matchStore.search(condition.value)
+}
+
+
 </script>
 
 <style scoped>
