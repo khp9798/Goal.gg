@@ -25,5 +25,35 @@
 		FROM userstat WHERE user_id=#{userId} AND match_id=#{matchId}
 	</select>
 	
-	
+<!-- 		List<KLeaguePlayers> selectMyLeage(Map<String, Integer> stat);
+			stat.put("shoot", shoot /= size);
+			stat.put("pass", pass /= size);
+			stat.put("speed", speed /= size);
+			stat.put("stamina", stamina /= size);
+			stat.put("dribble", dribble /= size);
+			List<KLeaguePlayers> players = userstatservice.selectMyLeague(stat); -->
+			
+<select id="selectMyLeage">
+    SELECT name, position, shoot, pass, speed, stamina, dribble
+    FROM kleagueplayers
+    WHERE SQRT(
+        POW(shoot - #{shoot}, 2) +
+        POW(pass - #{pass}, 2) +
+        POW(speed - #{speed}, 2) +
+        POW(stamina - #{stamina}, 2) +
+        POW(dribble - #{dribble}, 2)
+    ) = (
+        SELECT MIN(
+            SQRT(
+                POW(shoot - #{shoot}, 2) +
+                POW(pass - #{pass}, 2) +
+                POW(speed - #{speed}, 2) +
+                POW(stamina - #{stamina}, 2) +
+                POW(dribble - #{dribble}, 2)
+            )
+        )
+        FROM kleagueplayers
+    );
+</select>
+
 </mapper>

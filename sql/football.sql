@@ -22,6 +22,16 @@ CREATE TABLE users (
     district VARCHAR(50) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP -- 생성 시간
 );
+CREATE TABLE kleagueplayers(
+    id INT AUTO_INCREMENT PRIMARY KEY,           -- 시스템 내부 고유 식별자
+    name VARCHAR(100) NOT NULL,                  -- 사용자 이름 또는 닉네임
+    position ENUM('forward', 'midfield', 'defense', 'goalkeeper') DEFAULT 'midfield', -- 성향
+	shoot TINYINT NOT NULL CHECK (shoot BETWEEN 0 AND 100), -- 슛 스탯
+    pass TINYINT NOT NULL CHECK (pass BETWEEN 0 AND 100),   -- 패스 스탯
+    speed TINYINT NOT NULL CHECK (speed BETWEEN 0 AND 100), -- 스피드 스탯
+    stamina TINYINT NOT NULL CHECK (stamina BETWEEN 0 AND 100), -- 체력 스탯
+    dribble TINYINT NOT NULL CHECK (dribble BETWEEN 0 AND 100) -- 드리블 스탯
+);
 
 
 
@@ -37,13 +47,15 @@ CREATE TABLE stadium (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP -- 갱신 시간
 );
 
+-- 신청가능 (시작 시간 1시간 전까지), 마감 임박(인원이 12명 이상이 됐을 때), 마감(인원이 다 차거나 신청 시간이 끝나거나), 경기 취소(시작 시간 1시간전까지 최소인원 못채웠다.)
 CREATE TABLE matches (
     id INT AUTO_INCREMENT PRIMARY KEY,           -- 고유 ID
     name varchar(50) not null,
     stadium_id INT NOT NULL,                     -- 경기장이 매핑된 ID
+    capacity int not null,
     start_time DATETIME NOT NULL,                -- 경기 시작 시간
     end_time DATETIME NOT NULL,                  -- 경기 종료 시간
-    status ENUM('pending', 'approved', 'rejected', 'canceled') DEFAULT 'pending', -- 경기 상태
+    status ENUM('신청 가능', '마감 임박', '신청 마감','경기 취소') DEFAULT '신청 가능', -- 경기 상태
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- 생성 시간
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, -- 갱신 시간
     FOREIGN KEY (stadium_id) REFERENCES stadium(id) ON DELETE CASCADE -- 경기장 삭제 시 매치도 삭제
@@ -87,6 +99,37 @@ CREATE TABLE reviews (
     FOREIGN KEY (match_id) REFERENCES matches(id) ON DELETE CASCADE -- 매치 삭제 시 리뷰 삭제
 );
 
+DELIMITER //
+
+CREATE EVENT update_status_to_closed
+ON SCHEDULE EVERY 1 second
+DO
+BEGIN
+    -- 신청 마감 처리
+    UPDATE matches
+    SET status = '신청 마감'
+    WHERE start_time <= DATE_ADD(NOW(), INTERVAL 1 HOUR)
+      AND status IN ('신청 가능', '마감 임박');
+
+    -- 마감 임박 처리
+    UPDATE matches
+    SET status = '마감 임박'
+    WHERE EXISTS (
+        SELECT 1
+        FROM reservations
+        WHERE reservations.match_id = matches.id
+        GROUP BY match_id
+        HAVING COUNT(*) >= 12
+    )
+    AND status = '신청 가능';
+END //
+
+DELIMITER ;
+
+
+
+SET GLOBAL event_scheduler = ON;
+
 INSERT INTO users (userid, password, email, phone_number, name, role, position, tier, region, province, district) VALUES
 ('ssafy', 'ssafy', 'ssafy@example.com', '010-1111-2222', '양명균', 'admin', 'forward', 'bronze', '수도권', '서울', '강남구'),
 ('john_doe', 'hashedpassword1', 'john@example.com', '010-1111-2222', 'John Doe', 'user', 'forward', 'bronze', '경상권', '부산', '해운대구'),
@@ -98,7 +141,8 @@ INSERT INTO users (userid, password, email, phone_number, name, role, position, 
 ('sarah_midfield', 'hashedpassword7', 'sarah@example.com', '010-7777-8888', 'Sarah Midfield', 'user', 'midfield', 'silver', '수도권', '인천', '미추홀구'),
 ('david_goalkeeper', 'hashedpassword8', 'david@example.com', '010-8888-9999', 'David Goalkeeper', 'user', 'goalkeeper', 'gold', '경상권', '대구', '달서구'),
 ('oliver_striker', 'hashedpassword9', 'oliver@example.com', '010-9999-0000', 'Oliver Striker', 'user', 'forward', 'platinum', '전라권', '전북', '전주시 덕진구'),
-('amelia_playmaker', 'hashedpassword10', 'amelia@example.com', '010-1010-1111', 'Amelia Playmaker', 'user', 'midfield', 'diamond', '충청권', '대전', '유성구');
+('amelia_playmaker', 'hashedpassword10', 'amelia@example.com', '010-1010-1111', 'Amelia Playmaker', 'user', 'midfield', 'diamond', '충청권', '대전', '유성구'),
+('choi','1234','1sasdjklfjsadlkf@naver.com', '010-1010-1111', '최현만', 'user', 'midfield', 'diamond', '충청권', '대전', '유성구');
 
 INSERT INTO stadium (name, address, price, capacity, image) VALUES
 ('대전 삼정 풋살파크', '대전 유성구 한밭대로371번길 25-4 삼정풋살파크', 50000, 100, 'https://d31wz4d3hgve8q.cloudfront.net/media/dg_sj_coner_1.jpeg?w=1920'),
@@ -122,18 +166,33 @@ INSERT INTO stadium (name, address, price, capacity, image) VALUES
 
 
 
-INSERT INTO matches (name, stadium_id, start_time, end_time, status) VALUES
-('Championship Match', 1, '2024-11-19 14:00:00', '2024-11-19 16:00:00', 'approved'),
-('Friendly Game', 2, '2024-11-20 10:00:00', '2024-11-20 12:00:00', 'pending'),
-('League Match', 3, '2024-11-21 18:00:00', '2024-11-21 20:00:00', 'rejected'),
-('Semi-Finals', 4, '2024-11-21 13:00:00', '2024-11-21 15:00:00', 'canceled'),
-('Quarter-Finals', 5, '2024-11-21 09:00:00', '2024-11-21 11:00:00', 'approved'),
-('Training Session', 6, '2024-11-22 09:00:00', '2024-11-22 11:00:00', 'approved'),
-('Exhibition Game', 7, '2024-11-23 14:00:00', '2024-11-23 16:00:00', 'pending'),
-('Youth Match', 8, '2024-11-24 19:00:00', '2024-11-24 21:00:00', 'approved'),
-('Veterans Match', 9, '2024-11-25 11:00:00', '2024-11-25 13:00:00', 'canceled'),
-('Final Match', 10, '2024-11-26 15:00:00', '2024-11-26 17:00:00', 'approved'),
-('asdf', 1, '2024-11-26 15:00:00', '2024-11-26 17:00:00', 'approved');
+INSERT INTO matches (name, stadium_id, capacity, start_time, end_time, status)
+VALUES
+-- 신청 가능: 시작 시간이 아직 1시간 이상 남은 경우
+('축구 경기 1', 1, 18, '2024-11-22 18:00:00', '2024-11-22 20:00:00', '신청 가능'),
+('축구 경기 2', 2, 18, '2024-11-23 15:00:00', '2024-11-23 17:00:00', '신청 가능'),
+
+-- 마감 임박: 시작 시간이 1시간 이내인 경우
+('축구 경기 3', 3, 18, '2024-11-21 14:30:00', '2024-11-21 16:30:00', '마감 임박'),
+('축구 경기 4', 4, 18, '2024-11-21 15:15:00', '2024-11-21 17:15:00', '마감 임박'),
+
+-- 신청 마감: 신청 시간이 지나거나 인원이 모두 찬 경우
+('축구 경기 5', 5, 18, '2024-11-20 12:00:00', '2024-11-20 14:00:00', '신청 마감'),
+('축구 경기 6', 6, 18, '2024-11-20 10:00:00', '2024-11-20 12:00:00', '신청 마감'),
+
+-- 경기 취소: 최소 인원을 채우지 못해 취소된 경우
+('축구 경기 7', 7, 18, '2024-11-20 09:00:00', '2024-11-20 11:00:00', '경기 취소'),
+('축구 경기 8', 8, 18, '2024-11-19 14:00:00', '2024-11-19 16:00:00', '경기 취소'),
+
+-- 추가로 다양한 상태 조합
+('축구 경기 9', 9, 18, '2024-11-25 19:00:00', '2024-11-25 21:00:00', '신청 가능'),
+('축구 경기 10', 10, 18, '2024-11-18 13:00:00', '2024-11-18 15:00:00', '경기 취소'),
+('축구 경기 11', 10, 18, '2024-11-18 13:00:00', '2024-11-18 15:00:00', '신청 가능');
+
+
+
+
+select * from matches;
 
 
 INSERT INTO userstat (user_id, shoot, pass, speed, stamina, dribble, match_id) VALUES
@@ -146,7 +205,10 @@ INSERT INTO userstat (user_id, shoot, pass, speed, stamina, dribble, match_id) V
 ('chris_defense', 75, 80, 75, 85, 78, 7),  -- Sarah with match 7 (Daejeon Arena)
 ('sarah_midfield', 50, 45, 70, 75, 55, 8),  -- David with match 8 (Ulsan Grounds)
 ('david_goalkeeper', 88, 72, 90, 80, 85, 9),  -- Oliver with match 9 (Pohang Pitch)
-('oliver_striker', 65, 85, 78, 88, 70, 10); -- Amelia with match 10 (Suwon Sports Complex)
+('oliver_striker', 65, 85, 78, 88, 70, 10), -- Amelia with match 10 (Suwon Sports Complex)
+('choi', 100, 100, 100, 100, 100, 1); -- Amelia with match 10 (Suwon Sports Complex)
+
+
 
 
 
@@ -165,6 +227,10 @@ INSERT INTO reservations (user_id, match_id, reservation_date) VALUES
 ('ssafy', 10, '2024-11-18 18:00:00'); -- oliver_striker reserved for Suwon match
 
 
+
+
+
+
 INSERT INTO reviews (user_id, match_id, rating, comment) VALUES
 ('ssafy', 1, 5, 'Amazing experience! The game was thrilling.'), 
 ('john_doe', 2, 4, 'Great match but the facilities could be better.'),
@@ -181,6 +247,58 @@ INSERT INTO reviews (user_id, match_id, rating, comment) VALUES
 select * from users;
 
 
-        SELECT r.id, r.user_id, r.reservation_date, r.created_at, r.updated_at, m.id
-        FROM reservations r, matches m
-        WHERE r.user_id =  "ssafy" and  m.id = r.match_id;
+
+      
+      
+select * from reservations;
+select * from matches;
+
+
+INSERT INTO reservations (user_id, match_id, reservation_date) VALUES
+-- match_id = 1 (Seoul match, 총 12개)
+('ssafy', 2, '2024-11-18 09:10:00'),
+('ssafy', 2, '2024-11-18 09:15:00'),
+('ssafy',2, '2024-11-18 09:20:00'),
+('ssafy', 2, '2024-11-18 09:25:00'),
+('ssafy', 2, '2024-11-18 09:30:00'),
+('ssafy', 2, '2024-11-18 09:35:00'),
+('ssafy', 2, '2024-11-18 09:40:00'),
+('ssafy', 2, '2024-11-18 09:45:00'),
+('ssafy', 2, '2024-11-18 09:50:00'),
+('ssafy', 2, '2024-11-18 09:55:00'),
+('ssafy', 2, '2024-11-18 10:00:00'),
+('ssafy', 2, '2024-11-18 10:05:00');
+
+ INSERT INTO kleagueplayers (name, position, shoot, pass, speed, stamina, dribble) VALUES
+('이승우', 'forward', 80, 60, 85, 70, 88),
+('주민규', 'forward', 78, 68, 75, 73, 80),
+('황의조', 'forward', 82, 70, 83, 75, 85),
+('세징야', 'forward', 85, 75, 87, 72, 88),
+('무고사', 'forward', 78, 67, 79, 74, 77),
+('엄원상', 'forward', 79, 62, 88, 71, 85),
+('나상호', 'forward', 77, 63, 83, 70, 84),
+('기성용', 'midfield', 65, 85, 72, 80, 70),
+('팔로세비치', 'midfield', 70, 82, 74, 77, 75),
+('이진현', 'midfield', 68, 80, 70, 76, 72),
+('백승호', 'midfield', 67, 83, 71, 78, 73),
+('이청용', 'midfield', 70, 80, 73, 76, 74),
+('송민규', 'midfield', 72, 77, 75, 73, 76),
+('정승원', 'midfield', 69, 78, 74, 75, 71),
+('김민우', 'defense', 40, 75, 68, 83, 50),
+('박지수', 'defense', 42, 70, 66, 85, 48),
+('조유민', 'defense', 45, 72, 67, 84, 50),
+('홍정호', 'defense', 44, 68, 65, 87, 47),
+('정승현', 'defense', 43, 70, 64, 86, 49),
+('강상우', 'defense', 46, 73, 69, 82, 52),
+('김진수', 'defense', 47, 71, 68, 84, 53),
+('조현우', 'goalkeeper', 30, 65, 55, 90, 40),
+('송범근', 'goalkeeper', 32, 60, 53, 88, 42),
+('김동헌', 'goalkeeper', 28, 58, 52, 85, 38),
+('김기희', 'goalkeeper', 30, 62, 50, 87, 41),
+('이창민', 'goalkeeper', 29, 63, 51, 86, 39),
+('손흥민', 'forward', 90, 90, 90, 90, 90);
+
+
+
+
+

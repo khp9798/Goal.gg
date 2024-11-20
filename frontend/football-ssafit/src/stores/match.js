@@ -17,6 +17,9 @@ export const useMatchStore = defineStore('match', () => {
     .then((response)=>{
       matchList.value = response.data
     })
+    .catch((err)=>{
+      console.log(err.data)
+    })
   }
 
 

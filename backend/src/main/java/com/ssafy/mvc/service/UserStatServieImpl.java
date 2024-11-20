@@ -1,11 +1,13 @@
 package com.ssafy.mvc.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.mvc.dao.UserStatDao;
+import com.ssafy.mvc.dto.KLeaguePlayers;
 import com.ssafy.mvc.dto.UserStat;
 
 @Service
@@ -34,6 +36,11 @@ public class UserStatServieImpl implements UserStatService {
 	@Override
 	public UserStat selectUserMatchStat(String userId, int matchId) {
 		return userstatdao.selectUserMatchStat(userId, matchId);
+	}
+
+	@Override
+	public List<KLeaguePlayers> selectMyLeague(Map<String, Integer> stat) {
+		return userstatdao.selectMyLeage(stat);
 	}
 
 }
