@@ -84,6 +84,7 @@ public class UserStatController {
 			stat.put("speed",speed/=size);
 			stat.put("stamina",stamina/=size);
 			stat.put("dribble",dribble/=size);
+			System.out.println(stat);
 			return new ResponseEntity<>(stat,HttpStatus.OK);
 		}
 		return new ResponseEntity<>("스텟 전체 조회에 실패했습니다",HttpStatus.NOT_FOUND);
