@@ -17,7 +17,9 @@ import { useRoute } from 'vue-router';
 const stadiumstore = useStadiumStore()
 
 onMounted(() => {
-    stadiumstore.getStadiumList()
+    if(stadiumstore.stadiumlist.length == 0){
+        stadiumstore.getStadiumList()
+    }
 })
 </script>
 

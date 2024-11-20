@@ -7,11 +7,6 @@ const REST_STAT_API_URL = "http://localhost:8080/userstat"
 export const useStatStore = defineStore('stat', () => {
   
   const userstatavg = ref({
-    shoot: 0,
-    pass: 0,
-    speed: 0,
-    stamina: 0,
-    dribble: 0,
   });
 
   const myKLeaguer = ref({})

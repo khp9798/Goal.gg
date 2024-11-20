@@ -24,9 +24,7 @@
 				${key} LIKE CONCAT('%', #{word}, '%')
 			</if>
 		</where>
-		<if test="order != 'none'">
-			ORDER BY ${order} ${orderDir}
-		</if>
+		
 	</select>
 
 

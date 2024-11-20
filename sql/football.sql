@@ -300,5 +300,3 @@ INSERT INTO reservations (user_id, match_id, reservation_date) VALUES
 
 
 
-
-

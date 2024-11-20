@@ -9,7 +9,8 @@ const REST_USERSTAT_API = 'http://localhost:8080/userstat'
 export const useUserStore = defineStore('user', () => {
   const loginUser = ref({}) // 현재 로그인 되어있는 유저
 
-  const loginUserStat = ref({})
+  const loginUserStat = ref({
+  })
 
   const tryLogin = function(tryLoginUser){ // 유저 로그인
     axios({
