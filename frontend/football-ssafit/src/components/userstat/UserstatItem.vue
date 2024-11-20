@@ -35,6 +35,13 @@ onMounted(async () => {
                     borderColor: "blue",
                     pointBackgroundColor: "red",
                 },
+                {
+                    label: "목표 스탯",
+                    data: [90,90,90,90,90],
+                    backgroundColor: " rgb(212, 165, 165)",
+                    borderColor: "blue",
+                    pointBackgroundColor: "red",
+                },
             ],
         },
         options: {
@@ -63,5 +70,6 @@ onMounted(async () => {
 canvas {
     max-width: 100%;
     margin: auto;
+    color: rgb(212, 165, 165);
 }
 </style>
