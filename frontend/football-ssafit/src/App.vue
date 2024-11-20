@@ -3,7 +3,6 @@
     <!-- 헤더뷰,라우터뷰 -->
      
     <HeaderNav/>
-    <RegionTest/>
 
     <RouterView/>
   </div>

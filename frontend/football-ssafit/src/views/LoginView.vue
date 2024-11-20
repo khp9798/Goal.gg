@@ -26,6 +26,7 @@ const tryLoginUser = ref({ // 입력된 로그인 정보
 
 function tryLogin() { // 로그인 시도
     userstore.tryLogin(tryLoginUser.value)
+    tryLoginUser.value={};
 }
 
 </script>

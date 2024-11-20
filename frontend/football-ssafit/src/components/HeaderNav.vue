@@ -12,7 +12,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <ul class="navbar-nav me-auto mb-2">
                         <li class="nav-item me-3"> <!-- 간격 추가 -->
                             <RouterLink :to="{ name: 'stadiumlist' }" class="nav-link">경기장</RouterLink>
                         </li>
@@ -53,7 +53,7 @@ function tryLogout() {
 /* RouterLink 기본 스타일 제거 */
 .nav-link {
     text-decoration: none; /* 밑줄 제거 */
-    color: white; /* 텍스트 색상 */
+    color: white;
 }
 
 .nav-link:hover {

@@ -35,7 +35,7 @@ export const useUserStore = defineStore('user', () => {
     console.log("로그아웃 성공")
   }
 
-  const trySignup = function(trySignupUser){ // 유저 로그인
+  const trySignup = function(trySignupUser){ // 회원가입
     console.log(trySignupUser)
     axios({
       url : REST_USER_API+'/regist',
