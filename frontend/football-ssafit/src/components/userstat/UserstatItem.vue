@@ -8,15 +8,17 @@
 import { ref, onMounted } from "vue";
 import { Chart, registerables } from "chart.js";
 import { useStatStore } from "@/stores/stat";
+import { useUserStore } from "@/stores/user";
 
 Chart.register(...registerables);
 
 const store = useStatStore();
+const userStore = useUserStore();
 const data = ref([]);
 
 onMounted(async () => {
     // 데이터 로드
-    await store.getStat();
+    await store.getStat(userStore.loginUser.userid);
     data.value = Object.values(store.userstatavg);
 
     // 차트 생성

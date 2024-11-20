@@ -13,11 +13,11 @@ export const useStatStore = defineStore('stat', () => {
     dribble: 0,
   });
   
-  const getStat = async function() {
+  const getStat = async function(userId) {
     try {
       const res = await axios({
         url: REST_STAT_API_URL + "/avg",
-        params: { userId: "ssafy" },
+        params: { userId },
       });
       console.log(res.data);
       userstatavg.value = res.data;
