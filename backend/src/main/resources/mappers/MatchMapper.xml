@@ -5,63 +5,95 @@
 
 <mapper namespace="com.ssafy.mvc.dao.MatchDao">
 
-    <!-- 경기 등록 -->
-    <insert id="insertMatch">
-        INSERT INTO matches (stadium_id, start_time, end_time, status)
-        VALUES (#{stadiumId}, #{startTime}, #{endTime}, #{status})
-    </insert>
-    
-    <!-- 경기 수정 -->
-    <update id="updateMatch">
-        UPDATE matches
-        SET stadium_id = #{stadiumId}, 
-            start_time = #{startTime}, 
-            end_time = #{endTime}, 
-            status = #{status}
-        WHERE id = #{id}
-    </update>
-    
-    <!-- 경기 삭제 -->
-    <delete id="deleteMatch">
-        DELETE FROM matches
-        WHERE id = #{id}
-    </delete>
-    
-    <!-- 경기 목록 조회 -->
-    <select id="searchByCondition">
-        SELECT * FROM matches
-        <where>
-            <if test="word != 'none'">
-                name LIKE CONCAT('%', #{word}, '%')
-            </if>
-        </where>
-    </select>
-    
-    
-    <select id="selectOne">
-    	select m.id, m.name, s.id, m.start_time, m.end_time, m.status, s.name as stadiumName, s.image
-    	from matches m, stadium s
-    	where m.id = #{id} AND m.stadium_id = s.id; 
-    </select>
-    
-    <select id="selectAll">
-    	select m.id, m.name, s.id, m.start_time, m.end_time, m.status, s.name as stadiumName, s.image
-    	from matches m, stadium s
-    	where m.stadium_id = s.id;
-    </select>
-    
+	<!-- 경기 등록 -->
+	<insert id="insertMatch">
+		INSERT INTO matches (stadium_id, start_time, end_time, status)
+		VALUES (#{stadiumId}, #{startTime}, #{endTime}, #{status})
+	</insert>
 
-    <select id="selectcanList">
-    	select m.id, m.name, s.id, m.start_time, m.end_time, m.status, s.name as stadiumName, s.image
-    	from matches m, stadium s
-    	where m.stadium_id = s.id
-    	and m.status in ("마감 임박","신청 가능");
-    </select>
+	<!-- 경기 수정 -->
+	<update id="updateMatch">
+		UPDATE matches
+		SET stadium_id = #{stadiumId},
+		start_time = #{startTime},
+		end_time = #{endTime},
+		status = #{status}
+		WHERE id = #{id}
+	</update>
 
-    <select id="selectStadiumMatch">
-    	SELECT *
-    	FROM matches
-    	WHERE stadium_id = #{id}
-    </select>
+	<!-- 경기 삭제 -->
+	<delete id="deleteMatch">
+		DELETE FROM matches
+		WHERE id = #{id}
+	</delete>
+
+	<!-- 경기 목록 조회 -->
+	<select id="searchByCondition">
+		SELECT * FROM matches
+		<where>
+			<if test="word != 'none'">
+				name LIKE CONCAT('%', #{word}, '%')
+			</if>
+		</where>
+	</select>
+
+
+	<select id="selectOne">
+		select m.id, m.name, s.id, m.start_time, m.end_time, m.status, s.name as
+		stadiumName, s.image, s.address
+		from matches m, stadium s
+		where m.id = #{id} AND m.stadium_id = s.id;
+	</select>
+
+	<select id="selectAll">
+		select m.id, m.name, s.id, m.start_time, m.end_time, m.status, s.name as
+		stadiumName, s.image
+		from matches m, stadium s
+		where m.stadium_id = s.id;
+	</select>
+
+
+	<select id="selectcanList">
+		select m.id, m.name, s.id, m.start_time, m.end_time, m.status, s.name as
+		stadiumName, s.image
+		from matches m, stadium s
+		where m.stadium_id = s.id
+		and m.status in ("마감 임박","신청 가능");
+	</select>
+
+	<select id="selectStadiumMatch">
+		SELECT *
+		FROM matches
+		WHERE stadium_id = #{id}
+	</select>
+
+
+
+	<select id="matchAvgTier" resultType="string">
+		SELECT
+		CASE
+		WHEN avg_tier &gt;= 0 AND avg_tier &lt; 0.5 THEN 'unranked'
+		WHEN avg_tier &gt;= 0.5 AND avg_tier &lt; 1.5 THEN 'bronze'
+		WHEN avg_tier &gt;= 1.5 AND avg_tier &lt; 2.5 THEN 'silver'
+		WHEN avg_tier &gt;= 2.5 AND avg_tier &lt; 3.5 THEN 'gold'
+		WHEN avg_tier &gt;= 3.5 AND avg_tier &lt; 4.5 THEN 'platinum'
+		WHEN avg_tier &gt;= 4.5 THEN 'diamond'
+		END as tier
+		FROM (
+		SELECT AVG(
+		CASE users.tier
+		WHEN 'unranked' THEN 0
+		WHEN 'bronze' THEN 1
+		WHEN 'silver' THEN 2
+		WHEN 'gold' THEN 3
+		WHEN 'platinum' THEN 4
+		WHEN 'diamond' THEN 5
+		END
+		) AS avg_tier
+		FROM reservations
+		JOIN users ON reservations.user_id = users.userid
+		WHERE reservations.match_id = #{matchId}
+		) AS subquery
+	</select>
 
 </mapper>

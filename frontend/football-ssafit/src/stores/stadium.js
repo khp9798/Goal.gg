@@ -49,6 +49,10 @@ export const useStadiumStore = defineStore('stadium', () => {
       console.log(stadiumlist.value)
       router.push({name:'stadiumlist'})
     })
+    .catch((res)=>{
+      stadiumlist.value = []
+      router.push({name:'stadiumlist'})
+    })
   }
   
 

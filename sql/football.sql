@@ -300,3 +300,29 @@ INSERT INTO reservations (user_id, match_id, reservation_date) VALUES
 
 
 
+SELECT 
+    CASE
+        WHEN avg_tier >= 0 AND avg_tier < 0.5 THEN 'unranked'
+        WHEN avg_tier >= 0.5 AND avg_tier < 1.5 THEN 'bronze'
+        WHEN avg_tier >= 1.5 AND avg_tier < 2.5 THEN 'silver'
+        WHEN avg_tier >= 2.5 AND avg_tier < 3.5 THEN 'gold'
+        WHEN avg_tier >= 3.5 AND avg_tier < 4.5 THEN 'platinum'
+        WHEN avg_tier >= 4.5 THEN 'diamond'
+    END AS tier
+FROM (
+    SELECT AVG(
+        CASE users.tier
+            WHEN 'unranked' THEN 0
+            WHEN 'bronze' THEN 1
+            WHEN 'silver' THEN 2
+            WHEN 'gold' THEN 3
+            WHEN 'platinum' THEN 4
+            WHEN 'diamond' THEN 5
+        END
+    ) AS avg_tier
+    FROM reservations
+    JOIN users ON reservations.user_id = users.userid
+    WHERE reservations.match_id = 1
+) AS subquery;
+
+

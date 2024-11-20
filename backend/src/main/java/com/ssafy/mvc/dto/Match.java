@@ -14,5 +14,7 @@ public class Match {
     private LocalDateTime endTime;    // 경기 종료 시간
     private String status;         // 경기 상태 (pending, approved, rejected, canceled)
     private String image; // 경기장 이미
+    private String address; //경기장 주소  
+    private String tier; //이 매치의 평균 티어 
 	
 }

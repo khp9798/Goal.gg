@@ -35,4 +35,7 @@ public interface MatchDao {
 	//신청 가능한 매치 목록 가져오기
 	List<Match> selectcanList();
 	
+	
+	String matchAvgTier(int matchId);
+	
 }

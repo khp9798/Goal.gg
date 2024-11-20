@@ -5,6 +5,7 @@
     <HeaderNav/>
 
     <RouterView/>
+    <FooterView/>
   </div>
 </template>
 
@@ -12,6 +13,7 @@
 
 import { RouterView } from 'vue-router/dist/vue-router';
 import HeaderNav from './components/HeaderNav.vue';
+import FooterView from './components/FooterView.vue';
 
 </script>
 

@@ -1,9 +1,10 @@
 <template>
     <div>
+        
         <canvas id="radarChart"></canvas>
     </div>
     <div>
-        얘랑 닮았다는데요? {{ store.myKLeaguer }}
+        {{ store.myKLeaguer }}
     </div>
 </template>
 
@@ -46,14 +47,14 @@ onMounted(async () => {
                     label: "User Stats",
                     data: data.value,
                     backgroundColor: "rgba(0, 128, 255, 0.4)",
-                    borderColor: "blue",
+                    
                     pointBackgroundColor: "red",
                 },
                 {
-                    label: store.myKLeaguer.name,
+                    label: store.myKLeaguer.name+" Stats",
                     data: targetdata.value,
-                    backgroundColor: "red",
-                    borderColor: "blue",
+                    backgroundColor: "rgba(128,0,0, 0.4)",
+                    
                     pointBackgroundColor: "red",
                 }
             ],

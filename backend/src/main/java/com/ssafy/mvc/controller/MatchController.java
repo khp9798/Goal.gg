@@ -108,12 +108,25 @@ public class MatchController {
 	@GetMapping("/{id}")
 	public ResponseEntity<?> selectOne(@PathVariable int id) {
 		Match match = mService.selectOne(id);
+		System.out.println(match);
 
 		if (match != null) {
 			return new ResponseEntity<>(match, HttpStatus.OK);
 		}
 
 		return new ResponseEntity<>("그런 아이디를 가진 match는 없습니다.", HttpStatus.NOT_FOUND);
+	}
+	
+	
+	// 특정 매치의 평균 티어 반환
+	@GetMapping("/tier/{matchId}")
+	public ResponseEntity<?> getMatchAvgTier(@PathVariable int matchId){
+		String avgTier = mService.matchAvgTier(matchId);
+		System.out.println(avgTier);
+		if(avgTier!=null) {
+			return new ResponseEntity<>(avgTier,HttpStatus.OK);
+		}
+		return new ResponseEntity<>("이 매치의 예약이 없습니다.",HttpStatus.NO_CONTENT);
 	}
 	
 	// 특정 경기장 매치 조회

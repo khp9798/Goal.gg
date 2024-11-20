@@ -10,6 +10,8 @@ export const useMatchStore = defineStore('match', () => {
 
   const match = ref({})
 
+  const matchAvgTier = ref("")
+
   const stadiumMatchList = ref([]) // 해당 구장의 현재 매치
 
   const getMatchList = function(){
@@ -27,6 +29,7 @@ export const useMatchStore = defineStore('match', () => {
     axios.get(REST_MATCH_API_URL+"/"+id)
     .then((response)=>{
       match.value = response.data
+      console.log(match)
     })
     .catch((err)=>{
       console.log(err.response.data)
@@ -54,7 +57,15 @@ export const useMatchStore = defineStore('match', () => {
   }
 
 
+  const getMatchAvgTier = function(matchId){
+    axios({
+      url : REST_MATCH_API_URL+"/tier/"+matchId
+    })
+    .then((res)=>{
+      matchAvgTier.value = res.data
+    })
+  }
 
-  return { matchList,getMatchList , match, getMatch, stadiumMatchList, getStadiumMatch,search }
+  return { matchList,getMatchList , match, getMatch, stadiumMatchList, getStadiumMatch,search, matchAvgTier, getMatchAvgTier }
 
 })
