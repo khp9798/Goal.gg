@@ -28,6 +28,8 @@ public interface MatchDao {
 	
 	//모든 매치 목록 가져오기
 	List<Match> selectAll();
+
+	List<Match> selectStadiumMatch(int id);
 	
 	
 	//신청 가능한 매치 목록 가져오기

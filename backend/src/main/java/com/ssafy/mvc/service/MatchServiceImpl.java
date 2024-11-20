@@ -50,6 +50,12 @@ public class MatchServiceImpl implements MatchService{
 	public List<Match> selectcanList() {
 		return dao.selectcanList();
 	}
+
+	@Override
+	public List<Match> selectStadiumMatch(int id) {
+		return dao.selectStadiumMatch(id);
+
+	}
 	
 	
 

@@ -23,7 +23,11 @@ public interface MatchService {
 	Match selectOne(int id);
 	
 	List<Match> selectAll();
+
 	
 	//신청 가능한 매치 목록 가져오기
 	List<Match> selectcanList();
+
+
+	List<Match> selectStadiumMatch(int id);
 }

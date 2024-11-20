@@ -1,16 +1,24 @@
 <template>
-    <div>
+    <div class="container">
         경기장 리스트입니다
-        <StadiumListItem/>
+        <div class="justify-content-start">
+            <StadiumListItem v-for="stadium in stadiumstore.stadiumlist" :stadium="stadium" />
+        </div>
     </div>
+
 </template>
 
 <script setup>
 
+import { useStadiumStore } from '@/stores/stadium';
 import StadiumListItem from './StadiumListItem.vue';
+import { onMounted } from 'vue';
+import { useRoute } from 'vue-router';
+const stadiumstore = useStadiumStore()
 
+onMounted(() => {
+    stadiumstore.getStadiumList()
+})
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

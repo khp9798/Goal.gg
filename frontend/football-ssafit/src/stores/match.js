@@ -7,8 +7,10 @@ const REST_MATCH_API_URL = "http://localhost:8080/matches"
 export const useMatchStore = defineStore('match', () => {
   const matchList = ref([])
 
-  
+
   const match = ref({})
+
+  const stadiumMatchList = ref([]) // 해당 구장의 현재 매치
 
   const getMatchList = function(){
     axios.get(REST_MATCH_API_URL)
@@ -28,6 +30,16 @@ export const useMatchStore = defineStore('match', () => {
     })
   }
 
+  const getStadiumMatch = function(stadiumid){
+    console.log(stadiumid)
+    console.log("여기에요 여기")
+    axios({
+      url : REST_MATCH_API_URL+'/match/'+stadiumid,
+      method : 'GET'
+    }).then((response)=>{
+      stadiumMatchList.value = response.data
+    })
+  }
 
   const search = function(condition){
     axios({
@@ -37,5 +49,9 @@ export const useMatchStore = defineStore('match', () => {
       console.log(res)
     })
   }
-  return { matchList,getMatchList , match, getMatch,search }
+
+
+
+  return { matchList,getMatchList , match, getMatch, stadiumMatchList, getStadiumMatch,search }
+
 })
