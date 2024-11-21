@@ -2,6 +2,7 @@ import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import axios from 'axios' // axios 임포트
 import router from '@/router'
+import { useStatStore } from './stat'
 const REST_USER_API = 'http://localhost:8080/users' //user API 주소
 const REST_USERSTAT_API = 'http://localhost:8080/userstat' 
 
@@ -29,8 +30,11 @@ export const useUserStore = defineStore('user', () => {
     })
   }
 
+  const statStore = useStatStore()
   const tryLogout = function(){
     loginUser.value ={}
+    statStore.userstatavg = {}
+    statStore.myKLeaguer = {}
     console.log("로그아웃 성공")
     router.replace({name:'home'})
   }

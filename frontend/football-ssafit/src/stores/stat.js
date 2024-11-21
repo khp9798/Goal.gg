@@ -35,6 +35,8 @@ export const useStatStore = defineStore('stat', () => {
         params : {userId : userid}
       }).then((response)=>{
         myKLeaguer.value = response.data
+        console.log("mykleague")
+        console.log(myKLeaguer.value)
       }).catch((err)=>{
         console.log(err)
       })
@@ -62,5 +64,19 @@ export const useStatStore = defineStore('stat', () => {
     
   }
 
-  return {userstatavg, getStat,getMyLeague, myKLeaguer, userstatList,getStatList }
+
+  const getimg = async function () {
+    try {
+      const res = await axios.get('/proxy/image', {
+        params: { url: myKLeaguer.value.playerimg },
+      });
+      console.log(res.data);
+      myKLeaguer.value.playerimg = res.data
+    } catch (error) {
+      console.error("이미지 요청 실패:", error);
+    }
+  };
+  
+
+  return {userstatavg, getStat,getMyLeague, myKLeaguer, userstatList,getStatList,getimg }
 })

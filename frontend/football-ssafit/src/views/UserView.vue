@@ -2,7 +2,8 @@
     <div class="container">
         <h2 class="pb-2 border-bottom">마이페이지</h2>
         <!-- 유저 뷰 안에 유저 컴포넌트랑 유저 스탯 컴포넌트 둘다 추가 -->
-        <template v-if="userstore.loginUser.userid" class="text-center">
+        <template v-if="userstore.loginUser.userid" class="text-center" >
+            <h4>나와 비슷한 선수</h4>
             <UserstatItem />
             <UserstatChart />
             <UserDetail />

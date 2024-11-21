@@ -17,6 +17,6 @@ public class UserStat {
     private LocalDateTime createdAt; // 생성 시간
     private LocalDateTime updatedAt; // 생성 시간
     private LocalDateTime startTime;
-    
+    private int playercode;
 
 }

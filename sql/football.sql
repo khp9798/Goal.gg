@@ -31,7 +31,7 @@ CREATE TABLE users (
     nationimg TEXT NULL,
     playercode int not null,
     seasonimg VARCHAR(255) NOT null DEFAULT 'https://static.inven.co.kr/image_2011/site_image/fifaonline4/seasonicon2/season_icon_x2024.png?v=2401030a',
-    backgrounimg VARCHAR(255) NOT NULL DEFAULT 'https://static.inven.co.kr/image_2011/site_image/fifaonline4/seasonbgimage2/seasonbg_image_x2024.png?v=2401030a',
+    backgroundimg VARCHAR(255) NOT NULL DEFAULT 'https://static.inven.co.kr/image_2011/site_image/fifaonline4/seasonbgimage2/seasonbg_image_x2024.png?v=2401030a',
     position ENUM('ST', 'CF', 'RW', 'LW','CM','CAM','CDM','LM','RM','CB','RB','LB','RWB','LWB','GK') DEFAULT 'GK', -- 성향
     shoot TINYINT NOT NULL CHECK (shoot BETWEEN 0 AND 100), -- 슛 스탯
     pass TINYINT NOT NULL CHECK (pass BETWEEN 0 AND 100),   -- 패스 스탯

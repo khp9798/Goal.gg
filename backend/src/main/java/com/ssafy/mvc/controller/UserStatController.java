@@ -1,13 +1,16 @@
 package com.ssafy.mvc.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import com.ssafy.mvc.dto.KLeaguePlayers;
 import com.ssafy.mvc.dto.UserStat;
@@ -132,10 +136,12 @@ public class UserStatController {
 			System.out.println(players);
 			Random random = new Random();
 			KLeaguePlayers player = players.get(random.nextInt(players.size()));
-			return new ResponseEntity<>(player,HttpStatus.OK);
-			
+			return new ResponseEntity<>(player, HttpStatus.OK);
+
 		}
-		return new ResponseEntity<>("실패했어요 ㅠㅠ",HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>("실패했어요 ㅠㅠ", HttpStatus.NOT_FOUND);
 	}
+
+	
 
 }

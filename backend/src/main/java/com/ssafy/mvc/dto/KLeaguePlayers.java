@@ -13,4 +13,11 @@ public class KLeaguePlayers {
     private int speed; // 속도 스텟
     private int stamina; // 체력 스텟
     private int dribble; // 드리블 스텟
+    private String team;
+    private String playerimg;
+    private String nation;
+    private String nationimg;
+    private String seasonimg;
+    private String backgoundimg;
+    private int playercode;
 }

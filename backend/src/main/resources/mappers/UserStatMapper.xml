@@ -93,13 +93,21 @@
 		SELECT MIN(shape_distance) AS min_distance FROM distance_calculations
 		)
 		SELECT
+		id,
 		name,
 		position,
 		shoot,
 		pass,
 		speed,
 		stamina,
-		dribble
+		dribble,
+		team,
+		playerimg,
+		nation,
+		nationimg,
+		seasonimg,
+		backgroundimg,
+		playercode
 		FROM distance_calculations
 		WHERE shape_distance = (SELECT min_distance FROM min_shape_distance)
 		ORDER BY attribute_distance ASC;

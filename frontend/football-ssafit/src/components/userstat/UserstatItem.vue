@@ -1,12 +1,13 @@
 <template>
     <div>
-        <h4>나와 비슷한 선수</h4>
+
         <div class="row row-cols-md-2 g-4 text-center">
             <div>
                 <canvas ref="radarChart"></canvas>
             </div>
             <div>
-                <img src="/src/assets/Son.png" alt="">
+                <img :src="`/src/assets/PlayerImg/${store.myKLeaguer.playercode}.png`" alt="Player Image"/>
+                <p>{{ store.myKLeaguer.name }}</p>
             </div>
         </div>
     </div>
@@ -33,8 +34,15 @@ const keys = ["pass", "stamina", "dribble", "shoot", "speed"];
 
 onMounted(async () => {
     // 데이터 로드
-    await store.getMyLeague(userStore.loginUser.userid);
-    await store.getStat(userStore.loginUser.userid);
+    if (store.myKLeaguer.value == undefined || store.userstatavg.value == undefined) {
+        console.log("hi")
+        await store.getMyLeague(userStore.loginUser.userid);
+        await store.getStat(userStore.loginUser.userid);
+    }
+
+
+    store.getimg()
+    console.log(store.myKLeaguer.value)
 
     data.value = Object.values(store.userstatavg);
     targetdata.value = Object.keys(store.myKLeaguer)
