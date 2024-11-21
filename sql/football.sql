@@ -199,11 +199,9 @@ VALUES
 
 
 
-select * from matches;
 
 
 INSERT INTO userstat (user_id, shoot, pass, speed, stamina, dribble, match_id) VALUES
-('ssafy', 85, 60, 78, 80, 70, 1),  -- John with match 1 (Seoul Futbol Stadium)
 ('john_doe', 60, 85, 75, 90, 68, 2),  -- Jane with match 2 (Busan Arena)
 ('jane_smith', 50, 55, 65, 70, 60, 3),  -- Michael with match 3 (Daegu Grounds)
 ('michael_admin', 45, 60, 50, 85, 40, 4),  -- Lucas with match 4 (Incheon Park)
@@ -217,6 +215,22 @@ INSERT INTO userstat (user_id, shoot, pass, speed, stamina, dribble, match_id) V
 
 
 
+INSERT INTO userstat (user_id, shoot, pass, speed, stamina, dribble, match_id) VALUES
+('ssafy', 70, 80, 75, 85, 60, 1), -- Match 1
+('ssafy', 88, 65, 70, 90, 75, 2), -- Match 2
+('ssafy', 85, 70, 80, 78, 68, 3), -- Match 3
+('ssafy', 75, 60, 85, 80, 72, 4), -- Match 4
+('ssafy', 90, 75, 88, 85, 78, 5), -- Match 5
+('ssafy', 65, 72, 75, 70, 60, 6), -- Match 6
+('ssafy', 80, 85, 78, 90, 65, 7), -- Match 7
+('ssafy', 72, 68, 70, 80, 75, 8), -- Match 8
+('ssafy', 85, 80, 88, 85, 90, 9), -- Match 9
+('ssafy', 78, 75, 80, 78, 70, 10), -- Match 10
+('ssafy', 80, 88, 75, 85, 65, 11), -- Match 11
+('ssafy', 68, 70, 78, 80, 72, 12), -- Match 12
+('ssafy', 90, 85, 80, 78, 75, 13), -- Match 13
+('ssafy', 72, 75, 78, 85, 70, 14), -- Match 14
+('ssafy', 85, 78, 85, 90, 88, 15); -- Match 15
 
 
 
@@ -251,14 +265,7 @@ INSERT INTO reviews (user_id, match_id, rating, comment) VALUES
 ('oliver_striker', 10, 1, 'Worst experience. Poor communication.');
 
 
-select * from users;
 
-
-
-      
-      
-select * from reservations;
-select * from matches;
 
 
 INSERT INTO reservations (user_id, match_id, reservation_date) VALUES
@@ -306,33 +313,6 @@ INSERT INTO reservations (user_id, match_id, reservation_date) VALUES
 ('손흥민', 'forward', 90, 90, 90, 90, 90);
 
 
+SELECT u.user_id, u.shoot, u.pass, u.speed, u.stamina, u.dribble, m.start_time, u.match_id
+		FROM userstat u, matches m WHERE u.user_id='ssafy' and u.match_id = m.id
 
-SELECT 
-    CASE
-        WHEN avg_tier >= 0 AND avg_tier < 0.5 THEN 'unranked'
-        WHEN avg_tier >= 0.5 AND avg_tier < 1.5 THEN 'bronze'
-        WHEN avg_tier >= 1.5 AND avg_tier < 2.5 THEN 'silver'
-        WHEN avg_tier >= 2.5 AND avg_tier < 3.5 THEN 'gold'
-        WHEN avg_tier >= 3.5 AND avg_tier < 4.5 THEN 'platinum'
-        WHEN avg_tier >= 4.5 THEN 'diamond'
-    END AS tier
-FROM (
-    SELECT AVG(
-        CASE users.tier
-            WHEN 'unranked' THEN 0
-            WHEN 'bronze' THEN 1
-            WHEN 'silver' THEN 2
-            WHEN 'gold' THEN 3
-            WHEN 'platinum' THEN 4
-            WHEN 'diamond' THEN 5
-        END
-    ) AS avg_tier
-    FROM reservations
-    JOIN users ON reservations.user_id = users.userid
-    WHERE reservations.match_id = 1
-) AS subquery;
-
-    SELECT *
-    FROM matches
-    WHERE stadium_id = 1
-      AND DATE(start_time) = DATE('2024-11-21 11:48:21');

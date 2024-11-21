@@ -4,11 +4,11 @@
         <!-- 상단 이미지 섹션 -->
         <div class="row my-4">
             <div class="col-12">
-                <img :src="store.match.image" alt="축구장 이미지" class="img-fluid rounded">
+                <img :src="matchstore.match.image" alt="축구장 이미지" class="img-fluid rounded">
             </div>
         </div>
         <div class="m-2 d-flex justify-content-end">
-            <button v-if="isLogin" class="btn btn-primary mx-1" @click="goReservation">{{ store.match.status }}</button>
+            <button v-if="isLogin" class="btn btn-primary mx-1" @click="showModal = true">{{ matchstore.match.status }}</button>
             <button v-if="!isLogin" class="btn btn-secondary mx-1" @click="goLoginView">로그인하기</button>
         </div>
         <div class="row mt-4 h-100">
@@ -47,12 +47,12 @@
             <div class="col-md-6 d-flex align-items-stretch text-center">
                 <div class="card flex-grow-1">
                     <div class="card-body">
-                        <h4 class="card-title">{{ store.match.stadiumName }}</h4>
-                        <p>{{ store.match.address }}</p>
+                        <h4 class="card-title">{{ matchstore.match.stadiumName }}</h4>
+                        <p>{{ matchstore.match.address }}</p>
                         <div class="tier">
-                            <p>예상 평균 레벨은 <strong>{{ store.matchAvgTier ? store.matchAvgTier : "unRanked" }}</strong>입니다.
+                            <p>예상 평균 레벨은 <strong>{{ matchstore.matchAvgTier ? matchstore.matchAvgTier : "unRanked" }}</strong>입니다.
                             </p>
-                            <img :src="`/src/assets/${store.matchAvgTier}.webp`" alt="언랭" width="200px">
+                            <img :src="`/src/assets/${matchstore.matchAvgTier}.webp`" alt="언랭" width="200px">
                         </div>
 
 
@@ -102,6 +102,62 @@
         </div>
 
     </div>
+    
+    <!-- ddddddddddddddddddddddddddddddddddd -->
+    
+    <!-- 모달 -->
+    <div
+      v-if="showModal"
+      class="modal fade show"
+      style="display: block; background-color: rgba(0, 0, 0, 0.5);"
+      tabindex="-1"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <!-- 모달 헤더 -->
+          <div class="modal-header">
+            <h5 class="modal-title">결제 정보</h5>
+            <button type="button" class="btn-close" aria-label="Close" @click="closeModal"></button>
+          </div>
+
+          <!-- 모달 바디 -->
+          <div class="modal-body">
+            <!-- Header Section -->
+            <div class="bg-primary text-white p-4 rounded">
+              <h4>{{ matchstore.match.name }}</h4>
+              <h5>날짜 : {{ showdate }}</h5>
+              <p>시간 : {{ time }}</p>
+              <p>경기장 : {{ matchstore.match.stadiumName }}</p>
+              <p>주소 : {{ matchstore.match.address }}</p>
+            </div>
+
+            <!-- Payment Section -->
+            <div class="mt-4">
+              <h6>결제</h6>
+              <div class="d-flex justify-content-between mt-2">
+                <span>이용 금액</span>
+                <span>{{ formattedPrice }}원</span>
+              </div>
+              <div class="d-flex justify-content-between mt-2">
+                <span>프로모션 할인</span>
+                <span class="text-danger">-{{ formattedPromotion }}원</span>
+              </div>
+              <hr />
+              <div class="d-flex justify-content-between mt-2">
+                <strong>결제 금액</strong>
+                <strong>{{ formattedRealPrice }}원</strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- 모달 푸터 -->
+          <div class="modal-footer">
+            <button class="btn btn-secondary" @click="closeModal">닫기</button>
+            <button class="btn btn-warning">결제하기</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
 </template>
 
@@ -115,18 +171,21 @@ import { useRoute } from 'vue-router';
 
 const route = useRoute()
 
-const store = useMatchStore()
-
 const userstore = useUserStore()
+
+
+const matchstore = useMatchStore();
+
+const showModal = ref(false);
 
 const isLogin = computed(() => {
     return userstore.loginUser.userid ? true : false;
 });
 
 const goReservation = function(){
-    if(store.match.status=='신청 마감'){
+    if(matchstore.match.status=='신청 마감'){
         alert("경기가 마감되었습니다")
-    } else if(store.match.status=='경기 취소'){
+    } else if(matchstore.match.status=='경기 취소'){
         alert("취소된 경기입니다")
     } else{
         router.push({name : 'reservationform'})
@@ -138,13 +197,40 @@ const goLoginView = function(){
     router.push({name : 'loginview'})
 }
 
+
+
+const closeModal = () => {
+  showModal.value = false;
+};
+
+// 날짜 및 시간 포맷팅
+const date = new Date(matchstore.match.startTime);
+const showdate = `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`;
+const time = matchstore.match.startTime
+
+// 결제 정보
+const price = ref(10000);
+const promotion = ref(9999);
+
+// 숫자 포맷팅 함수
+const formatNumber = (number) => {
+  return new Intl.NumberFormat('ko-KR').format(number);
+};
+
+// 포맷팅된 값
+const formattedPrice = computed(() => formatNumber(price.value));
+const formattedPromotion = computed(() => formatNumber(promotion.value));
+const formattedRealPrice = computed(() => formatNumber(price.value - promotion.value));
 onMounted(() => {
-    store.getMatch(route.params.id)
-    store.getMatchAvgTier(route.params.id)
+    matchstore.getMatch(route.params.id)
+    matchstore.getMatchAvgTier(route.params.id)
     userstore.loginUser.userid ? true : false;
 })
 
-
 </script>
 
-<style lang="scss" scoped></style>
+
+
+<style  scoped>
+
+</style>

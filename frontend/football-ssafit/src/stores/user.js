@@ -32,6 +32,7 @@ export const useUserStore = defineStore('user', () => {
   const tryLogout = function(){
     loginUser.value ={}
     console.log("로그아웃 성공")
+    router.replace({name:'home'})
   }
 
   const trySignup = function(trySignupUser){ // 회원가입
