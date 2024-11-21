@@ -2,12 +2,15 @@
 
     <div class="container mt-4">
         <!-- 상단 이미지 섹션 -->
-        <div class="row">
+        <div class="row my-4">
             <div class="col-12">
                 <img :src="store.match.image" alt="축구장 이미지" class="img-fluid rounded">
             </div>
         </div>
-
+        <div class="m-2 d-flex justify-content-end">
+            <button v-if="isLogin" class="btn btn-primary mx-1" @click="goReservation">{{ store.match.status }}</button>
+            <button v-if="!isLogin" class="btn btn-secondary mx-1" @click="goLoginView">로그인하기</button>
+        </div>
         <div class="row mt-4 h-100">
             <!-- 왼쪽 구장 정보 -->
             <div class="col-md-6 d-flex align-items-stretch">
@@ -47,11 +50,12 @@
                         <h4 class="card-title">{{ store.match.stadiumName }}</h4>
                         <p>{{ store.match.address }}</p>
                         <div class="tier">
-                            <p>예상 평균 레벨은 <strong>{{ store.matchAvgTier ? store.matchAvgTier : "unRanked" }}</strong>입니다.</p>
+                            <p>예상 평균 레벨은 <strong>{{ store.matchAvgTier ? store.matchAvgTier : "unRanked" }}</strong>입니다.
+                            </p>
                             <img :src="`/src/assets/${store.matchAvgTier}.webp`" alt="언랭" width="200px">
                         </div>
-                        
-                        
+
+
                     </div>
                 </div>
             </div>
@@ -102,17 +106,42 @@
 </template>
 
 <script setup>
+import router from '@/router';
 import { useMatchStore } from '@/stores/match';
-import { onMounted } from 'vue';
+import { useUserStore } from '@/stores/user';
+import { computed, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
+
 
 const route = useRoute()
 
 const store = useMatchStore()
 
+const userstore = useUserStore()
+
+const isLogin = computed(() => {
+    return userstore.loginUser.userid ? true : false;
+});
+
+const goReservation = function(){
+    if(store.match.status=='신청 마감'){
+        alert("경기가 마감되었습니다")
+    } else if(store.match.status=='경기 취소'){
+        alert("취소된 경기입니다")
+    } else{
+        router.push({name : 'reservationform'})
+    }
+}
+
+const goLoginView = function(){
+    // console.log(store.match.status)
+    router.push({name : 'loginview'})
+}
+
 onMounted(() => {
     store.getMatch(route.params.id)
     store.getMatchAvgTier(route.params.id)
+    userstore.loginUser.userid ? true : false;
 })
 
 

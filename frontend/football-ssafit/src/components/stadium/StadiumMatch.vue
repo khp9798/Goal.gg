@@ -24,12 +24,7 @@ const props = defineProps({
     match: Object
 })
 const goReservation = function(){
-    if(!userstore.loginUser.userid){
-        alert("로그인이 필요한 기능입니다")
-        router.push({name :'loginview'})
-    }
     router.push({name: 'matchDetail', params : {id : props.match.id}})
-
 }
 
 

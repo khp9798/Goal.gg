@@ -10,6 +10,7 @@ import SignupView from '@/views/SignupView.vue'
 import StadiumView from '@/views/StadiumVIew.vue'
 import StadiumList from '@/components/stadium/StadiumLIst.vue'
 import StadiumMatch from '@/components/stadium/StadiumMatch.vue'
+import ReservationForm from '@/components/reservation/ReservationForm.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -72,6 +73,11 @@ const router = createRouter({
       path : '/signup',
       name : 'signup',
       component : SignupView
+    },
+    {
+      path : '/reservationform',
+      name : 'reservationform',
+      component : ReservationForm
     }
   ],
 })
