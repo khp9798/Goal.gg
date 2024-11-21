@@ -84,7 +84,7 @@ function tryLogout() {
 }
 
 const getReservationList = function(){
-    if(userstore.loginUser){
+    if(userstore.loginUser.userid){
         console.log(userstore.loginUser.userid)
         reservationstore.getList(userstore.loginUser.userid)
     } else{

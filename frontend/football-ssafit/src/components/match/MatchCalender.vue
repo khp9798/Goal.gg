@@ -4,7 +4,7 @@
     <div>
         <vue-cal style="height: 600px;" :time-from="8 * 60" :time-to="24 * 60"  active-view="month"
             :disable-views="['years', 'year', 'week']" locale="ko" :events="events"
-            events-on-month-view="short"
+            events-count-on-month-view
             @event-click="onEventClick">
             
             <template #arrow-prev>

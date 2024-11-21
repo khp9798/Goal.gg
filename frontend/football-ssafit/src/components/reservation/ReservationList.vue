@@ -19,13 +19,7 @@ import router from '@/router';
 
 const store = useReservationStore()
 const userstore = useUserStore()
-onMounted(() => {
-    if(userstore.loginUser.userid){
-        store.getList(userstore.loginUser.userid)
-    } else{
-        router.push({name :'loginview'})
-    }
-})
+
 
 </script>
 
