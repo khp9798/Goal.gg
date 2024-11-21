@@ -32,4 +32,6 @@ public interface MatchService {
 	List<Match> selectStadiumMatch(int id);
 	
 	String matchAvgTier(int matchId);
+
+	List<Match> selectStadiumDayMatch(int id, String date);
 }

@@ -37,5 +37,8 @@ public interface MatchDao {
 	
 	
 	String matchAvgTier(int matchId);
+
+
+	List<Match> selectStadiumDayMatch(int id, String date);
 	
 }

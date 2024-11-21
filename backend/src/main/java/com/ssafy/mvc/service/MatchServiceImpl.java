@@ -61,6 +61,11 @@ public class MatchServiceImpl implements MatchService{
 	public String matchAvgTier(int matchId) {
 		return dao.matchAvgTier(matchId);
 	}
+
+	@Override
+	public List<Match> selectStadiumDayMatch(int id, String date) {
+		return dao.selectStadiumDayMatch(id, date);
+	}
 	
 	
 

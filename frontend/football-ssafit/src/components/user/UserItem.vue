@@ -1,6 +1,6 @@
 <template>
-    <div class="container mt-5">
-        <h4>로그인이 필요한 기능입니다.</h4>
+    <div class="container mt-5" >
+        <h4 v-if="!userstore.loginUser.userid">로그인이 필요한 기능입니다.</h4>
         <button @click="showme">확인용</button>
         <h5 class="mb-4">유저 능력치</h5>
 

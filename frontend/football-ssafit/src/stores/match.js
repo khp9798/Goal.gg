@@ -14,6 +14,8 @@ export const useMatchStore = defineStore('match', () => {
 
   const stadiumMatchList = ref([]) // 해당 구장의 현재 매치
 
+  const StadiumDayMatchList = ref([])
+
   const getMatchList = function(){
     axios.get(REST_MATCH_API_URL)
     .then((response)=>{
@@ -37,8 +39,8 @@ export const useMatchStore = defineStore('match', () => {
   }
 
   const getStadiumMatch = function(stadiumid){
-    console.log(stadiumid)
-    console.log("여기에요 여기")
+    // console.log(stadiumid)
+    // console.log("여기에요 여기")
     axios({
       url : REST_MATCH_API_URL+'/match/'+stadiumid,
       method : 'GET'
@@ -65,7 +67,17 @@ export const useMatchStore = defineStore('match', () => {
       matchAvgTier.value = res.data
     })
   }
+   
+  const getStadiumDayMatch = function(date, stadiumid){
+    axios({
+      url : REST_MATCH_API_URL+"/match/"+stadiumid+'/'+date
+    }).then((response)=>{
+      console.log("여기여기")
+      console.log(response)
+      StadiumDayMatchList.value = response.data
+    })
+  }
 
-  return { matchList,getMatchList , match, getMatch, stadiumMatchList, getStadiumMatch,search, matchAvgTier, getMatchAvgTier }
+  return { StadiumDayMatchList,getStadiumDayMatch,matchList,getMatchList , match, getMatch, stadiumMatchList, getStadiumMatch,search, matchAvgTier, getMatchAvgTier }
 
 })

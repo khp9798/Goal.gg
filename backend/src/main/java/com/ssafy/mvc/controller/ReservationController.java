@@ -59,6 +59,7 @@ public class ReservationController {
 	@GetMapping
 	public ResponseEntity<?> selectAll(@RequestParam String userid){
 		List<Reservation> list = service.selectListByUser(userid);
+		System.out.println(userid);
 		
 		if(!list.isEmpty() && list!=null) {
 			return new ResponseEntity<>(list,HttpStatus.OK);
