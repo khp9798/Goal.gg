@@ -13,11 +13,18 @@
 import { onMounted } from 'vue';
 import ReservationListItem from './ReservationListItem.vue';
 import { useReservationStore } from '@/stores/reservation';
+import { useUserStore } from '@/stores/user';
+import router from '@/router';
 
 
 const store = useReservationStore()
+const userstore = useUserStore()
 onMounted(() => {
-    store.getList()
+    if(userstore.loginUser.userid){
+        store.getList(userstore.loginUser.userid)
+    } else{
+        router.push({name :'loginview'})
+    }
 })
 
 </script>
