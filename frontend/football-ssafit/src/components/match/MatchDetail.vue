@@ -8,7 +8,7 @@
             </div>
         </div>
         <div class="m-2 d-flex justify-content-end">
-            <button v-if="isLogin" class="btn btn-primary mx-1" @click="goReservation">{{ matchstore.match.status }}</button>
+            <button v-if="isLogin" class="btn btn-primary mx-1" :class="statusClass" @click="goReservation">{{ matchstore.match.status }}</button>
             <button v-if="!isLogin" class="btn btn-secondary mx-1" @click="goLoginView">로그인하기</button>
         </div>
         <div class="row mt-4 h-100">
@@ -168,7 +168,6 @@ import { useUserStore } from '@/stores/user';
 import { computed, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
-
 const route = useRoute()
 
 const userstore = useUserStore()
@@ -177,6 +176,17 @@ const userstore = useUserStore()
 const matchstore = useMatchStore();
 
 const showModal = ref(false);
+
+const statusClass = computed(()=>{
+    const status = matchstore.match.status
+    if (status === "신청 가능") {
+    return "btn-primary"; // 파란색 버튼
+  } else if (status === "마감 임박") {
+    return "btn-danger"; // 빨간색 버튼
+  } else {
+    return "btn-secondary"; // 회색 버튼
+  }
+});
 
 const isLogin = computed(() => {
     return userstore.loginUser.userid ? true : false;
