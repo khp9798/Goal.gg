@@ -106,8 +106,8 @@ const getStadiumList = function(){
 const stadiumstore = useStadiumStore()
 const search = function () {
     stadiumstore.searchList(condition.value)
-    condition.value = {}
-    condition.value.key = "name"
+    // condition.value = {}
+    // condition.value.key = "name"
 
 }
 

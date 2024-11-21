@@ -30,8 +30,7 @@ export const useUserStore = defineStore('user', () => {
   }
 
   const tryLogout = function(){
-    loginUser.value.userid = '',
-    loginUser.value.name = ''
+    loginUser.value ={}
     console.log("로그아웃 성공")
   }
 

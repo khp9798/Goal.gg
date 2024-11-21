@@ -22,7 +22,7 @@ const userstore = useUserStore()
 
 onBeforeMount(()=>{
     console.log("유저뷰에서 마운트되기 전입니다.")
-    if(!userstore.loginUser.userid||userstore.loginUser.username){
+    if(!userstore.loginUser){
         window.alert("로그인이 필요합니다")
         router.push({name : 'loginview'})
     }
