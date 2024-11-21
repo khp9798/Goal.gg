@@ -1,7 +1,5 @@
 <template>
     <div class="container mt-5">
-        <h4>로그인이 필요한 기능입니다.</h4>
-        <button @click="showme">확인용</button>
         <h5 class="mb-4">유저 능력치</h5>
 
         <div class="card p-4 shadow" v-if="userstore.loginUser.userid">
@@ -61,9 +59,7 @@ import { useUserStore } from "@/stores/user";
 import { onMounted } from "vue";
 
 const userstore = useUserStore();
-function showme(){
-    console.log(userstore.loginUser)
-}
+
 onMounted(()=>{
     console.log('마운트됏음')
     console.log(userstore.loginUser.userid)

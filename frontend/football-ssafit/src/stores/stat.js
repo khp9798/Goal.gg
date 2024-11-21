@@ -9,6 +9,8 @@ export const useStatStore = defineStore('stat', () => {
   const userstatavg = ref({
   });
 
+  const userstatList = ref([])
+
   const myKLeaguer = ref({})
   
   const getStat = async function(userId) {
@@ -32,18 +34,27 @@ export const useStatStore = defineStore('stat', () => {
         method : 'POST',
         params : {userId : userid}
       }).then((response)=>{
-        // console.log("여기여기")
         myKLeaguer.value = response.data
-        // console.log(myKLeaguer.value)
       }).catch((err)=>{
-        // console.log("액시오스 실패")
-        // console.log(err)
+        console.log(err)
       })
     } catch (error){
-      // console.log(error)
-      // console.log("트라이캐치 실패")
+      
     }
   }
   
-  return {userstatavg, getStat,getMyLeague, myKLeaguer }
+  const getStatList = function(userId){
+    axios({
+      url: REST_STAT_API_URL,
+      params : {userId}
+    })
+    .then((res)=>{
+      userstatList.value = res.data
+    })
+    .catch((err)=>{
+      console.log(err)
+    })
+  }
+
+  return {userstatavg, getStat,getMyLeague, myKLeaguer, userstatList,getStatList }
 })

@@ -25,16 +25,16 @@ const targetdata = ref([]);
 const keys = ["pass","stamina","dribble","shoot","speed"]
 onMounted(async () => {
     await store.getMyLeague(userStore.loginUser.userid)
-    console.log(store.myKLeaguer)
 
     // 데이터 로드
     await store.getStat(userStore.loginUser.userid);
     data.value = Object.values(store.userstatavg);
-    console.log(data.value)
     targetdata.value = Object.keys(store.myKLeaguer)
     .filter(key => keys.includes(key)) // keys에 포함된 key만 필터링
     .map(key => store.myKLeaguer[key]); // 해당 key의 value를 가져옴
 
+
+    
 
     // 차트 생성
     const ctx = document.getElementById("radarChart").getContext("2d");

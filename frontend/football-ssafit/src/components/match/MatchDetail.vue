@@ -46,11 +46,11 @@
                     <div class="card-body">
                         <h4 class="card-title">{{ store.match.stadiumName }}</h4>
                         <p>{{ store.match.address }}</p>
-                        <div class="tier" v-if="store.matchAvgTier">
-                            <p>예상 평균 레벨은 <strong>{{ store.matchAvgTier }}</strong>입니다.</p>
-                            <img :src="`/src/assets/${store.matchAvgTier}.webp`" alt="Tier Image" width="200px">
+                        <div class="tier">
+                            <p>예상 평균 레벨은 <strong>{{ store.matchAvgTier ? store.matchAvgTier : "unRanked" }}</strong>입니다.</p>
+                            <img :src="`/src/assets/${store.matchAvgTier}.webp`" alt="언랭" width="200px">
                         </div>
-                        <p v-else>흠...</p>
+                        
                         
                     </div>
                 </div>
