@@ -8,7 +8,7 @@
             </div>
         </div>
         <div class="m-2 d-flex justify-content-end">
-            <button v-if="isLogin" class="btn btn-primary mx-1" @click="showModal = true">{{ matchstore.match.status }}</button>
+            <button v-if="isLogin" class="btn btn-primary mx-1" @click="goReservation">{{ matchstore.match.status }}</button>
             <button v-if="!isLogin" class="btn btn-secondary mx-1" @click="goLoginView">로그인하기</button>
         </div>
         <div class="row mt-4 h-100">
@@ -126,7 +126,7 @@
             <div class="bg-primary text-white p-4 rounded">
               <h4>{{ matchstore.match.name }}</h4>
               <h5>날짜 : {{ showdate }}</h5>
-              <p>시간 : {{ time }}</p>
+              <p>시간 : {{ matchstore.match.startTime.slice(11,16) }} - {{ matchstore.match.endTime.slice(11,16) }}</p>
               <p>경기장 : {{ matchstore.match.stadiumName }}</p>
               <p>주소 : {{ matchstore.match.address }}</p>
             </div>
@@ -188,7 +188,7 @@ const goReservation = function(){
     } else if(matchstore.match.status=='경기 취소'){
         alert("취소된 경기입니다")
     } else{
-        router.push({name : 'reservationform'})
+        showModal.value = true;
     }
 }
 
@@ -206,7 +206,6 @@ const closeModal = () => {
 // 날짜 및 시간 포맷팅
 const date = new Date(matchstore.match.startTime);
 const showdate = `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`;
-const time = matchstore.match.startTime
 
 // 결제 정보
 const price = ref(10000);
@@ -225,6 +224,7 @@ onMounted(() => {
     matchstore.getMatch(route.params.id)
     matchstore.getMatchAvgTier(route.params.id)
     userstore.loginUser.userid ? true : false;
+    matchstore.match.startTime
 })
 
 </script>
