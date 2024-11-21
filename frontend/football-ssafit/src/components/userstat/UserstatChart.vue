@@ -1,52 +1,80 @@
 <template>
     <div>
-        <canvas id="myChart"></canvas>
-        <p>{{ statstore.userstatList }}</p>
-        <p>{{ labels }}</p>
+        <h4>스탯 변화 추이</h4>
+        <canvas id="myChart" width="600"></canvas>
     </div>
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
+import { ref, watch } from 'vue';
 import { Chart } from 'chart.js';
 import { useStatStore } from '@/stores/stat';
 import { useUserStore } from '@/stores/user';
 
-const userStore = useUserStore()
+const userStore = useUserStore();
+const statstore = useStatStore();
 
-const statstore = useStatStore()
+const labels = ref([]);
+const data = ref([]);
+let chartInstance = null;
 
-
-const labels = ref([])
-onMounted(() => {
-    statstore.getStatList(userStore.loginUser.userid)
-
-
-    labels.value = Object.keys(statstore.userstatList)
-    .filter(key => key === "createdAt")
-    .map(key => statstore.userstatList[key]);
-
-
+// 차트 생성 함수
+const createChart = () => {
     const ctx = document.getElementById('myChart').getContext('2d');
-    new Chart(ctx, {
-        type: 'line', // 그래프 타입: 라인 그래프
+    if (chartInstance) {
+        chartInstance.destroy(); // 기존 차트가 있다면 제거
+    }
+    chartInstance = new Chart(ctx, {
+        type: 'line',
         data: {
-            labels: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'], // X축 레이블
+            labels: labels.value,
             datasets: [
                 {
-                    label: 'Weekly Sales', // 데이터 세트 이름
-                    data: [14000, 16000, 22000, 18000, 20000, 24000, 12000], // Y축 값
-                    borderColor: 'rgba(75, 192, 192, 1)', // 선 색상
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)', // 배경 색상
-                    borderWidth: 2, // 선 두께
-                    tension: 0, // 곡선의 부드러움
-
+                    label: '나의 스탯 변화',
+                    data: data.value,
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderWidth: 2,
+                    tension: 0,
                 },
             ],
         },
-
+        options: {
+            responsive: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    min: 0,
+                    max: 100,
+                    ticks: {
+                        stepSize: 10,
+                    },
+                },
+            },
+        },
     });
-});
+};
+
+// 데이터 변경 감지
+watch(
+    () => statstore.userstatList,
+    (newStatList) => {
+        if (newStatList.length > 0) {
+            labels.value = newStatList.map((item) => item["startTime"].slice(0, 10));
+            data.value = newStatList.map((item) => {
+                return (
+                    (item.shoot + item.pass + item.speed + item.stamina + item.dribble) /
+                    5
+                );
+            });
+            createChart(); // 데이터 업데이트 후 차트 생성
+        }
+    },
+    { immediate: true } // 데이터가 처음 로드될 때도 실행
+);
+
+// 데이터 로드
+statstore.getStatList(userStore.loginUser.userid);
 </script>
 
 <style scoped>

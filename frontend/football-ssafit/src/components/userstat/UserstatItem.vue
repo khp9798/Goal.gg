@@ -1,10 +1,7 @@
 <template>
     <div>
-        
+        <h4>나와 비슷한 선수</h4>
         <canvas id="radarChart"></canvas>
-    </div>
-    <div>
-        {{ store.myKLeaguer }}
     </div>
 </template>
 
@@ -68,7 +65,7 @@ onMounted(async () => {
                 },
             },
             responsive: true, // 부모 크기에 따라 자동 조정
-            maintainAspectRatio: false, // 비율 유지하지 않음
+            // maintainAspectRatio: false, // 비율 유지하지 않음
             scales: {
                 r: {
                     angleLines: { display: true },

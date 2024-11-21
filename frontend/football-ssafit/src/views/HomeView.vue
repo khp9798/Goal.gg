@@ -1,9 +1,8 @@
 <template>
     <div>
-        홈뷰입니다.
         <!-- 유저뷰, 매치뷰 -->
         <UserItem/>
-        <MatchRecommandList/>
+        <MatchRecommandList class="mt-5"/>
     </div>
 </template>
 

@@ -5,7 +5,7 @@
             <div class="container-fluid">
                 <!-- 로고 -->
                 <RouterLink :to="{ name: 'home' }" class="navbar-brand">
-                    <img src="../assets/logo.png" alt="Logo" width="40" height="40">
+                    <img src="../assets/logo.png" alt="Logo" width="50" height="50">
                 </RouterLink>
                 <!-- 메뉴 -->
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -84,7 +84,7 @@ function tryLogout() {
 }
 
 const getReservationList = function(){
-    if(userstore.loginUser.userid){
+    if(userstore.loginUser){
         console.log(userstore.loginUser.userid)
         reservationstore.getList(userstore.loginUser.userid)
     } else{

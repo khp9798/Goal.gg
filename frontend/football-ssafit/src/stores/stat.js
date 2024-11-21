@@ -44,16 +44,22 @@ export const useStatStore = defineStore('stat', () => {
   }
   
   const getStatList = function(userId){
-    axios({
-      url: REST_STAT_API_URL,
-      params : {userId}
-    })
-    .then((res)=>{
-      userstatList.value = res.data
-    })
-    .catch((err)=>{
-      console.log(err)
-    })
+    try{
+      axios({
+        url: REST_STAT_API_URL,
+        params : {userId}
+      })
+      .then((res)=>{
+        userstatList.value = res.data
+        console.log(userstatList.value)
+      })
+      .catch((err)=>{
+        console.log(err)
+      })
+    } catch(err){
+
+    }
+    
   }
 
   return {userstatavg, getStat,getMyLeague, myKLeaguer, userstatList,getStatList }

@@ -2,58 +2,56 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace = "com.ssafy.mvc.dao.UserStatDao">
+<mapper namespace="com.ssafy.mvc.dao.UserStatDao">
 
 	<select id="selectUserAllStat">
-		SELECT * 
-		FROM userstat WHERE user_id=#{userId}
+		SELECT u.user_id, u.shoot, u.pass, u.speed, u.stamina, u.dribble, m.start_time, u.match_id
+		FROM userstat u, matches m WHERE u.user_id=#{userId} and u.match_id = m.id
+		order by m.start_time;
 	</select>
-	
+
 	<insert id="registUserStat">
-		INSERT INTO userstat (user_id, match_Id, shoot, pass, speed, stamina, dribble)
-		VALUES(#{userId},#{matchId},#{shoot}, #{pass},#{speed},#{stamina},#{dribble})
+		INSERT INTO userstat (user_id, match_Id, shoot, pass,
+		speed, stamina, dribble)
+		VALUES(#{userId},#{matchId},#{shoot},
+		#{pass},#{speed},#{stamina},#{dribble})
 	</insert>
-	
+
 	<update id="updateUserStat">
 		UPDATE userstat
-		SET shoot=#{shoot}, pass=#{pass}, speed=#{speed}, stamina=#{stamina}, dribble=#{dribble}
-		WHERE user_id=#{userId} AND match_id=#{matchId}
+		SET shoot=#{shoot}, pass=#{pass},
+		speed=#{speed}, stamina=#{stamina}, dribble=#{dribble}
+		WHERE
+		user_id=#{userId} AND match_id=#{matchId}
 	</update>
-	
+
 	<select id="selectUserMatchStat">
-		SELECT * 
+		SELECT *
 		FROM userstat WHERE user_id=#{userId} AND match_id=#{matchId}
 	</select>
-	
-<!-- 		List<KLeaguePlayers> selectMyLeage(Map<String, Integer> stat);
-			stat.put("shoot", shoot /= size);
-			stat.put("pass", pass /= size);
-			stat.put("speed", speed /= size);
-			stat.put("stamina", stamina /= size);
-			stat.put("dribble", dribble /= size);
-			List<KLeaguePlayers> players = userstatservice.selectMyLeague(stat); -->
-			
-<select id="selectMyLeage">
-    SELECT name, position, shoot, pass, speed, stamina, dribble
-    FROM kleagueplayers
-    WHERE SQRT(
-        POW(shoot - #{shoot}, 2) +
-        POW(pass - #{pass}, 2) +
-        POW(speed - #{speed}, 2) +
-        POW(stamina - #{stamina}, 2) +
-        POW(dribble - #{dribble}, 2)
-    ) = (
-        SELECT MIN(
-            SQRT(
-                POW(shoot - #{shoot}, 2) +
-                POW(pass - #{pass}, 2) +
-                POW(speed - #{speed}, 2) +
-                POW(stamina - #{stamina}, 2) +
-                POW(dribble - #{dribble}, 2)
-            )
-        )
-        FROM kleagueplayers
-    );
-</select>
+
+
+	<select id="selectMyLeage">
+		SELECT name, position, shoot, pass, speed, stamina, dribble
+		FROM kleagueplayers
+		WHERE SQRT(
+		POW(shoot - #{shoot}, 2) +
+		POW(pass - #{pass}, 2) +
+		POW(speed - #{speed}, 2) +
+		POW(stamina - #{stamina}, 2) +
+		POW(dribble - #{dribble}, 2)
+		) = (
+		SELECT MIN(
+		SQRT(
+		POW(shoot - #{shoot}, 2) +
+		POW(pass - #{pass}, 2) +
+		POW(speed - #{speed}, 2) +
+		POW(stamina - #{stamina}, 2) +
+		POW(dribble - #{dribble}, 2)
+		)
+		)
+		FROM kleagueplayers
+		);
+	</select>
 
 </mapper>
