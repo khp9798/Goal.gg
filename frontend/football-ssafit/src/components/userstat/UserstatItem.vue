@@ -1,7 +1,14 @@
 <template>
     <div>
         <h4>나와 비슷한 선수</h4>
-        <canvas ref="radarChart"></canvas>
+        <div class="row row-cols-md-2 g-4 text-center">
+            <div>
+                <canvas ref="radarChart"></canvas>
+            </div>
+            <div>
+                <img src="/src/assets/Son.png" alt="">
+            </div>
+        </div>
     </div>
 </template>
 
@@ -61,7 +68,7 @@ onMounted(async () => {
                     duration: 1000,
                     easing: "easeOutBounce",
                 },
-                responsive: true,
+                responsive: false,
                 scales: {
                     r: {
                         angleLines: { display: true },

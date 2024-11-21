@@ -1,7 +1,7 @@
 <template>
     <div>
         <h4>스탯 변화 추이</h4>
-        <canvas ref="chartCanvas"></canvas>
+        <canvas ref="chartCanvas" width="600px"></canvas>
     </div>
 </template>
 
@@ -47,7 +47,7 @@ const createOrUpdateChart = () => {
                 ],
             },
             options: {
-                responsive: true,
+                responsive: false,
                 scales: {
                     y: {
                         beginAtZero: true,

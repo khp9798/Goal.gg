@@ -1,10 +1,10 @@
 <template>
-    <div @click="goStadiumDetail" class="card mx-3 flex-shrink-0" style="width: 25rem;">
-        <img :src="stadium.image" class="card-img-top" alt="..." width="300" height="200">
-        <div class="card-body text-center">
-            <h5 class="card-title">{{stadium.name}}</h5>
-            <p class="card-text">{{ stadium.address }}</p>
-        </div>
+    <div class="card" @click="goStadiumDetail">
+      <img :src="stadium.image" class="card-img-top mt-3" alt="..." width="500" height="400">
+      <div class="card-body">
+        <h5 class="card-title">{{stadium.name}}</h5>
+        <p class="card-text">{{ stadium.address }}</p>
+      </div>
     </div>
 </template>
 
