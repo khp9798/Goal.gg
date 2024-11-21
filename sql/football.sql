@@ -134,7 +134,6 @@ END //
 DELIMITER ;
 
 
-
 SET GLOBAL event_scheduler = ON;
 
 INSERT INTO users (userid, password, email, phone_number, name, role, position, tier, region, province, district) VALUES
@@ -775,8 +774,92 @@ INSERT INTO reservations (user_id, match_id, reservation_date) VALUES
 ('강교훈', 300279851, '수원 FC', '대한민국', 'cm', 34, 49, 50, 50, 40, 'https://static.inven.co.kr/image_2011/site_image/fifaonline4/playerimage2/p279851.png?v=2401030a'),
 ('김현민', 300071463, '수원 FC', '대한민국', 'cdm', 43, 44, 57, 41, 41, 'https://static.inven.co.kr/image_2011/site_image/fifaonline4/playerimage2/p71463.png?v=2401030a');
 
-
+select * from kleagueplayers;
 
 SELECT u.user_id, u.shoot, u.pass, u.speed, u.stamina, u.dribble, m.start_time, u.match_id
-		FROM userstat u, matches m WHERE u.user_id='ssafy' and u.match_id = m.id
+		FROM userstat u, matches m WHERE u.user_id='ssafy' and u.match_id = m.id;
+
+
+
+	SELECT name, position, shoot, pass, speed, stamina, dribble
+FROM (
+    SELECT 
+        name, 
+        position, 
+        shoot, 
+        pass, 
+        speed, 
+        stamina, 
+        dribble,
+        POWER(shoot / 100.0 - 60 / 100.0, 2) +
+        POWER(pass / 100.0 - 85 / 100.0, 2) +
+        POWER(speed / 100.0 - 75 / 100.0, 2) +
+        POWER(stamina / 100.0 - 90 / 100.0, 2) +
+        POWER(dribble / 100.0 - 68 / 100.0, 2) AS radar_similarity
+    FROM kleagueplayers
+) AS similarity_calculation
+WHERE radar_similarity = (
+    SELECT MIN(
+        POWER(shoot / 100.0 - 60 / 100.0, 2) +
+        POWER(pass / 100.0 - 85 / 100.0, 2) +
+        POWER(speed / 100.0 - 75 / 100.0, 2) +
+        POWER(stamina / 100.0 - 90 / 100.0, 2) +
+        POWER(dribble / 100.0 - 68 / 100.0, 2)
+    )
+    FROM kleagueplayers
+);
+
+WITH user AS (
+  SELECT
+    60 AS shoot,
+    85 AS pass,
+    75 AS speed,
+    90 AS stamina,
+    68 AS dribble
+),
+user_normalized AS (
+  SELECT
+    shoot / total AS shoot_ratio,
+    pass / total AS pass_ratio,
+    speed / total AS speed_ratio,
+    stamina / total AS stamina_ratio,
+    dribble / total AS dribble_ratio
+  FROM (
+    SELECT
+      shoot,
+      pass,
+      speed,
+      stamina,
+      dribble,
+      (shoot + pass + speed + stamina + dribble) AS total
+    FROM user
+  ) AS jd_total
+)
+SELECT
+  name,
+  position,
+  shoot,
+  pass,
+  speed,
+  stamina,
+  dribble
+FROM (
+  SELECT
+    k.*,
+    SQRT(
+      POWER((k.shoot / total_k) - jd.shoot_ratio, 2) +
+      POWER((k.pass / total_k) - jd.pass_ratio, 2) +
+      POWER((k.speed / total_k) - jd.speed_ratio, 2) +
+      POWER((k.stamina / total_k) - jd.stamina_ratio, 2) +
+      POWER((k.dribble / total_k) - jd.dribble_ratio, 2)
+    ) AS distance
+  FROM (
+    SELECT
+      *,
+      (shoot + pass + speed + stamina + dribble) AS total_k
+    FROM kleagueplayers
+  ) AS k
+  CROSS JOIN user_normalized jd
+) AS distances
+ORDER BY distance ASC;
 

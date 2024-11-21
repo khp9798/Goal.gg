@@ -5,9 +5,12 @@
 <mapper namespace="com.ssafy.mvc.dao.UserStatDao">
 
 	<select id="selectUserAllStat">
-		SELECT u.user_id, u.shoot, u.pass, u.speed, u.stamina, u.dribble, m.start_time, u.match_id
-		FROM userstat u, matches m WHERE u.user_id=#{userId} and u.match_id = m.id
-		order by m.start_time;
+		SELECT u.user_id, u.shoot, u.pass, u.speed,
+		u.stamina, u.dribble, m.start_time, u.match_id
+		FROM userstat u, matches
+		m WHERE u.user_id=#{userId} and u.match_id = m.id
+		order by
+		m.start_time;
 	</select>
 
 	<insert id="registUserStat">
@@ -27,31 +30,80 @@
 
 	<select id="selectUserMatchStat">
 		SELECT *
-		FROM userstat WHERE user_id=#{userId} AND match_id=#{matchId}
+		FROM userstat WHERE user_id=#{userId} AND
+		match_id=#{matchId}
 	</select>
 
 
 	<select id="selectMyLeage">
-		SELECT name, position, shoot, pass, speed, stamina, dribble
-		FROM kleagueplayers
-		WHERE SQRT(
-		POW(shoot - #{shoot}, 2) +
-		POW(pass - #{pass}, 2) +
-		POW(speed - #{speed}, 2) +
-		POW(stamina - #{stamina}, 2) +
-		POW(dribble - #{dribble}, 2)
-		) = (
-		SELECT MIN(
+
+		WITH user_stats AS (
+		SELECT
+		#{shoot} AS shoot,
+		#{pass} AS pass,
+		#{speed} AS speed,
+		#{stamina} AS stamina,
+		#{dribble} AS dribble
+		),
+		user_normalized AS (
+		SELECT
+		shoot / total AS shoot_ratio,
+		pass / total AS pass_ratio,
+		speed / total AS speed_ratio,
+		stamina / total AS stamina_ratio,
+		dribble / total AS dribble_ratio
+		FROM (
+		SELECT
+		shoot,
+		pass,
+		speed,
+		stamina,
+		dribble,
+		(shoot + pass + speed + stamina + dribble) AS total
+		FROM user_stats
+		) AS user_total
+		),
+		distance_calculations AS (
+		SELECT
+		k.*,
 		SQRT(
-		POW(shoot - #{shoot}, 2) +
-		POW(pass - #{pass}, 2) +
-		POW(speed - #{speed}, 2) +
-		POW(stamina - #{stamina}, 2) +
-		POW(dribble - #{dribble}, 2)
-		)
-		)
+		POWER((k.shoot / total_k) - un.shoot_ratio, 2) +
+		POWER((k.pass / total_k) - un.pass_ratio, 2) +
+		POWER((k.speed / total_k) - un.speed_ratio, 2) +
+		POWER((k.stamina / total_k) - un.stamina_ratio, 2) +
+		POWER((k.dribble / total_k) - un.dribble_ratio, 2)
+		) AS shape_distance,
+		SQRT(
+		POWER(k.shoot - us.shoot, 2) +
+		POWER(k.pass - us.pass, 2) +
+		POWER(k.speed - us.speed, 2) +
+		POWER(k.stamina - us.stamina, 2) +
+		POWER(k.dribble - us.dribble, 2)
+		) AS attribute_distance
+		FROM (
+		SELECT
+		*,
+		(shoot + pass + speed + stamina + dribble) AS total_k
 		FROM kleagueplayers
-		);
+		) AS k
+		CROSS JOIN user_normalized un
+		CROSS JOIN user_stats us
+		),
+		min_shape_distance AS (
+		SELECT MIN(shape_distance) AS min_distance FROM distance_calculations
+		)
+		SELECT
+		name,
+		position,
+		shoot,
+		pass,
+		speed,
+		stamina,
+		dribble
+		FROM distance_calculations
+		WHERE shape_distance = (SELECT min_distance FROM min_shape_distance)
+		ORDER BY attribute_distance ASC;
+
 	</select>
 
 </mapper>
