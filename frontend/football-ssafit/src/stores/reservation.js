@@ -10,10 +10,10 @@ export const useReservationStore = defineStore('reservation', () => {
   const reservation = ref({})
 
 
-  const getList = function(){
+  const getList = function(userid){
     axios({
       url : REST_RESERVATION_URL,
-      params : {userid : "ssafy"} //임시로 싸피넣음
+      params : {userid : userid} //임시로 싸피넣음
     })
     .then((response)=>{
       console.log(response.data)

@@ -141,5 +141,19 @@ public class MatchController {
 
 		return new ResponseEntity<>("해당 경기장에 매치가 없습니다.", HttpStatus.NOT_FOUND);
 	}
+	
+	// 특정 경기장 특정 날짜 매치 조회
+	@GetMapping("/match/{id}/{date}")
+	public ResponseEntity<?> selectStadiumDayMatch(@PathVariable int id, @PathVariable String date) {
+		List<Match> list = mService.selectStadiumDayMatch(id, date);
+		System.out.println(id);
+		System.out.println(date);
+		System.out.println(list);
+		if (list != null) {
+			return new ResponseEntity<>(list, HttpStatus.OK);
+		}
+
+		return new ResponseEntity<>("해당 경기장에 매치가 없습니다.", HttpStatus.NOT_FOUND);
+	}
 
 }

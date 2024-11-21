@@ -1,5 +1,6 @@
 <template>
     <div class="container mt-5">
+
         <h5 class="mb-4">유저 능력치</h5>
 
         <div class="card p-4 shadow" v-if="userstore.loginUser.userid">

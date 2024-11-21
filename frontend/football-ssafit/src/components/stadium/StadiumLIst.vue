@@ -13,7 +13,7 @@
 
 import { useStadiumStore } from '@/stores/stadium';
 import StadiumListItem from './StadiumListItem.vue';
-import { onMounted } from 'vue';
+import { onMounted, onUnmounted } from 'vue';
 import { useRoute } from 'vue-router';
 const stadiumstore = useStadiumStore()
 
@@ -22,6 +22,7 @@ onMounted(() => {
         stadiumstore.getStadiumList()
     }
 })
+
 </script>
 
 <style lang="scss" scoped></style>

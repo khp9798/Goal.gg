@@ -16,7 +16,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2">
                         <li class="nav-item me-3"> <!-- 간격 추가 -->
-                            <RouterLink :to="{ name: 'stadiumlist' }" class="nav-link">경기장</RouterLink>
+                            <RouterLink :to="{ name: 'stadiumlist' }" class="nav-link" @click="getStadiumList">경기장</RouterLink>
                         </li>
                         <li class="nav-item me-3"> <!-- 간격 추가 -->
                             <RouterLink :to="{ name: 'userview' }" class="nav-link">유저 정보</RouterLink>
@@ -25,7 +25,7 @@
                             <RouterLink :to="{ name: 'match' }" class="nav-link">매치 일정</RouterLink>
                         </li>
                         <li class="nav-item me-3"> <!-- 간격 추가 -->
-                            <RouterLink :to="{ name: 'reservation' }" class="nav-link">예약 확인</RouterLink>
+                            <RouterLink :to="{ name: 'reservation' }" class="nav-link" @click="getReservationList">예약 확인</RouterLink>
                         </li>
                         <li class="nav-item me-3">
                             <RouterLink :to="{ name: 'loginview' }" class="nav-link d-flex"
@@ -73,11 +73,24 @@ import { useUserStore } from '@/stores/user';
 import { useMatchStore } from '@/stores/match';
 import { ref } from 'vue';
 import { useStadiumStore } from '@/stores/stadium';
+import { useReservationStore } from '@/stores/reservation';
+import router from '@/router';
+const reservationstore = useReservationStore()
 
 const userstore = useUserStore();
 
 function tryLogout() {
     userstore.tryLogout();
+}
+
+const getReservationList = function(){
+    if(userstore.loginUser.userid){
+        console.log(userstore.loginUser.userid)
+        reservationstore.getList(userstore.loginUser.userid)
+    } else{
+        alert("로그인이 필요합니다")
+        router.push({name : 'loginview'})
+    }
 }
 
 const condition = ref({
@@ -86,6 +99,10 @@ const condition = ref({
     order: "",
     orderDir: ""
 })
+
+const getStadiumList = function(){
+    stadiumstore.getStadiumList()
+}
 const stadiumstore = useStadiumStore()
 const search = function () {
     stadiumstore.searchList(condition.value)

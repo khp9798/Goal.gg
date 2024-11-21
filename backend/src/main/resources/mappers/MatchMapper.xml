@@ -95,5 +95,12 @@
 		WHERE reservations.match_id = #{matchId}
 		) AS subquery
 	</select>
+	
+<select id="selectStadiumDayMatch">
+    SELECT *
+    FROM matches
+    WHERE stadium_id = #{id} 
+      AND DATE(start_time) = DATE(#{date})
+</select>
 
 </mapper>
