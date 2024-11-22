@@ -8,7 +8,7 @@
       <div class="image-container mx-auto">
         <div class="player-positionbox">
           <!-- <div class="player-rank">24</div> -->
-          <div class="player-position" :class="positionColor"> {{ store.myKLeaguer.position }}</div>
+          <div class="player-position" :class="positionColor"> {{ position }}</div>
         </div>
         <!-- Background Image -->
         <img src="/src/assets/Background/backgroundimg.png" alt="BackGround Image" class="background-img" />
@@ -16,19 +16,19 @@
         <!-- Season Badge -->
         <div class="d-flex season-img">
           <img src="/src/assets/Season/seasonimg.png" alt="Season Image">
-          <span class="nameBold">&nbsp;{{ shortenedName }}</span>
+          <span class="nameBold">&nbsp;{{ shortenedName || "아가 이강인" }}</span>
         </div>
         <!-- <img src="/src/assets/Season/seasonimg.png" alt="Season Image" class="season-img" > -->
 
         <img src="/src/assets/Flag/korea.jpg" alt="Flag Image" class="flag-img" />
 
-        <img :src="`/src/assets/Team/${store.myKLeaguer.team}.png`" alt="Team Image" class="team-img" />
+        <img :src="`/src/assets/Team/${team}.png`" alt="Team Image" class="team-img" />
 
         <img src="/src/assets/logo.png" alt="GOAL.GG Image" class="logo-img" />
 
 
         <!-- Player Image -->
-        <img :src="`/src/assets/PlayerImg/${store.myKLeaguer.playercode}.png`" alt="Player Image" class="player-img" />
+        <img :src="`/src/assets/PlayerImg/${playercode}.png`" alt="Player Image" class="player-img" />
 
         <!-- Player Info -->
         <div class="player-info">
@@ -52,6 +52,35 @@ const userStore = useUserStore();
 const data = ref([]);
 const targetdata = ref([]);
 
+const position = computed(() => {
+  if (userStore.loginUser.userid==undefined) {
+    return "ST"; // 값이 있으면 그대로 반환
+  } else if(store.myKLeaguer.position==undefined) {
+    return "CAM"; // 값이 없으면 기본값 반환
+  } else{
+    return store.myKLeaguer.position
+  }
+});
+const team = computed(() => {
+  if (userStore.loginUser.userid==undefined) {
+    return "토트넘"; // 값이 있으면 그대로 반환
+  } else if(store.myKLeaguer.team==undefined) {
+    return "김천 상무"; // 값이 없으면 기본값 반환
+  } else{
+    return store.myKLeaguer.team
+  }
+});
+const playercode = computed(() => {
+  if (userStore.loginUser.userid==undefined) {
+    return 1; // 값이 있으면 그대로 반환
+  } else if(store.myKLeaguer.team==undefined) {
+    return 2; // 값이 없으면 기본값 반환
+  } else{
+    return store.myKLeaguer.playercode
+  }
+});
+
+
 // `canvas`를 참조할 ref
 const radarChart = ref(null);
 
@@ -60,8 +89,10 @@ const keys = ["shoot", "pass", "speed", "stamina", "dribble"];
 
 const shortenedName = computed(() => {
   const name = store?.myKLeaguer?.name; // 안전하게 접근
-  if (!name || name.length === 0) {
-    return ""; // 이름이 없으면 빈 문자열 반환
+  if (userStore.loginUser.userid==undefined) {
+    return "손흥민"; // 이름이 없으면 빈 문자열 반환
+  } else if(store.myKLeaguer.name==undefined){
+    return "이강인"
   }
   return name.length > 7 ? name.slice(0, 7) + "..." : name; // 7글자 초과 시 잘라냄
 });

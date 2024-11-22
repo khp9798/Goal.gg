@@ -1,7 +1,5 @@
 <template>
     <div>
-        
-
         <UserItem/>
         <MatchRecommandList class="mt-5"/>
     </div>

@@ -27,27 +27,25 @@
 
 
         <div class="card p-4 shadow" v-else>
-            <!-- 기본 예시 데이터 -->
-            <div class="row">
-                <div class="col-md-4">
-                    <h6>이름: 김철수</h6>
-                    <h6>포지션: 공격수</h6>
-                    <h6>티어: 다이아몬드</h6>
+
+            <div class="row row-cols-md-2">
+
+                <!-- 유저 정보 -->
+                <div class="col-md-2">
+                    <h4>이름</h4>
+                    <p>손흥민</p>
+                    <h4>포지션</h4>
+                    <p>forward</p>
+                    <h4>티어</h4>
+                    <img src="/src/assets/unranked.webp" alt="" width="100" height="100">
                 </div>
-                <!-- 유저 능력치 -->
-                <div class="col-md-4">
-                    <h6>능력치</h6>
-                    <div class="mb-2">슛: <span class="fw-bold">83</span></div>
-                    <div class="mb-2">패스: <span class="fw-bold">76</span></div>
-                    <div class="mb-2">속력: <span class="fw-bold">81</span></div>
-                    <div class="mb-2">체력: <span class="fw-bold">81</span></div>
-                    <div class="mb-2">드리블: <span class="fw-bold">80</span></div>
+
+
+                <!-- 유저 능력치 차트 -->
+                <div class="col-md-10">
+                    <UserstatItem class="d-flex" />
                 </div>
-                <!-- 닮은 선수 -->
-                <div class="col-md-4 text-center">
-                    <h6>나와 닮은 선수</h6>
-                    <img src="../../assets/Son.png" alt="Logo" width="180rem" height="260rem">
-                </div>
+
             </div>
         </div>
     </div>

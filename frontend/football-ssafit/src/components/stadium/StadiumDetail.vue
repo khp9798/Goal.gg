@@ -13,7 +13,7 @@
         <div>경기장 수용인원</div>
         {{ stadiumstore.stadium.capacity }}
         <div>
-            <vue-cal class="vuecal--blue-theme" ref="vueCalRef" style="height:150px;" :time=false active-view="week"
+            <vue-cal  ref="vueCalRef" style="height:150px;" :time=false active-view="week"
                 :disable-views="['years', 'year', 'month', 'day']" locale="ko" :events="events"
                 :show-week-numbers="false" @cell-click="SearchStadiumDayMatch">
 
@@ -134,9 +134,14 @@ const SearchStadiumDayMatch = (day) => {
     // 결과 출력
     console.log(formatDate(date)); // 2024-11-22 18:00:00
     matchstore.getStadiumDayMatch(formatDate(date), route.params.id)
-
+    
 }
 
 </script>
 
-<style lang="scss" scoped></style>
+<style>
+.vuecal__flex.weekday-label {
+  background-color: aqua;
+  color: red;
+}
+</style>
