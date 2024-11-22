@@ -13,7 +13,7 @@
         <div>경기장 수용인원</div>
         {{ stadiumstore.stadium.capacity }}
         <div>
-            <vue-cal ref="vueCalRef" style="height:0px;" :time=false active-view="week"
+            <vue-cal class="vuecal--blue-theme" ref="vueCalRef" style="height:150px;" :time=false active-view="week"
                 :disable-views="['years', 'year', 'month', 'day']" locale="ko" :events="events"
                 :show-week-numbers="false" @cell-click="SearchStadiumDayMatch">
 
@@ -26,7 +26,7 @@
             </vue-cal>
 
         </div>
-        <div style="height: 10rem;">
+        <div style="height: 1rem;">
 
         </div>
         <!-- {{ matchstore.StadiumDayMatchList }} -->
@@ -41,7 +41,8 @@
                 </tr>
             </thead>
             <tbody>
-                <StadiumMatch v-for="match in matchstore.StadiumDayMatchList" :match="match" />
+                <StadiumMatch v-for="match in matchstore.StadiumDayMatchList" :match="match" v-if="matchstore.StadiumDayMatchList.length>0"/>
+                <p v-else>해당 날짜에는 아직 매치가 없어요</p>
             </tbody>
         </table>
         

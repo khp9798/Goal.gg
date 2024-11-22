@@ -35,11 +35,13 @@
                                                 class="form-control form-control-lg" v-model="tryLoginUser.password" />
                                         </div>
 
-                                        <div class="pt-1 mb-4">
+                                        <div class="d-flex justify-content-even pt-1 mb-4">
                                             <button data-mdb-button-init data-mdb-ripple-init
-                                                class="btn btn-dark btn-lg btn-block" type="submit">Login</button>
+                                                class="btn btn-dark btn-lg me-2" type="submit">Login</button>
+                                            <button data-mdb-button-init data-mdb-ripple-init
+                                                class="btn btn-dark btn-lg" type="button"
+                                                @click="goSignupView">Register</button>
                                         </div>
-
 
                                     </form>
 
