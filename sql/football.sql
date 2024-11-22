@@ -137,7 +137,7 @@ DELIMITER ;
 SET GLOBAL event_scheduler = ON;
 
 INSERT INTO users (userid, password, email, phone_number, name, role, position, tier, region, province, district) VALUES
-('ssafy', 'ssafy', 'ssafy@example.com', '010-1111-2222', '양명균', 'admin', 'forward', 'bronze', '수도권', '서울', '강남구'),
+('ssafy', 'ssafy', 'ssafy@example.com', '010-1111-2222', '양명균', 'admin', 'forward', 'bronze', '충청권', '대전', '대덕구'),
 ('john_doe', 'hashedpassword1', 'john@example.com', '010-1111-2222', 'John Doe', 'user', 'forward', 'bronze', '경상권', '부산', '해운대구'),
 ('jane_smith', 'hashedpassword2', 'jane@example.com', '010-2222-3333', 'Jane Smith', 'user', 'midfield', 'silver', '전라권', '전남', '순천시'),
 ('michael_admin', 'hashedpassword3', 'admin@example.com', '010-3333-4444', 'Michael Admin', 'admin', 'defense', 'gold', '충청권', '충북', '청주시 서원구'),
@@ -148,7 +148,18 @@ INSERT INTO users (userid, password, email, phone_number, name, role, position, 
 ('david_goalkeeper', 'hashedpassword8', 'david@example.com', '010-8888-9999', 'David Goalkeeper', 'user', 'goalkeeper', 'gold', '경상권', '대구', '달서구'),
 ('oliver_striker', 'hashedpassword9', 'oliver@example.com', '010-9999-0000', 'Oliver Striker', 'user', 'forward', 'platinum', '전라권', '전북', '전주시 덕진구'),
 ('amelia_playmaker', 'hashedpassword10', 'amelia@example.com', '010-1010-1111', 'Amelia Playmaker', 'user', 'midfield', 'diamond', '충청권', '대전', '유성구'),
-('choi','1234','1sasdjklfjsadlkf@naver.com', '010-1010-1111', '최현만', 'user', 'midfield', 'diamond', '충청권', '대전', '유성구');
+('choi','1234','1sasdjklfjsadlkf@naver.com', '010-1010-1111', '최현만', 'user', 'midfield', 'diamond', '충청권', '대전', '유성구'),
+('q1', '123', 'q1@example.com', '010-1111-0001', 'User One', 'user', 'goalkeeper', 'bronze', 'Region A', 'Province A', 'District A'),
+('q2', '123', 'q2@example.com', '010-1111-0002', 'User Two', 'user', 'defense', 'silver', 'Region B', 'Province B', 'District B'),
+('q3', '123', 'q3@example.com', '010-1111-0003', 'User Three', 'user', 'midfield', 'gold', 'Region C', 'Province C', 'District C'),
+('q4', '123', 'q4@example.com', '010-1111-0004', 'User Four', 'user', 'forward', 'platinum', 'Region D', 'Province D', 'District D'),
+('q5', '123', 'q5@example.com', '010-1111-0005', 'User Five', 'user', 'midfield', 'diamond', 'Region E', 'Province E', 'District E'),
+('q6', '123', 'q6@example.com', '010-1111-0006', 'User Six', 'user', 'defense', 'unranked', 'Region F', 'Province F', 'District F'),
+('q7', '123', 'q7@example.com', '010-1111-0007', 'User Seven', 'user', 'goalkeeper', 'bronze', 'Region G', 'Province G', 'District G'),
+('q8', '123', 'q8@example.com', '010-1111-0008', 'User Eight', 'user', 'midfield', 'silver', 'Region H', 'Province H', 'District H'),
+('q9', '123', 'q9@example.com', '010-1111-0009', 'User Nine', 'user', 'forward', 'gold', 'Region I', 'Province I', 'District I'),
+('q10', '123', 'q10@example.com', '010-1111-0010', 'User Ten', 'user', 'defense', 'platinum', 'Region J', 'Province J', 'District J');
+
 
 INSERT INTO stadium (name, address, price, capacity, image) VALUES
 ('대전 삼정 풋살파크', '대전 유성구 한밭대로371번길 25-4 삼정풋살파크', 50000, 100, 'https://d31wz4d3hgve8q.cloudfront.net/media/dg_sj_coner_1.jpeg?w=1920'),
@@ -217,7 +228,18 @@ INSERT INTO userstat (user_id, shoot, pass, speed, stamina, dribble, match_id) V
 ('sarah_midfield', 50, 45, 70, 75, 55, 8),  -- David with match 8 (Ulsan Grounds)
 ('david_goalkeeper', 88, 72, 90, 80, 85, 9),  -- Oliver with match 9 (Pohang Pitch)
 ('oliver_striker', 65, 85, 78, 88, 70, 10), -- Amelia with match 10 (Suwon Sports Complex)
-('choi', 100, 100, 100, 100, 100, 1); -- Amelia with match 10 (Suwon Sports Complex)
+('choi', 100, 100, 100, 100, 100, 1), -- Amelia with match 10 (Suwon Sports Complex)
+('amelia_playmaker', 0, 0, 0, 0, 0, 1),
+('q1', 5, 10, 15, 20, 5, 1),   -- Very low stats
+('q2', 15, 20, 25, 30, 15, 1),
+('q3', 25, 30, 35, 40, 25, 2),
+('q4', 35, 40, 45, 50, 35, 2),
+('q5', 45, 50, 55, 60, 45, 3),
+('q6', 60, 60, 80, 67, 69, 3),
+('q7', 63, 68, 66, 54, 72, 4),
+('q8', 75, 80, 85, 90, 75, 4),
+('q9', 53, 55, 35, 32, 51, 5),
+('q10', 66, 64, 72, 59, 67, 5);
 
 
 

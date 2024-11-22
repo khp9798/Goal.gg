@@ -18,5 +18,26 @@ public class UserStat {
     private LocalDateTime updatedAt; // 생성 시간
     private LocalDateTime startTime;
     
+    
+	public UserStat(int id, String userId, int matchId, int shoot, int pass, int speed, int stamina, int dribble,
+			LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime startTime) {
+		super();
+		this.id = id;
+		this.userId = userId;
+		this.matchId = matchId;
+		this.shoot = shoot;
+		this.pass = pass;
+		this.speed = speed;
+		this.stamina = stamina;
+		this.dribble = dribble;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+		this.startTime = startTime;
+	}
 
+
+	public UserStat() {
+	}
+    
+    
 }

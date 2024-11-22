@@ -13,7 +13,11 @@
           <img src="/src/assets/Background/backgroundimg.png" alt="BackGround Image" class="background-img" />
   
           <!-- Season Badge -->
-          <img src="/src/assets/Season/seasonimg.png" alt="Season Image" class="season-img" />
+          <div class="d-flex season-img align-items-center justify-content-start">
+            <img src="/src/assets/Season/seasonimg.png" alt="Season Image" >
+            <span class="ms-2">{{ store.myKLeaguer.name }}</span>
+          </div>
+          <!-- <img src="/src/assets/Season/seasonimg.png" alt="Season Image" class="season-img" > -->
 
           <img src="/src/assets/Flag/korea.jpg" alt="Flag Image" class="flag-img" />
 
@@ -28,14 +32,14 @@
           <!-- Player Info -->
           <div class="player-info">
             <!-- <div class="player-rank">24</div> -->
-            <div class="player-name">{{ store.myKLeaguer.name }}</div>
+            <!-- <div class="player-name">{{ store.myKLeaguer.name }}</div> -->
           </div>
         </div>
       </div>
     </div>
   </template>
 <script setup>
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted, computed, onUpdated } from "vue";
 import { Chart, registerables } from "chart.js";
 import { useStatStore } from "@/stores/stat";
 import { useUserStore } from "@/stores/user";
@@ -51,7 +55,7 @@ const targetdata = ref([]);
 const radarChart = ref(null);
 
 
-const keys = ["pass", "stamina", "dribble", "shoot", "speed"];
+const keys = ["shoot", "pass", "speed", "stamina", "dribble"];
 
 onMounted(async () => {
     // 데이터 로드
@@ -63,10 +67,13 @@ onMounted(async () => {
 
 
 
-    data.value = Object.values(store.userstatavg);
+    data.value = Object.keys(store.userstatavg)
+        .filter(key => keys.includes(key)) // keys에 포함된 key만 필터링
+        .map(key => store.userstatavg[key]);;
     targetdata.value = Object.keys(store.myKLeaguer)
         .filter(key => keys.includes(key)) // keys에 포함된 key만 필터링
         .map(key => store.myKLeaguer[key]); // 해당 key의 value를 가져옴
+
 
     // `radarChart` ref를 통해 DOM에 접근
     if (radarChart.value) {
@@ -74,19 +81,19 @@ onMounted(async () => {
         new Chart(ctx, {
             type: "radar",
             data: {
-                labels: ["Pass", "Stamina", "Dribble", "Shoot", "Speed"],
+                labels: ["Shoot", "Pass", "Speed", "Stamina", "Dribble"],
                 datasets: [
                     {
                         label: "User Stats",
                         data: data.value,
                         backgroundColor: "rgba(0, 128, 255, 0.4)",
-                        pointBackgroundColor: "red",
+                        pointBackgroundColor: "black",
                     },
                     {
                         label: store.myKLeaguer.name + " Stats",
                         data: targetdata.value,
                         backgroundColor: "rgba(128,0,0, 0.4)",
-                        pointBackgroundColor: "red",
+                        pointBackgroundColor: "black",
                     },
                 ],
             },
@@ -107,6 +114,7 @@ onMounted(async () => {
         });
     }
 });
+
 const positionColor = computed(()=>{
   const position = store.myKLeaguer.position
   if(['ST','CF','RW','LW'].includes(position)){
@@ -160,10 +168,17 @@ canvas {
 .season-img {
   position: absolute;
   top: 205px;
-  left: 45px;
+  left: 0.5rem;
   width: 30px;
   height: 22px;
   z-index: 2;
+  display: flex;
+  align-items: center; /* 세로 가운데 정렬 */
+  justify-content: start; /* 왼쪽 정렬 */
+  flex-direction: row;          /* 기본값으로 수평 정렬 */
+  align-items: center;
+  width: max-content;  /* 텍스트 길이에 맞춰 크기 조정 */
+  white-space: nowrap; /* 텍스트가 줄바꿈되지 않도록 설정 */
 }
 
 .flag-img {

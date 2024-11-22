@@ -84,13 +84,9 @@ public class UserStatController {
 				stamina += list.get(i).getStamina();
 				dribble += list.get(i).getDribble();
 			}
-			Map<String, Integer> stat = new HashMap<>();
-			stat.put("shoot", shoot /= size);
-			stat.put("pass", pass /= size);
-			stat.put("speed", speed /= size);
-			stat.put("stamina", stamina /= size);
-			stat.put("dribble", dribble /= size);
-//			System.out.println(stat);
+			
+			UserStat stat = new UserStat(0, null, 0, shoot/=size, pass/=size, speed/=size, stamina/=size, dribble/=size, null, null, null);
+			System.out.println(stat);
 			return new ResponseEntity<>(stat, HttpStatus.OK);
 		}
 		return new ResponseEntity<>("스텟 전체 조회에 실패했습니다", HttpStatus.NOT_FOUND);

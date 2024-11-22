@@ -19,7 +19,6 @@ export const useStatStore = defineStore('stat', () => {
         url: REST_STAT_API_URL + "/avg",
         params: { userId },
       });
-      // console.log(res.data);
       userstatavg.value = res.data;
     } catch (error) {
       // console.error("스탯 조회 실패:", error.response?.data || error.message);
