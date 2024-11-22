@@ -1,24 +1,44 @@
 <template>
     <div>
-
-        <div class="row row-cols-md-2 g-4 text-center">
-            <div>
-                <canvas ref="radarChart"></canvas>
-            </div>
-            <div>
-                <img :src="`/src/assets/PlayerImg/${store.myKLeaguer.playercode}.png`" alt="Player Image"/>
-                <p>{{ store.myKLeaguer.name }}</p>
-            </div>
+      <div class="row row-cols-md-2 g-4 text-center">
+        <div>
+          <canvas ref="radarChart"></canvas>
         </div>
-    </div>
-</template>
+        <div class="image-container mx-auto">
+            <div class="player-positionbox">
+            <!-- <div class="player-rank">24</div> -->
+            <div class="player-position" :class="positionColor">{{ store.myKLeaguer.position }}</div>
+          </div>
+          <!-- Background Image -->
+          <img src="/src/assets/Background/backgroundimg.png" alt="BackGround Image" class="background-img" />
+  
+          <!-- Season Badge -->
+          <img src="/src/assets/Season/seasonimg.png" alt="Season Image" class="season-img" />
 
+          <img src="/src/assets/Flag/korea.jpg" alt="Flag Image" class="flag-img" />
+
+          <img :src="`/src/assets/Team/${store.myKLeaguer.team}.png`" alt="Team Image" class="team-img" />
+
+          <img src="/src/assets/logo.png" alt="GOAL.GG Image" class="logo-img" />
+
+  
+          <!-- Player Image -->
+          <img :src="`/src/assets/PlayerImg/${store.myKLeaguer.playercode}.png`" alt="Player Image" class="player-img" />
+  
+          <!-- Player Info -->
+          <div class="player-info">
+            <!-- <div class="player-rank">24</div> -->
+            <div class="player-name">{{ store.myKLeaguer.name }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { Chart, registerables } from "chart.js";
 import { useStatStore } from "@/stores/stat";
 import { useUserStore } from "@/stores/user";
-
 // Chart.js 플러그인 등록
 Chart.register(...registerables);
 
@@ -29,6 +49,7 @@ const targetdata = ref([]);
 
 // `canvas`를 참조할 ref
 const radarChart = ref(null);
+
 
 const keys = ["pass", "stamina", "dribble", "shoot", "speed"];
 
@@ -88,6 +109,32 @@ onMounted(async () => {
         });
     }
 });
+const positionColor = computed(()=>{
+  const position = store.myKLeaguer.position
+  if(['ST','CF','RW','LW'].includes(position)){
+    return "forward"
+  } else if(['RB','LB','CB','RWB','LWB'].includes(position)){
+    return "defense"
+  } else if(position==='GK'){
+    return "goalkeeper"
+  } else{
+    return "midfield"
+  }
+
+
+})
+
+// const statusClass = computed(()=>{
+//     const status = matchstore.match.status
+//     if (status === "신청 가능") {
+//     return "btn-primary"; // 파란색 버튼
+//   } else if (status === "마감 임박") {
+//     return "btn-danger"; // 빨간색 버튼
+//   } else {
+//     return "btn-secondary"; // 회색 버튼
+//   }
+// });
+
 </script>
 
 <style scoped>
@@ -95,4 +142,114 @@ canvas {
     max-width: 100%;
     margin: auto;
 }
+.image-container {
+  position: relative;
+  width: 180px;
+  height: 280px;
+}
+
+/* Background Image */
+.background-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* Season Badge */
+.season-img {
+  position: absolute;
+  top: 205px;
+  left: 45px;
+  width: 30px;
+  height: 22px;
+  z-index: 2;
+}
+
+.flag-img {
+  position: absolute;
+  top: 100px;
+  left: 15px;
+  width: 35px;
+  height: 22px;
+  z-index: 2;
+}
+
+.logo-img {
+  position: absolute;
+  top: 20px;
+  left: 60px;
+  width: 55px;
+  height: 50px;
+  z-index: 2;
+  opacity: 0.6;
+}
+
+.team-img {
+  position: absolute;
+  bottom: 10px;
+  left: 68px;
+  width: 43px;
+  height: 43px;
+  z-index: 2;
+}
+
+
+/* Player Image */
+.player-img {
+  position: absolute;
+  top: 70px;
+  left: 25px;
+  width: 130px;
+  height: 130px;
+  z-index: 3;
+}
+
+/* Player Info */
+.player-info {
+  position: absolute;
+  bottom: 50px;
+  left: 18px;
+  width: 100%;
+  text-align: center;
+  z-index: 4;
+}
+
+.player-name {
+  font-size: 18px;
+  color: black;
+  font-weight: 900;
+}
+
+.player-positionbox {
+  position: absolute;
+  top : 70px;
+  right: 60px;
+  width: 100%;
+  text-align: center;
+  z-index: 4;
+}
+.player-position{
+  font-size: 18px;
+  font-weight: 900;
+}
+
+.forward{
+  color: rgb(215, 22, 22);
+}
+
+.midfield{
+  color: rgb(12, 214, 80);
+}
+
+.defense{
+  color: rgb(41, 113, 245);
+}
+
+.goalkeeper{
+  color:rgb(210, 210, 11)
+}
+
 </style>
