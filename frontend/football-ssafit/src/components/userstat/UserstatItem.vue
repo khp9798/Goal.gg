@@ -150,6 +150,7 @@ canvas {
 }
 .image-container {
   position: relative;
+  text-align: center;
   width: 180px;
   height: 280px;
 }
@@ -168,17 +169,11 @@ canvas {
 .season-img {
   position: absolute;
   top: 205px;
-  left: 0.5rem;
-  width: 30px;
-  height: 22px;
   z-index: 2;
   display: flex;
   align-items: center; /* 세로 가운데 정렬 */
-  justify-content: start; /* 왼쪽 정렬 */
   flex-direction: row;          /* 기본값으로 수평 정렬 */
-  align-items: center;
   width: max-content;  /* 텍스트 길이에 맞춰 크기 조정 */
-  white-space: nowrap; /* 텍스트가 줄바꿈되지 않도록 설정 */
 }
 
 .flag-img {

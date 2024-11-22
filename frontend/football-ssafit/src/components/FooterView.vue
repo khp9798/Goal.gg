@@ -1,21 +1,54 @@
 <template>
-   
-        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-            <div class="col-md-4 d-flex align-items-center">
-                <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
-                    <svg class="bi" width="30" height="24">
-                        <use xlink:href="#bootstrap"></use>
-                    </svg>
-                </a>
-                <span class="mb-3 mb-md-0 text-body-secondary">© 2024 Football SSAFIT</span>
-            </div>
 
-            
-        </footer>
+
+    <footer class="footer mt-5 bg-dark">
+        <div class="col-md-4 d-flex align-items-center">
+            <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
+                <svg class="bi" width="30" height="24">
+                    <use xlink:href="#bootstrap"></use>
+                </svg>
+            </a>
+            <span class="mb-3 mb-md-0 text-light">© 2024 GOAL.GG</span>
+        </div>
+    </footer>
 </template>
 
 <script setup>
-
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+/* 기본 스타일 */
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    /* 전체 페이지 높이 */
+}
+
+/* 전체 레이아웃 */
+.layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    /* 뷰포트 전체 높이 */
+}
+
+/* 콘텐츠 영역 */
+.content {
+    flex: 1;
+    /* 남는 공간을 채움 */
+    padding: 20px;
+    /* 기본 패딩 */
+}
+
+/* 푸터 스타일 */
+.footer {
+    /* 검은색 배경 */
+    color: white;
+    /* 흰색 텍스트 */
+    padding: 1rem;
+    text-align: center;
+    width: 100%;
+}
+</style>

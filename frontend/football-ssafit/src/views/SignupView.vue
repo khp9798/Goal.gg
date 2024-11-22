@@ -1,60 +1,148 @@
 <template>
-    <div>
-        회원가입 입니다.
-    </div>
-    <form @submit.prevent="trySignup">
-        <label for="userid">아이디</label>
-        <input type="text" id="userid" v-model="trySignupUser.userid" />
-        <hr>
-        <label for="password">비밀번호</label>
-        <input type="text" id="password" v-model="trySignupUser.password" />
-        <hr>
-        <label for="passwordcheck">비밀번호 확인</label>
-        <input type="text" id="passwordcheck" v-model="trySignupUser.passwordcheck" />
-        <hr>
-        <label for="email">이메일</label>
-        <input type="text" id="email" v-model="trySignupUser.email" />
-        <hr>
-        <label for="phoneNumber">휴대전화 번호</label>
-        <input type="text" id="phoneNumber" v-model="trySignupUser.phoneNumber" />
-        <hr>
-        <label for="name">이름</label>
-        <input type="text" id="name" v-model="trySignupUser.name" />
-        <hr>
-        <!-- Position 선택 -->
-        <label for="position">선호 포지션</label>
-        <select id="position" v-model="trySignupUser.position">
-            <option value="" disabled>-- 선택하세요 --</option>
-            <option value="forward">공격수</option>
-            <option value="midfield">미드필더</option>
-            <option value="defense">수비수</option>
-            <option value="goalkeeper">골키퍼</option>
-        </select>
-        <hr>
 
-        <!-- 권역 선택 -->
-        <label for="region">권역 선택:</label>
-        <select id="region" v-model="selectedRegion" @change="updateProvinces">
-            <option value="">선택</option>
-            <option v-for="region in regions" :key="region" :value="region">{{ region }}</option>
-        </select>
+    <section class="text-center text-lg-start">
 
-        <!-- 도/시 선택 -->
-        <label for="province">도/시 선택:</label>
-        <select id="province" v-model="selectedProvince" @change="updateDistricts">
-            <option value="">선택</option>
-            <option v-for="province in provinces" :key="province" :value="province">{{ province }}</option>
-        </select>
+        <!-- Jumbotron -->
+        <div class="container py-4">
+            <div class="row g-0 align-items-center">
+                <div class="col-lg-6 mb-5 mb-lg-0">
+                    <div class="card cascading-right bg-body-tertiary" style="
+          backdrop-filter: blur(30px);
+          ">
+                        <div class="card-body p-5 shadow-5 text-center">
+                            <h2 class="fw-bold mb-5">Sign up now</h2>
+                            <form @submit.prevent="trySignup">
 
-        <!-- 구/군 선택 -->
-        <label for="district">구/군 선택:</label>
-        <select id="district" v-model="selectedDistrict">
-            <option value="">선택</option>
-            <option v-for="district in districts" :key="district" :value="district">{{ district }}</option>
-        </select>
-        <hr>
-        <button type="submit">회원가입</button>
-    </form>
+
+
+
+                                <!-- 아이디 -->
+                                <div data-mdb-input-init class="form-outline mb-4">
+                                    <input type="text" id="userid" class="form-control"
+                                        v-model="trySignupUser.userid" />
+                                    <label class="form-label" for="userid">ID</label>
+                                </div>
+
+                                <!-- 비밀번호 -->
+                                <div data-mdb-input-init class="form-outline mb-4">
+                                    <input type="password" id="form3Example4" class="form-control"
+                                        v-model="trySignupUser.password" />
+                                    <label class="form-label" for="form3Example4">Password</label>
+                                </div>
+
+                                <!-- 비밀번호 확인 -->
+                                <div data-mdb-input-init class="form-outline mb-4">
+                                    <input type="password" id="passwordcheck" class="form-control"
+                                        v-model="trySignupUser.passwordcheck" />
+                                    <label class="form-label" for="passwordcheck">Check Password</label>
+                                </div>
+
+
+                                <!-- Email input -->
+                                <div data-mdb-input-init class="form-outline mb-4">
+                                    <input type="email" id="form3Example3" class="form-control"
+                                        v-model="trySignupUser.email" />
+                                    <label class="form-label" for="form3Example3">Email address</label>
+                                </div>
+
+
+                                <!-- Email input -->
+                                <div data-mdb-input-init class="form-outline mb-4">
+                                    <input type="text" id="name" class="form-control" v-model="trySignupUser.name" />
+                                    <label class="form-label" for="name">Name</label>
+                                </div>
+
+                                <!-- 전화번호 -->
+                                <div data-mdb-input-init class="form-outline mb-4">
+                                    <input type="tel" id="phone" class="form-control"
+                                        v-model="trySignupUser.phoneNumber" />
+                                    <label class="form-label" for="phone">phoneNumber</label>
+                                </div>
+
+                                <div class="row">
+                                    <!-- Position 선택 -->
+                                    <div class="mb-4">
+                                        <label for="position">선호 포지션</label>
+                                        <select id="position" v-model="trySignupUser.position">
+                                            <option value="" disabled>-- 선택하세요 --</option>
+                                            <option value="forward">공격수</option>
+                                            <option value="midfield">미드필더</option>
+                                            <option value="defense">수비수</option>
+                                            <option value="goalkeeper">골키퍼</option>
+                                        </select>
+                                    </div>
+
+
+
+                                    <!-- 권역 선택 -->
+                                    <div class="col-md-4">
+                                        <label for="region">권역 선택:</label>
+                                        <select id="region" v-model="selectedRegion" @change="updateProvinces">
+                                            <option value="">선택</option>
+                                            <option v-for="region in regions" :key="region" :value="region">{{
+                                                region }}
+                                            </option>
+                                        </select>
+                                    </div>
+
+
+                                    <!-- 도/시 선택 -->
+                                    <div class="col-md-4">
+                                        <label for="province">도/시 선택:</label>
+                                        <select id="province" v-model="selectedProvince" @change="updateDistricts">
+                                            <option value="">선택</option>
+                                            <option v-for="province in provinces" :key="province" :value="province">
+                                                {{
+                                                    province }}</option>
+                                        </select>
+                                    </div>
+
+
+
+                                    <div class="col-md-4">
+                                        <!-- 구/군 선택 -->
+                                        <label for="district">구/군 선택:</label>
+                                        <select id="district" v-model="selectedDistrict">
+                                            <option value="">선택</option>
+                                            <option v-for="district in districts" :key="district" :value="district">
+                                                {{
+                                                    district }}</option>
+                                        </select>
+                                    </div>
+
+                                </div>
+
+
+
+
+                                <!-- Submit button -->
+                                <button type="submit" data-mdb-button-init data-mdb-ripple-init
+                                    class="btn btn-primary btn-block mt-4">
+                                    Sign up
+                                </button>
+
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 mb-5 mb-lg-0">
+                    <!-- <img src="https://img.fcseoulite.me/files/attach/images/192/861/683/026/395e841484a8de4e4b32581ade78513f.mp4"
+                        class="w-100 rounded-4 shadow-4" alt="" /> -->
+                    <video width="800" height="1100" controls autoplay muted loop>
+                        <source
+                            src="/src/assets/린가드영상.mp4"
+                            type="video/mp4">
+                        브라우저가 비디오 태그를 지원하지 않습니다.
+                    </video>
+                </div>
+            </div>
+        </div>
+        <!-- Jumbotron -->
+    </section>
+    <!-- Section: Design Block -->
+
 </template>
 
 <script setup>
@@ -150,4 +238,14 @@ function trySignup() { // 로그인 시도
 
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+.cascading-right {
+    margin-right: -50px;
+}
+
+@media (max-width: 991.98px) {
+    .cascading-right {
+        margin-right: 0;
+    }
+}
+</style>
