@@ -21,17 +21,18 @@ public interface MatchService {
 
 	// 특정 경기 세부 정보 조회
 	Match selectOne(int id);
-	
+
 	List<Match> selectAll();
 
-	
-	//신청 가능한 매치 목록 가져오기
+	// 신청 가능한 매치 목록 가져오기
 	List<Match> selectcanList();
 
-
 	List<Match> selectStadiumMatch(int id);
-	
+
 	String matchAvgTier(int matchId);
 
 	List<Match> selectStadiumDayMatch(int id, String date);
+
+	// 추천 매치 목록 가져오기
+	List<Match> RecommandMatchList(String district, String province);
 }

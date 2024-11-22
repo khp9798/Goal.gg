@@ -7,8 +7,10 @@
 
 	<!-- 경기 등록 -->
 	<insert id="insertMatch">
-		INSERT INTO matches (stadium_id, start_time, end_time, status)
-		VALUES (#{stadiumId}, #{startTime}, #{endTime}, #{status})
+		INSERT INTO matches (stadium_id, start_time,
+		end_time, status)
+		VALUES (#{stadiumId}, #{startTime}, #{endTime},
+		#{status})
 	</insert>
 
 	<!-- 경기 수정 -->
@@ -39,25 +41,31 @@
 
 
 	<select id="selectOne">
-		select m.id, m.name, s.id, m.start_time, m.end_time, m.status, s.name as
+		select m.id, m.name, s.id, m.start_time, m.end_time,
+		m.status, s.name as
 		stadiumName, s.image, s.address
-		from matches m, stadium s
+		from matches m,
+		stadium s
 		where m.id = #{id} AND m.stadium_id = s.id;
 	</select>
 
 	<select id="selectAll">
-		select m.id, m.name, s.id, m.start_time, m.end_time, m.status, s.name as
+		select m.id, m.name, s.id, m.start_time, m.end_time,
+		m.status, s.name as
 		stadiumName, s.image
 		from matches m, stadium s
-		where m.stadium_id = s.id;
+		where
+		m.stadium_id = s.id;
 	</select>
 
 
 	<select id="selectcanList">
-		select m.id, m.name, s.id, m.start_time, m.end_time, m.status, s.name as
+		select m.id, m.name, s.id, m.start_time, m.end_time,
+		m.status, s.name as
 		stadiumName, s.image
 		from matches m, stadium s
-		where m.stadium_id = s.id
+		where
+		m.stadium_id = s.id
 		and m.status in ("마감 임박","신청 가능");
 	</select>
 
@@ -72,11 +80,16 @@
 	<select id="matchAvgTier" resultType="string">
 		SELECT
 		CASE
-		WHEN avg_tier &gt;= 0 AND avg_tier &lt; 0.5 THEN 'unranked'
-		WHEN avg_tier &gt;= 0.5 AND avg_tier &lt; 1.5 THEN 'bronze'
-		WHEN avg_tier &gt;= 1.5 AND avg_tier &lt; 2.5 THEN 'silver'
-		WHEN avg_tier &gt;= 2.5 AND avg_tier &lt; 3.5 THEN 'gold'
-		WHEN avg_tier &gt;= 3.5 AND avg_tier &lt; 4.5 THEN 'platinum'
+		WHEN avg_tier
+		&gt;= 0 AND avg_tier &lt; 0.5 THEN 'unranked'
+		WHEN avg_tier &gt;= 0.5
+		AND avg_tier &lt; 1.5 THEN 'bronze'
+		WHEN avg_tier &gt;= 1.5 AND
+		avg_tier &lt; 2.5 THEN 'silver'
+		WHEN avg_tier &gt;= 2.5 AND avg_tier
+		&lt; 3.5 THEN 'gold'
+		WHEN avg_tier &gt;= 3.5 AND avg_tier &lt; 4.5 THEN
+		'platinum'
 		WHEN avg_tier &gt;= 4.5 THEN 'diamond'
 		END as tier
 		FROM (
@@ -87,20 +100,36 @@
 		WHEN 'silver' THEN 2
 		WHEN 'gold' THEN 3
 		WHEN 'platinum' THEN 4
-		WHEN 'diamond' THEN 5
+		WHEN
+		'diamond' THEN 5
 		END
 		) AS avg_tier
 		FROM reservations
-		JOIN users ON reservations.user_id = users.userid
-		WHERE reservations.match_id = #{matchId}
+		JOIN users ON
+		reservations.user_id = users.userid
+		WHERE reservations.match_id =
+		#{matchId}
 		) AS subquery
 	</select>
-	
-<select id="selectStadiumDayMatch">
-    SELECT *
-    FROM matches
-    WHERE stadium_id = #{id} 
-      AND DATE(start_time) = DATE(#{date})
-</select>
+
+	<select id="selectStadiumDayMatch">
+		SELECT *
+		FROM matches
+		WHERE stadium_id = #{id}
+		AND
+		DATE(start_time) = DATE(#{date})
+	</select>
+
+
+	<select id="RecommandMatchList">
+		select distinct m.id, m.name, s.id, m.start_time, m.end_time, s.address,
+		m.status, s.name as
+		stadiumName, s.image from matches m, users u,
+		stadium s
+		where s.id = m.stadium_id and m.status in ('신청 가능', '마감 임박') and s.address
+		like concat('%',#{province},'%',#{district},'%')
+		order by m.status desc;
+	</select>
+
 
 </mapper>

@@ -41,4 +41,8 @@ public interface MatchDao {
 
 	List<Match> selectStadiumDayMatch(int id, String date);
 	
+	
+	//추천 매치 목록 가져오기
+	List<Match> RecommandMatchList(String district, String province);
+	
 }

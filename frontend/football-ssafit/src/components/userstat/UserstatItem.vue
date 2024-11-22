@@ -41,8 +41,6 @@ onMounted(async () => {
     }
 
 
-    store.getimg()
-    console.log(store.myKLeaguer.value)
 
     data.value = Object.values(store.userstatavg);
     targetdata.value = Object.keys(store.myKLeaguer)
