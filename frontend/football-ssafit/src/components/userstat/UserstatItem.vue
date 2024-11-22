@@ -1,43 +1,44 @@
 <template>
-    <div>
-      <div class="row row-cols-md-2 g-4 text-center">
-        <div>
-          <canvas ref="radarChart"></canvas>
+  <div class="row row-cols-md-2 row g-4 text-center">
+    
+      <div>
+        <canvas ref="radarChart"></canvas>
+      </div>
+   
+      <div class="image-container mx-auto">
+        <div class="player-positionbox">
+          <!-- <div class="player-rank">24</div> -->
+          <div class="player-position" :class="positionColor"> {{ store.myKLeaguer.position }}</div>
         </div>
-        <div class="image-container mx-auto">
-            <div class="player-positionbox">
-            <!-- <div class="player-rank">24</div> -->
-            <div class="player-position" :class="positionColor">{{ store.myKLeaguer.position }}</div>
-          </div>
-          <!-- Background Image -->
-          <img src="/src/assets/Background/backgroundimg.png" alt="BackGround Image" class="background-img" />
-  
-          <!-- Season Badge -->
-          <div class="d-flex season-img align-items-center justify-content-start">
-            <img src="/src/assets/Season/seasonimg.png" alt="Season Image" >
-            <span class="ms-2">{{ store.myKLeaguer.name }}</span>
-          </div>
-          <!-- <img src="/src/assets/Season/seasonimg.png" alt="Season Image" class="season-img" > -->
+        <!-- Background Image -->
+        <img src="/src/assets/Background/backgroundimg.png" alt="BackGround Image" class="background-img" />
 
-          <img src="/src/assets/Flag/korea.jpg" alt="Flag Image" class="flag-img" />
+        <!-- Season Badge -->
+        <div class="d-flex season-img">
+          <img src="/src/assets/Season/seasonimg.png" alt="Season Image">
+          <span class="nameBold">&nbsp;{{ shortenedName }}</span>
+        </div>
+        <!-- <img src="/src/assets/Season/seasonimg.png" alt="Season Image" class="season-img" > -->
 
-          <img :src="`/src/assets/Team/${store.myKLeaguer.team}.png`" alt="Team Image" class="team-img" />
+        <img src="/src/assets/Flag/korea.jpg" alt="Flag Image" class="flag-img" />
 
-          <img src="/src/assets/logo.png" alt="GOAL.GG Image" class="logo-img" />
+        <img :src="`/src/assets/Team/${store.myKLeaguer.team}.png`" alt="Team Image" class="team-img" />
 
-  
-          <!-- Player Image -->
-          <img :src="`/src/assets/PlayerImg/${store.myKLeaguer.playercode}.png`" alt="Player Image" class="player-img" />
-  
-          <!-- Player Info -->
-          <div class="player-info">
-            <!-- <div class="player-rank">24</div> -->
-            <!-- <div class="player-name">{{ store.myKLeaguer.name }}</div> -->
-          </div>
+        <img src="/src/assets/logo.png" alt="GOAL.GG Image" class="logo-img" />
+
+
+        <!-- Player Image -->
+        <img :src="`/src/assets/PlayerImg/${store.myKLeaguer.playercode}.png`" alt="Player Image" class="player-img" />
+
+        <!-- Player Info -->
+        <div class="player-info">
+          <!-- <div class="player-rank">24</div> -->
+          <!-- <div class="player-name">{{ store.myKLeaguer.name }}</div> -->
         </div>
       </div>
-    </div>
-  </template>
+  </div>
+
+</template>
 <script setup>
 import { ref, onMounted, computed, onUpdated } from "vue";
 import { Chart, registerables } from "chart.js";
@@ -57,73 +58,81 @@ const radarChart = ref(null);
 
 const keys = ["shoot", "pass", "speed", "stamina", "dribble"];
 
-onMounted(async () => {
-    // 데이터 로드
-    if (store.myKLeaguer.value == undefined || store.userstatavg.value == undefined) {
-        console.log("hi")
-        await store.getMyLeague(userStore.loginUser.userid);
-        await store.getStat(userStore.loginUser.userid);
-    }
-
-
-
-    data.value = Object.keys(store.userstatavg)
-        .filter(key => keys.includes(key)) // keys에 포함된 key만 필터링
-        .map(key => store.userstatavg[key]);;
-    targetdata.value = Object.keys(store.myKLeaguer)
-        .filter(key => keys.includes(key)) // keys에 포함된 key만 필터링
-        .map(key => store.myKLeaguer[key]); // 해당 key의 value를 가져옴
-
-
-    // `radarChart` ref를 통해 DOM에 접근
-    if (radarChart.value) {
-        const ctx = radarChart.value.getContext("2d");
-        new Chart(ctx, {
-            type: "radar",
-            data: {
-                labels: ["Shoot", "Pass", "Speed", "Stamina", "Dribble"],
-                datasets: [
-                    {
-                        label: "User Stats",
-                        data: data.value,
-                        backgroundColor: "rgba(0, 128, 255, 0.4)",
-                        pointBackgroundColor: "black",
-                    },
-                    {
-                        label: store.myKLeaguer.name + " Stats",
-                        data: targetdata.value,
-                        backgroundColor: "rgba(128,0,0, 0.4)",
-                        pointBackgroundColor: "black",
-                    },
-                ],
-            },
-            options: {
-                animation: {
-                    duration: 1000,
-                    easing: "easeOutBounce",
-                },
-                responsive: false,
-                scales: {
-                    r: {
-                        angleLines: { display: true },
-                        suggestedMin: 0,
-                        suggestedMax: 100,
-                    },
-                },
-            },
-        });
-    }
+const shortenedName = computed(() => {
+  const name = store?.myKLeaguer?.name; // 안전하게 접근
+  if (!name || name.length === 0) {
+    return ""; // 이름이 없으면 빈 문자열 반환
+  }
+  return name.length > 7 ? name.slice(0, 7) + "..." : name; // 7글자 초과 시 잘라냄
 });
 
-const positionColor = computed(()=>{
+onMounted(async () => {
+  // 데이터 로드
+  if (store.myKLeaguer.value == undefined || store.userstatavg.value == undefined) {
+    console.log("hi")
+    await store.getMyLeague(userStore.loginUser.userid);
+    await store.getStat(userStore.loginUser.userid);
+  }
+
+
+
+  data.value = Object.keys(store.userstatavg)
+    .filter(key => keys.includes(key)) // keys에 포함된 key만 필터링
+    .map(key => store.userstatavg[key]);;
+  targetdata.value = Object.keys(store.myKLeaguer)
+    .filter(key => keys.includes(key)) // keys에 포함된 key만 필터링
+    .map(key => store.myKLeaguer[key]); // 해당 key의 value를 가져옴
+
+
+  // `radarChart` ref를 통해 DOM에 접근
+  if (radarChart.value) {
+    const ctx = radarChart.value.getContext("2d");
+    new Chart(ctx, {
+      type: "radar",
+      data: {
+        labels: ["Shoot", "Pass", "Speed", "Stamina", "Dribble"],
+        datasets: [
+          {
+            label: "User Stats",
+            data: data.value,
+            backgroundColor: "rgba(0, 128, 255, 0.4)",
+            pointBackgroundColor: "black",
+          },
+          {
+            label: store.myKLeaguer.name + " Stats",
+            data: targetdata.value,
+            backgroundColor: "rgba(128,0,0, 0.4)",
+            pointBackgroundColor: "black",
+          },
+        ],
+      },
+      options: {
+        animation: {
+          duration: 1000,
+          easing: "easeOutBounce",
+        },
+        responsive: false,
+        scales: {
+          r: {
+            angleLines: { display: true },
+            suggestedMin: 0,
+            suggestedMax: 100,
+          },
+        },
+      },
+    });
+  }
+});
+
+const positionColor = computed(() => {
   const position = store.myKLeaguer.position
-  if(['ST','CF','RW','LW'].includes(position)){
+  if (['ST', 'CF', 'RW', 'LW'].includes(position)) {
     return "forward"
-  } else if(['RB','LB','CB','RWB','LWB'].includes(position)){
+  } else if (['RB', 'LB', 'CB', 'RWB', 'LWB'].includes(position)) {
     return "defense"
-  } else if(position==='GK'){
+  } else if (position === 'GK') {
     return "goalkeeper"
-  } else{
+  } else {
     return "midfield"
   }
 
@@ -145,13 +154,18 @@ const positionColor = computed(()=>{
 
 <style scoped>
 canvas {
-    max-width: 100%;
-    margin: auto;
+  max-width: 100%;
+  margin: auto;
 }
+
 .image-container {
   position: relative;
   width: 180px;
   height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  justify-items: center;
 }
 
 /* Background Image */
@@ -168,18 +182,20 @@ canvas {
 .season-img {
   position: absolute;
   top: 205px;
-  left: 0.5rem;
-  width: 30px;
-  height: 22px;
+  left: 0;
+  width: 100%;
+  height: auto;
   z-index: 2;
   display: flex;
-  align-items: center; /* 세로 가운데 정렬 */
-  justify-content: start; /* 왼쪽 정렬 */
-  flex-direction: row;          /* 기본값으로 수평 정렬 */
-  align-items: center;
-  width: max-content;  /* 텍스트 길이에 맞춰 크기 조정 */
-  white-space: nowrap; /* 텍스트가 줄바꿈되지 않도록 설정 */
+  justify-content: center; /* 수평 가운데 정렬 */
+  align-items: center; /* 수직 가운데 정렬 */
+  white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+  overflow: hidden; /* 넘치는 텍스트 숨기기 */
+  text-overflow: ellipsis; /* 넘칠 때 '...' 표시 */
+  padding : 0 10px; /* 양쪽 여백 추가 (필요하면 조정) */
+  box-sizing: border-box; /* 패딩 포함 크기 계산 */
 }
+
 
 .flag-img {
   position: absolute;
@@ -238,31 +254,35 @@ canvas {
 
 .player-positionbox {
   position: absolute;
-  top : 70px;
+  top: 70px;
   right: 60px;
   width: 100%;
   text-align: center;
   z-index: 4;
 }
-.player-position{
+
+.player-position {
   font-size: 18px;
   font-weight: 900;
 }
 
-.forward{
+.forward {
   color: rgb(215, 22, 22);
 }
 
-.midfield{
+.midfield {
   color: rgb(12, 214, 80);
 }
 
-.defense{
+.defense {
   color: rgb(41, 113, 245);
 }
 
-.goalkeeper{
-  color:rgb(210, 210, 11)
+.goalkeeper {
+  color: rgb(210, 210, 11)
 }
 
+.nameBold{
+  font-weight: 900;
+}
 </style>
