@@ -161,7 +161,7 @@ public class MatchController {
 	
 	@GetMapping("/recommand")
 	public ResponseEntity<?> RecommandMatchList(@RequestParam String district,@RequestParam String province){
-		System.out.println("시 :"+province);
+		System.out.println("시 : "+province);
 		System.out.println("구 : "+district);
 		List<Match> recommandList = mService.RecommandMatchList(district, province);
 		

@@ -160,6 +160,7 @@ canvas {
 
 .image-container {
   position: relative;
+  text-align: center;
   width: 180px;
   height: 280px;
   display: flex;
@@ -194,6 +195,7 @@ canvas {
   text-overflow: ellipsis; /* 넘칠 때 '...' 표시 */
   padding : 0 10px; /* 양쪽 여백 추가 (필요하면 조정) */
   box-sizing: border-box; /* 패딩 포함 크기 계산 */
+
 }
 
 

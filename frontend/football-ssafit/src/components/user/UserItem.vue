@@ -1,10 +1,11 @@
 <template>
     <div class="container mt-5">
 
-        <h5 class="mb-4">유저 능력치</h5>
+        <h2 class="mb-4">유저 능력치</h2>
 
         <div class="card p-4 shadow d-flex" v-if="userstore.loginUser.userid">
             <div class="row row-cols-md-2">
+
                 <!-- 유저 정보 -->
                 <div class="col-md-2">
                     <h4>이름</h4>
@@ -12,7 +13,7 @@
                     <h4>포지션</h4>
                     <p>{{ userstore.loginUser.position }}</p>
                     <h4>티어</h4>
-                    <p>{{ userstore.loginUser.tier }}</p>
+                    <img :src="`/src/assets/${userstore.loginUser.tier}.webp`" alt="" width="100" height="100">
                 </div>
 
 
