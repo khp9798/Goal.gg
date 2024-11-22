@@ -3,10 +3,11 @@
 
         <h2 class="mb-4">유저 능력치</h2>
 
-        <div class="card p-4 shadow" v-if="userstore.loginUser.userid">
-            <div class="ms-5 row row-cols-md-2">
+        <div class="card p-4 shadow d-flex" v-if="userstore.loginUser.userid">
+            <div class="row row-cols-md-2">
+
                 <!-- 유저 정보 -->
-                <div>
+                <div class="col-md-2">
                     <h4>이름</h4>
                     <p>{{ userstore.loginUser.name }}</p>
                     <h4>포지션</h4>
@@ -17,8 +18,9 @@
 
 
                 <!-- 유저 능력치 차트 -->
-                <UserstatItem />
-
+                <div class="col-md-10">
+                    <UserstatItem class="d-flex" />
+                </div>
 
             </div>
         </div>
