@@ -1,6 +1,7 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import axios from 'axios'
+import { useUserStore } from './user'
 
 
 const REST_RESERVATION_URL = "http://localhost:8080/reservations"
@@ -28,6 +29,8 @@ export const useReservationStore = defineStore('reservation', () => {
       reservation.value = response.data
     })
   }
+
+  
 
   return { reservationList,getList, reservation, getReservation }
 })

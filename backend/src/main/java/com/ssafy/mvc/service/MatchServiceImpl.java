@@ -66,6 +66,11 @@ public class MatchServiceImpl implements MatchService{
 	public List<Match> selectStadiumDayMatch(int id, String date) {
 		return dao.selectStadiumDayMatch(id, date);
 	}
+
+	@Override
+	public List<Match> RecommandMatchList(String district, String province) {
+		return dao.RecommandMatchList(district, province);
+	}
 	
 	
 

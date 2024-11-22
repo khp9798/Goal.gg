@@ -1,6 +1,7 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import axios from 'axios'
+import { useUserStore } from './user'
 
 
 const REST_MATCH_API_URL = "http://localhost:8080/matches"
@@ -15,6 +16,8 @@ export const useMatchStore = defineStore('match', () => {
   const stadiumMatchList = ref([]) // 해당 구장의 현재 매치
 
   const StadiumDayMatchList = ref([])
+
+  const RecommandMatchList = ref([])
 
   const getMatchList = function(){
     axios.get(REST_MATCH_API_URL)
@@ -78,6 +81,34 @@ export const useMatchStore = defineStore('match', () => {
     })
   }
 
-  return { StadiumDayMatchList,getStadiumDayMatch,matchList,getMatchList , match, getMatch, stadiumMatchList, getStadiumMatch,search, matchAvgTier, getMatchAvgTier }
+
+  const userstore = useUserStore()
+  const getRecommandMatchList = function(district,province) {
+    console.log(district)
+    console.log(province)
+    axios({
+      url: REST_MATCH_API_URL + "/recommand",
+      params: {
+        district,
+        province
+      }
+    }).then((res) => {
+      if (res.status === 204) {
+        console.log("추천 매치 없음");
+        RecommandMatchList.value = []; // 빈 목록 처리
+      } else {
+        console.log("추천 매치 리스트:");
+        console.log(res.data);
+        RecommandMatchList.value = res.data;
+      }
+    }).catch((err) => {
+      console.log("추천매치목록 가져오기 에러");
+      console.log(err);
+      getMatchList();
+    });
+  };
+  
+
+  return { StadiumDayMatchList,getStadiumDayMatch,matchList,getMatchList , match, getMatch, stadiumMatchList, getStadiumMatch,search, matchAvgTier, getMatchAvgTier, RecommandMatchList, getRecommandMatchList }
 
 })

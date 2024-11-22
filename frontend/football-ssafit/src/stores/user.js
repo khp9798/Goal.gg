@@ -20,8 +20,8 @@ export const useUserStore = defineStore('user', () => {
       data : tryLoginUser
     }).then((response)=>{
       console.log("로그인 성공")
-      console.log(response)
       loginUser.value = response.data // 현재 로그인 된 유저 아이디 업데이트
+      console.log(loginUser.value)
       router.replace({name : 'home'}) // 로그인 성공 시 홈으로(뒤로가기로?)
     }).catch((err)=>{
       console.log("로그인 실패")

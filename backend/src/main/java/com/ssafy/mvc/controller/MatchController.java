@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.mvc.dto.Match;
@@ -154,6 +155,21 @@ public class MatchController {
 		}
 
 		return new ResponseEntity<>("해당 경기장에 매치가 없습니다.", HttpStatus.NOT_FOUND);
+	}
+	
+	
+	
+	@GetMapping("/recommand")
+	public ResponseEntity<?> RecommandMatchList(@RequestParam String district,@RequestParam String province){
+		System.out.println("시 :"+province);
+		System.out.println("구 : "+district);
+		List<Match> recommandList = mService.RecommandMatchList(district, province);
+		
+		if(!recommandList.isEmpty() && recommandList!=null) {
+			return new ResponseEntity<>(recommandList, HttpStatus.OK);
+		}
+		
+		return new ResponseEntity<>("주변에 매치가 없습니다.",HttpStatus.NO_CONTENT);
 	}
 
 }
