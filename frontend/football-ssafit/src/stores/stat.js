@@ -65,18 +65,7 @@ export const useStatStore = defineStore('stat', () => {
   }
 
 
-  const getimg = async function () {
-    try {
-      const res = await axios.get('/proxy/image', {
-        params: { url: myKLeaguer.value.playerimg },
-      });
-      console.log(res.data);
-      myKLeaguer.value.playerimg = res.data
-    } catch (error) {
-      console.error("이미지 요청 실패:", error);
-    }
-  };
-  
 
-  return {userstatavg, getStat,getMyLeague, myKLeaguer, userstatList,getStatList,getimg }
+
+  return {userstatavg, getStat,getMyLeague, myKLeaguer, userstatList,getStatList, }
 })
