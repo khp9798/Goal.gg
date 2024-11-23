@@ -60,7 +60,7 @@ CREATE TABLE matches (
     name varchar(50) not null,
     stadium_id INT NOT NULL,                     -- 경기장이 매핑된 ID
     manager_id INT null,
-    capacity int not null,
+    capacity int null,
     start_time DATETIME NOT NULL,                -- 경기 시작 시간
     end_time DATETIME NOT NULL,                  -- 경기 종료 시간
     status ENUM('신청 가능', '마감 임박', '신청 마감','경기 취소') DEFAULT '신청 가능', -- 경기 상태

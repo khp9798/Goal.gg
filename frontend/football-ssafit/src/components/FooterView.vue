@@ -1,7 +1,7 @@
 <template>
 
 
-    <footer class="footer mt-5 bg-dark">
+    <footer class="footer mt-5" :class="userstore.isManagerMode ? 'gradient-effect-m' : 'gradient-effect-u'">
         <div class="col-md-4 d-flex align-items-center">
             <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
                 <svg class="bi" width="30" height="24">
@@ -14,6 +14,12 @@
 </template>
 
 <script setup>
+import { useUserStore } from '@/stores/user';
+import { onBeforeUpdate, watch } from 'vue';
+
+const userstore =useUserStore();
+
+
 </script>
 
 <style scoped>
@@ -50,5 +56,39 @@ body {
     padding: 1rem;
     text-align: center;
     width: 100%;
+}
+
+@keyframes gradient-m {
+    0% {
+        background: linear-gradient(90deg, #07782fe5, #212529);
+    }
+    50% {
+        background: linear-gradient(90deg, #07782fe5, #343a40);
+    }
+    100% {
+        background: linear-gradient(90deg, #07782fe5, #212529);
+    }
+}
+
+.gradient-effect-m {
+    animation: gradient-m 3600s ease-in-out infinite;
+    background-size: 200% 200%;
+}
+
+@keyframes gradient-u {
+    0% {
+        background: linear-gradient(90deg, #000000, #212529);
+    }
+    50% {
+        background: linear-gradient(90deg, #000000, #343a40);
+    }
+    100% {
+        background: linear-gradient(90deg, #000000, #212529);
+    }
+}
+
+.gradient-effect-u {
+    animation: gradient-u 3600s ease-in-out infinite;
+    background-size: 200% 200%;
 }
 </style>

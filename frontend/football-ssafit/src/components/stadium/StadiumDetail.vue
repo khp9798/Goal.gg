@@ -13,7 +13,7 @@
         <div>경기장 수용인원</div>
         {{ stadiumstore.stadium.capacity }}
         <div>
-            <vue-cal class=""  ref="vueCalRef" style="height:150px;" :time=false active-view="week"
+            <vue-cal class=""  ref="vueCalRef" style="height:600px;" :time=false active-view="week"
                 :disable-views="['years', 'year', 'month', 'day']" locale="ko" :events="events"
                 :show-week-numbers="false" @cell-click="SearchStadiumDayMatch" :today-button="true">
 

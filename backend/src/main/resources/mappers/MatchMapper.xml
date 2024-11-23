@@ -7,10 +7,9 @@
 
 	<!-- 경기 등록 -->
 	<insert id="insertMatch">
-		INSERT INTO matches (stadium_id, start_time,
-		end_time, status)
-		VALUES (#{stadiumId}, #{startTime}, #{endTime},
-		#{status})
+		INSERT INTO matches (name, stadium_id, manager_id, start_time,
+		end_time)
+		VALUES (#{name},#{stadiumId},#{managerId}, #{startTime}, #{endTime})
 	</insert>
 
 	<!-- 경기 수정 -->
