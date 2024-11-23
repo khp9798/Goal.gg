@@ -22,6 +22,7 @@ export const useUserStore = defineStore('user', () => {
       loginUser.value = response.data; // 현재 로그인된 유저 업데이트
       isAuth.value = true;
       sessionStorage.setItem('loginUser', JSON.stringify(loginUser.value)); // 세션 스토리지에 저장
+      console.log(loginUser.value)
       router.replace({ name: 'home' }); // 로그인 성공 시 홈으로 이동
     } catch (err) {
       console.log('로그인 실패');

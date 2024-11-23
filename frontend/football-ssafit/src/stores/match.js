@@ -20,6 +20,8 @@ export const useMatchStore = defineStore('match', () => {
 
   const RecommandMatchList = ref([])
 
+  const matchManagerList = ref([])
+
   const getMatchRegionList = function(region){
     axios({
       url: REST_MATCH_API_URL+"/search",
@@ -138,9 +140,21 @@ export const useMatchStore = defineStore('match', () => {
       alert("매치 등록에 실패했습니다")
     })
   }
+
+  const getMatchManagerList = function(managerid){
+    axios({
+      url : REST_MATCH_API_URL+'/manager',
+      method : 'GET',
+      params : {id : managerid}
+    }).then((res)=>{
+      matchManagerList.value = res.data
+      console.log(matchManagerList.value)
+    }).catch((err)=>{
+    })
+  }
   
 
-  return { registMatch, StadiumDayMatchList,getStadiumDayMatch,matchList , match, getMatch, stadiumMatchList, getStadiumMatch,search, matchAvgTier, getMatchAvgTier, RecommandMatchList, getRecommandMatchList, getMatchRegionList,
+  return { getMatchManagerList,matchManagerList, registMatch, StadiumDayMatchList,getStadiumDayMatch,matchList , match, getMatch, stadiumMatchList, getStadiumMatch,search, matchAvgTier, getMatchAvgTier, RecommandMatchList, getRecommandMatchList, getMatchRegionList,
     RegisterManager
    }
 

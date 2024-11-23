@@ -173,5 +173,17 @@ public class MatchController {
 		
 		return new ResponseEntity<>("주변에 매치가 없습니다.",HttpStatus.NO_CONTENT);
 	}
+	
+	//해당 매니저 담당 매치 조회
+	@GetMapping("/manager")
+	public ResponseEntity<?> getMatchManagerList(@RequestParam int id) {
+		List<Match> list = mService.getMatchManagerList(id);
+
+		if (!list.isEmpty() && list != null) {
+			return new ResponseEntity<>(list, HttpStatus.OK);
+		}
+		System.out.println(id);
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+	}
 
 }

@@ -44,5 +44,8 @@ public interface MatchDao {
 	
 	//추천 매치 목록 가져오기
 	List<Match> RecommandMatchList(String district, String province);
+
+
+	List<Match> getMatchManagerList(int id);
 	
 }

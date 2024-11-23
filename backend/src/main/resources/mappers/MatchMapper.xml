@@ -154,6 +154,18 @@
 		concat('%',#{province},'%',#{district},'%')
 		order by m.status desc;
 	</select>
+	
+<select id="getMatchManagerList">
+    SELECT 
+        m.*,               -- matches 테이블의 모든 컬럼
+        s.name AS stadium_name, -- stadium의 name
+        s.address AS address -- stadium의 address
+    FROM matches m
+    JOIN stadium s
+    ON m.stadium_id = s.id
+    WHERE m.manager_id = #{id}
+</select>
+
 
 
 </mapper>
