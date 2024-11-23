@@ -23,28 +23,12 @@
         <div class="card flex-grow-1">
           <div class="card-body">
             <h5 class="card-title">구장 정보</h5>
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>Source</th>
-                  <th>Info</th>
-                  <th>Charge</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>8x8 축구 매치</td>
-                  <td>70×37m 실외 인조잔디</td>
-                  <td>110000</td>
-                </tr>
-                <tr>
-                  <td>A 구장</td>
-                  <td>37×20m 실외 인조잔디</td>
-                  <td>50000</td>
-                </tr>
-
-              </tbody>
-            </table>
+            <p v-if="managerName">
+              {{ managerName }}님이 매니저로 참여합니다.
+            </p>
+            <p v-else>
+              아직 매치 매니저가 등록되지 않았습니다.
+            </p>
           </div>
         </div>
       </div>
@@ -133,7 +117,7 @@
 import router from '@/router';
 import { useMatchStore } from '@/stores/match';
 import { useUserStore } from '@/stores/user';
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
 const route = useRoute()
@@ -177,6 +161,9 @@ const goLoginView = function () {
 
 const RegisterManager = function () {
   alert("매치 매니저로 신청 되었습니다.")
+  let match = matchstore.match
+  match.managerId = userstore.loginUser.id
+  matchstore.RegisterManager(match)
 }
 
 
@@ -202,6 +189,17 @@ const formatNumber = (number) => {
 const formattedPrice = computed(() => formatNumber(price.value));
 const formattedPromotion = computed(() => formatNumber(promotion.value));
 const formattedRealPrice = computed(() => formatNumber(price.value - promotion.value));
+
+
+const managerName = ref("")
+
+watch(()=>matchstore.match, (newValue)=>{
+  managerName.value = newValue.managerName
+  matchstore.getMatch(route.params.id)
+},{deep:true})
+
+
+
 onMounted(() => {
   matchstore.getMatch(route.params.id)
   matchstore.getMatchAvgTier(route.params.id)

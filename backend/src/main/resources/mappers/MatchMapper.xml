@@ -19,7 +19,8 @@
 		SET stadium_id = #{stadiumId},
 		start_time = #{startTime},
 		end_time = #{endTime},
-		status = #{status}
+		status = #{status},
+		manager_id = #{managerId}
 		WHERE id = #{id}
 	</update>
 
@@ -37,17 +38,36 @@
 		from matches m, stadium s
 		where
 		m.stadium_id = s.id and s.address like concat('%',#{region},'%');
-		
+
 	</select>
 
 
 	<select id="selectOne">
-		select m.id, m.name, s.id, m.start_time, m.end_time,
-		m.status, s.name as
-		stadiumName, s.image, s.address
-		from matches m,
+		SELECT
+		m.id,
+		m.name,
+		s.id,
+		m.start_time,
+		m.end_time,
+		m.status,
+		m.stadium_id,
+		s.name AS stadiumName,
+		s.image,
+		s.address,
+		u.name AS managerName
+		FROM
+		matches m
+		JOIN
 		stadium s
-		where m.id = #{id} AND m.stadium_id = s.id;
+		ON
+		m.stadium_id = s.id
+		LEFT JOIN
+		users u
+		ON
+		m.manager_id IS NOT NULL AND m.manager_id = u.id
+		WHERE
+		m.id = #{id};
+
 	</select>
 
 	<select id="selectAll">
@@ -123,12 +143,16 @@
 
 
 	<select id="RecommandMatchList">
-		select distinct m.id, m.name, s.id, m.start_time, m.end_time, s.address,
+		select distinct m.id, m.name, s.id, m.start_time,
+		m.end_time, s.address,
 		m.status, s.name as
-		stadiumName, s.image from matches m, users u,
+		stadiumName, s.image from
+		matches m, users u,
 		stadium s
-		where s.id = m.stadium_id and m.status in ('신청 가능', '마감 임박') and s.address
-		like concat('%',#{province},'%',#{district},'%')
+		where s.id = m.stadium_id and m.status in
+		('신청 가능', '마감 임박') and s.address
+		like
+		concat('%',#{province},'%',#{district},'%')
 		order by m.status desc;
 	</select>
 

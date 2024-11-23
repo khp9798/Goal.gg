@@ -9,6 +9,8 @@ public class Match {
 	private int id;                // 고유 ID
 	private String name;			//매치 이름 
     private int stadiumId;         // 경기장이 매핑된 ID
+    private int managerId;			//경기 담당 매니저 id
+    private String managerName;
     private String stadiumName;		//경기장 이름 
     private LocalDateTime startTime;  // 경기 시작 시간
     private LocalDateTime endTime;    // 경기 종료 시간

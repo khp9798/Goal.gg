@@ -108,13 +108,14 @@ public class MatchController {
 	// 특정 매치 조회
 	@GetMapping("/{id}")
 	public ResponseEntity<?> selectOne(@PathVariable int id) {
+		System.out.println(id);
 		Match match = mService.selectOne(id);
-		System.out.println(match);
+//		System.out.println(match);
 
 		if (match != null) {
 			return new ResponseEntity<>(match, HttpStatus.OK);
 		}
-
+		
 		return new ResponseEntity<>("그런 아이디를 가진 match는 없습니다.", HttpStatus.NOT_FOUND);
 	}
 	

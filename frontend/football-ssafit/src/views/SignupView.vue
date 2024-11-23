@@ -130,7 +130,7 @@
                 <div class="col-lg-6 mb-5 mb-lg-0">
                     <!-- <img src="https://img.fcseoulite.me/files/attach/images/192/861/683/026/395e841484a8de4e4b32581ade78513f.mp4"
                         class="w-100 rounded-4 shadow-4" alt="" /> -->
-                    <video width="800" height="1100" controls autoplay muted loop>
+                    <video width="800" height="1100" autoplay muted loop>
                         <source
                             src="/src/assets/린가드영상.mp4"
                             type="video/mp4">

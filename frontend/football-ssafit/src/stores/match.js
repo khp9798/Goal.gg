@@ -40,7 +40,6 @@ export const useMatchStore = defineStore('match', () => {
     axios.get(REST_MATCH_API_URL+"/"+id)
     .then((response)=>{
       match.value = response.data
-      console.log(match)
     })
     .catch((err)=>{
       console.log(err.response.data)
@@ -112,8 +111,26 @@ export const useMatchStore = defineStore('match', () => {
       console.log(err);
     });
   };
+
+
+  //매니저등록
+  const RegisterManager = function(match){
+    axios({
+      url : REST_MATCH_API_URL,
+      method : 'put',
+      data : match
+    })
+    .then((res)=>{
+      console.log(res.data)
+    })
+    .catch((err)=>{
+      console.log("매니저 등록 실패")
+    })
+  }
   
 
-  return { StadiumDayMatchList,getStadiumDayMatch,matchList , match, getMatch, stadiumMatchList, getStadiumMatch,search, matchAvgTier, getMatchAvgTier, RecommandMatchList, getRecommandMatchList, getMatchRegionList }
+  return { StadiumDayMatchList,getStadiumDayMatch,matchList , match, getMatch, stadiumMatchList, getStadiumMatch,search, matchAvgTier, getMatchAvgTier, RecommandMatchList, getRecommandMatchList, getMatchRegionList,
+    RegisterManager
+   }
 
 })
