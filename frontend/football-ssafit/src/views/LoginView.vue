@@ -6,11 +6,7 @@
                 <div class="col col-xl-10">
                     <div class="card h-100" style="border-radius: 1rem; margin: 0;">
                         <div class="row g-0 h-100">
-                            <div class="col-md-6 col-lg-5 d-none d-md-block">
-                                <img src="https://cdn.spotvnews.co.kr/news/photo/202210/558962_781459_4446.jpg"
-                                    alt="login form" class="img-fluid h-100"
-                                    style="border-radius: 1rem 0 0 1rem; object-fit: cover;" />
-                            </div>
+                            
                             <div class="col-md-6 col-lg-7 d-flex align-items-center">
                                 <div class="card-body p-4 p-lg-5 text-black">
 
@@ -46,6 +42,11 @@
                                     </form>
 
                                 </div>
+                            </div>
+                            <div class="col-md-6 col-lg-5 d-none d-md-block">
+                                <img src="https://cdn.spotvnews.co.kr/news/photo/202210/558962_781459_4446.jpg"
+                                    alt="login form" class="img-fluid h-100"
+                                    style="border-radius: 1rem 0 0 1rem; object-fit: cover;" />
                             </div>
                         </div>
                     </div>

@@ -51,7 +51,7 @@ export const useUserStore = defineStore('user', () => {
     }).then((response)=>{
       console.log("회원가입 성공")
       console.log(response)
-      router.replace({name : 'home'}) // 로그인 성공 시 홈으로(뒤로가기로?)
+      router.replace({name : 'loginview'}) // 로그인 성공 시 홈으로(뒤로가기로?)
     }).catch((err)=>{
       console.log("회원가입 실패")
       console.log(err)

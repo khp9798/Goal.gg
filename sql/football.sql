@@ -819,3 +819,7 @@ delete from kleagueplayers where playercode in
 SET SQL_SAFE_UPDATES = 1;
 
 
+
+SELECT r.id, r.user_id, r.match_id, r.reservation_date, r.created_at, r.updated_at, m.name, m.start_time, m.end_time
+        FROM reservations r, matches m
+        WHERE r.user_id =  'ssafy' and  m.id = r.match_id and m.status in ('신청 가능','마감 임박';

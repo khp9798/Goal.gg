@@ -233,7 +233,15 @@ const trySignupUser = ref({ // 입력된 회원가입 정보
     district: computed(() => selectedDistrict.value)
 })
 function trySignup() { // 로그인 시도
-    userstore.trySignup(trySignupUser.value)
+    if(!selectedRegion.value || !selectedProvince.value || !selectedDistrict.value){
+        alert("시,군,구를 선택해주세요.")
+    }
+    else if(!trySignupUser.value.position){
+        alert("선호 포지션을 선택해주세요.")
+    }
+    else{
+        userstore.trySignup(trySignupUser.value)
+    }
 }
 
 </script>

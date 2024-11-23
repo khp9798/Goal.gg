@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="container mt-5">
         <h2>매치 일정</h2>
         <Calender/>
     </div>

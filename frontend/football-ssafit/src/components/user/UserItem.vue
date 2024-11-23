@@ -1,7 +1,7 @@
 <template>
     <div class="container mt-5">
 
-        <h2 class="mb-4">유저 능력치</h2>
+        <h2>유저 능력치</h2>
 
         <div class="card p-4 shadow d-flex" v-if="userstore.loginUser.userid">
             <div class="row row-cols-md-2">
@@ -55,6 +55,7 @@
 import { useUserStore } from "@/stores/user";
 import { onMounted } from "vue";
 import UserstatItem from "../userstat/UserstatItem.vue";
+import router from "@/router";
 
 const userstore = useUserStore();
 
@@ -65,6 +66,9 @@ onMounted(() => {
         userstore.getUserstat(userstore.loginUser.userid)
     }
 })
+
+
+
 </script>
 
 <style scoped>

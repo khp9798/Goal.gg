@@ -1,12 +1,11 @@
 <template>
-    <div>
-        <li @click="goDetail">
-            {{ props.reservation.name }}
-            {{ props.reservation.reservationDate.replace('T', ' ').slice(0, 16) }}
-            경기 타임 : {{ props.reservation.startTime.replace('T', ' ').slice(0, 16) }} ~ 
-            {{ props.reservation.endTime.replace('T', ' ').slice(0, 16) }}
-        </li>
-    </div>
+    <tr @click="goDetail">
+        <td>{{ props.reservation.name }}</td>
+        <td>{{ props.reservation.startTime.replace('T', ' ').slice(0, 16) }}</td>
+        <td>{{ props.reservation.endTime.replace('T', ' ').slice(0, 16) }}</td>
+        <td>{{ props.reservation.status }}</td>
+        <td>{{ props.reservation.reservationDate.replace('T', ' ').slice(0, 16) }}</td>
+    </tr>
 </template>
 
 <script setup>
