@@ -30,14 +30,23 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUpdate, onBeforeMount, onUpdated } from 'vue';
+import { ref, onMounted, onBeforeUpdate, onBeforeMount, onUpdated, watch } from 'vue';
 import { useMatchStore } from '@/stores/match';
 import MatchRecommandListItem from './MatchRecommandListItem.vue';
 import { useUserStore } from '@/stores/user';
+import router from '@/router';
 
 const store = useMatchStore();
 const userstore = useUserStore();
-
+watch(()=>userstore.loginUser,()=>{
+    console.log("변화감지완료")
+    if(!userstore.loginUser.district || !userstore.loginUser.province){
+        store.getRecommandMatchList("","")
+    }else{
+        store.getRecommandMatchList(userstore.loginUser.district, userstore.loginUser.province);
+    }
+    // router.replace({name:'home'})
+},{deep:true})
 
 // 스크롤 컨테이너
 const scrollContainer = ref(null);
@@ -63,6 +72,9 @@ onMounted(() => {
         store.getRecommandMatchList(userstore.loginUser.district, userstore.loginUser.province);
     }
 });
+
+
+
 </script>
 
 <style scoped>

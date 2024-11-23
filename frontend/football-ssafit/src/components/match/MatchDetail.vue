@@ -29,6 +29,8 @@
             <p v-else>
               아직 매치 매니저가 등록되지 않았습니다.
             </p>
+            <h6>매치 시간 : {{ matchstore.match.startTime }} - {{ matchstore.match.endTime }}</h6>
+ 
           </div>
         </div>
       </div>

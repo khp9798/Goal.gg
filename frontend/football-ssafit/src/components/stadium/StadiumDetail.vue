@@ -13,9 +13,9 @@
         <div>경기장 수용인원</div>
         {{ stadiumstore.stadium.capacity }}
         <div>
-            <vue-cal  ref="vueCalRef" style="height:150px;" :time=false active-view="week"
+            <vue-cal class=""  ref="vueCalRef" style="height:150px;" :time=false active-view="week"
                 :disable-views="['years', 'year', 'month', 'day']" locale="ko" :events="events"
-                :show-week-numbers="false" @cell-click="SearchStadiumDayMatch">
+                :show-week-numbers="false" @cell-click="SearchStadiumDayMatch" :today-button="true">
 
                 <template #arrow-prev>
                     <i class="icon material-icons">&lt;</i>
@@ -140,8 +140,14 @@ const SearchStadiumDayMatch = (day) => {
 </script>
 
 <style>
-.vuecal__flex.weekday-label {
-  background-color: aqua;
-  color: red;
-}
+.vuecal__menu, .vuecal__cell-events-count {background-color: #42b983;}
+.vuecal__title-bar {background-color: #e4f5ef;}
+.vuecal__cell--today, .vuecal__cell--current {background-color: rgba(22, 200, 93, 0.581);}
+.vuecal:not(.vuecal--day-view) .vuecal__cell--selected {background-color: rgb(255, 80, 45);}
+.vuecal__cell--selected:before {border-color: rgba(66, 185, 131, 0.5);}
+/* Cells and buttons get highlighted when an event is dragged over it. */
+.vuecal__cell--highlighted:not(.vuecal__cell--has-splits),
+.vuecal__cell-split--highlighted {background-color: rgba(195, 255, 225, 0.5);}
+.vuecal__arrow.vuecal__arrow--highlighted,
+.vuecal__view-btn.vuecal__view-btn--highlighted {background-color: rgba(136, 236, 191, 0.25);}
 </style>
