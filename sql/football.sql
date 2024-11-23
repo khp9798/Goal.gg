@@ -137,7 +137,7 @@ DELIMITER ;
 SET GLOBAL event_scheduler = ON;
 
 INSERT INTO users (userid, password, email, phone_number, name, role, position, tier, region, province, district) VALUES
-('ssafy', 'ssafy', 'ssafy@example.com', '010-1111-2222', '양명균', 'admin', 'forward', 'bronze', '충청권', '대전', '대덕구'),
+('ssafy', 'ssafy', 'ssafy@example.com', '010-1111-2222', '양명균', 'manager', 'forward', 'bronze', '충청권', '대전', '대덕구'),
 ('john_doe', 'hashedpassword1', 'john@example.com', '010-1111-2222', 'John Doe', 'user', 'forward', 'bronze', '경상권', '부산', '해운대구'),
 ('jane_smith', 'hashedpassword2', 'jane@example.com', '010-2222-3333', 'Jane Smith', 'user', 'midfield', 'silver', '전라권', '전남', '순천시'),
 ('michael_admin', 'hashedpassword3', 'admin@example.com', '010-3333-4444', 'Michael Admin', 'admin', 'defense', 'gold', '충청권', '충북', '청주시 서원구'),

@@ -3,6 +3,9 @@ import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.bundle';
+// main.js 또는 main.ts (Vue.js의 진입 파일)
+import 'bootstrap-icons/font/bootstrap-icons.css';
+
 
 
 import App from './App.vue'

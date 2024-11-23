@@ -13,6 +13,8 @@ export const useUserStore = defineStore('user', () => {
   const loginUserStat = ref({
   })
 
+  const isManagerMode = ref(false)
+
   const tryLogin = function(tryLoginUser){ // 유저 로그인
     axios({
       url : REST_USER_API+'/login',
@@ -35,6 +37,7 @@ export const useUserStore = defineStore('user', () => {
     loginUser.value ={}
     statStore.userstatavg = {}
     statStore.myKLeaguer = {}
+    isManagerMode.value = false
     console.log("로그아웃 성공")
     router.replace({name:'home'})
   }
@@ -73,5 +76,5 @@ export const useUserStore = defineStore('user', () => {
   }
   
 
-  return {loginUser, tryLogin, tryLogout, trySignup, getUserstat, loginUserStat   }
+  return {loginUser, tryLogin, tryLogout, trySignup, getUserstat, loginUserStat, isManagerMode   }
 })

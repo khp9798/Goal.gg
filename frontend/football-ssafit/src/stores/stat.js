@@ -37,7 +37,7 @@ export const useStatStore = defineStore('stat', () => {
         console.log("mykleague")
         console.log(myKLeaguer.value)
       }).catch((err)=>{
-        console.log(err)
+        // console.log(err)
       })
     } catch (error){
       
