@@ -1,99 +1,142 @@
 <template>
-
-    <section class="vh-100" style="margin: 0; padding: 0;">
-        <div class="container h-100 p-0">
+    <section class="vh-100 bg-light" style="margin: 0; padding: 0;">
+        <div class="container h-100">
             <div class="row h-100 d-flex justify-content-center align-items-center">
                 <div class="col col-xl-10">
-                    <div class="card h-100" style="border-radius: 1rem; margin: 0;">
+                    <div class="card shadow-lg" style="border-radius: 1rem;">
                         <div class="row g-0 h-100">
-                            
+
+                            <!-- 이미지 영역 -->
+                            <div class="col-md-6 col-lg-5 d-none d-md-block">
+                                <img src="https://cdn.spotvnews.co.kr/news/photo/202210/558962_781459_4446.jpg"
+                                    alt="login form" class="img-fluid h-100 rounded-start" style="object-fit: cover;" />
+                            </div>
+
+                            <!-- 로그인 폼 영역 -->
                             <div class="col-md-6 col-lg-7 d-flex align-items-center">
-                                <div class="card-body p-4 p-lg-5 text-black">
+                                <div class="card-body p-5 text-black">
 
                                     <form @submit.prevent="tryLogin">
-
-                                        <div class="d-flex align-items-center mb-3 pb-1">
-                                            <img src="/src/assets/logo.png" alt="" width="100" class="bg-dark">
+                                        <!-- 로고 -->
+                                        <div class="d-flex align-items-center justify-content-center mb-4">
+                                            <img src="/src/assets/logo.png" alt="Logo" width="80"
+                                                class="rounded-circle bg-dark p-2">
                                         </div>
 
-                                        <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Sign into your
-                                            account</h5>
+                                        <!-- 제목 -->
+                                        <h5 class="fw-bold text-center mb-4" style="letter-spacing: 1px;">로그인</h5>
 
-                                        <div data-mdb-input-init class="form-outline mb-4">
-                                            <label class="form-label" for="form2Example17">ID</label>
+                                        <!-- ID 입력 -->
+                                        <div class="form-outline mb-4">
+                                            <label class="form-label" for="form2Example17">아이디</label>
                                             <input type="text" id="form2Example17" class="form-control form-control-lg"
-                                                v-model="tryLoginUser.userid" />
+                                                v-model="tryLoginUser.userid" placeholder="아이디를 입력하세요" />
                                         </div>
 
-                                        <div data-mdb-input-init class="form-outline mb-4">
-                                            <label class="form-label" for="form2Example27">Password</label>
+                                        <!-- 비밀번호 입력 -->
+                                        <div class="form-outline mb-4">
+                                            <label class="form-label" for="form2Example27">비밀번호</label>
                                             <input type="password" id="form2Example27"
-                                                class="form-control form-control-lg" v-model="tryLoginUser.password" />
+                                                class="form-control form-control-lg" v-model="tryLoginUser.password"
+                                                placeholder="비밀번호를 입력하세요" />
                                         </div>
 
-                                        <div class="d-flex justify-content-even pt-1 mb-4">
-                                            <button data-mdb-button-init data-mdb-ripple-init
-                                                class="btn btn-dark btn-lg me-2" type="submit">Login</button>
-                                            <button data-mdb-button-init data-mdb-ripple-init
-                                                class="btn btn-dark btn-lg" type="button"
-                                                @click="goSignupView">Register</button>
+                                        <!-- 버튼 -->
+                                        <div class="d-flex justify-content-between pt-1 mb-4">
+                                            <button class="btn btn-dark btn-lg me-2 w-50" type="submit">
+                                                로그인
+                                            </button>
+                                            <button class="btn btn-outline-dark btn-lg w-50" type="button"
+                                                @click="goSignupView">
+                                                회원가입
+                                            </button>
                                         </div>
-
                                     </form>
 
                                 </div>
                             </div>
-                            <div class="col-md-6 col-lg-5 d-none d-md-block">
-                                <img src="https://cdn.spotvnews.co.kr/news/photo/202210/558962_781459_4446.jpg"
-                                    alt="login form" class="img-fluid h-100"
-                                    style="border-radius: 1rem 0 0 1rem; object-fit: cover;" />
-                            </div>
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-
-
-
 </template>
 
 <script setup>
-import { useUserStore } from '@/stores/user'; //유저 스토어 임포트
+import { useUserStore } from '@/stores/user';
 import { ref } from 'vue';
 import router from '@/router';
-const userstore = useUserStore() // 유저 스토어 사용
-const tryLoginUser = ref({ // 입력된 로그인 정보
+
+const userstore = useUserStore(); // 유저 스토어 사용
+const tryLoginUser = ref({
     userid: '',
-    password: ''
-})
+    password: '',
+});
 
-function tryLogin() { // 로그인 시도
-    userstore.tryLogin(tryLoginUser.value)
-    tryLoginUser.value = {};
+function tryLogin() {
+    userstore.tryLogin(tryLoginUser.value);
+    tryLoginUser.value = { userid: '', password: '' };
 }
 
-
-const goSignupView = function () {
-    router.push({ name: 'signup' })
+function goSignupView() {
+    router.push({ name: 'signup' });
 }
-
 </script>
 
 <style scoped>
-.rounded-t-5 {
-    border-top-left-radius: 0.5rem;
-    border-top-right-radius: 0.5rem;
+/* 카드 그림자와 반응형 스타일 */
+.card {
+    border-radius: 1rem;
+    background-color: #fff;
+    border: none;
+    overflow: hidden;
 }
 
-@media (min-width: 992px) {
-    .rounded-tr-lg-0 {
-        border-top-right-radius: 0;
-    }
+.img-fluid {
+    border-top-left-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+}
 
-    .rounded-bl-lg-5 {
-        border-bottom-left-radius: 0.5rem;
+@media (max-width: 768px) {
+    .img-fluid {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
     }
+}
+
+h5 {
+    color: #333;
+}
+
+.form-control {
+    border: 1px solid #ddd;
+    border-radius: 0.5rem;
+}
+
+.form-control:focus {
+    box-shadow: none;
+    border-color: #333;
+}
+
+.btn {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #444;
+    color: #fff;
+}
+
+.btn-outline-dark {
+    border: 1px solid #444;
+    background-color: #fff;
+    color: #444;
+}
+
+.btn-outline-dark:hover {
+    background-color: #444;
+    color: #fff;
 }
 </style>

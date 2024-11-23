@@ -1,18 +1,26 @@
 <template>
     <div class="container mt-5">
-        <h2>매치 일정</h2>
-        <!-- 모달을 열기 위한 버튼 -->
-        <button type="button" id="btn" class="btn btn-outline-dark mt-3 mb-3" @click="openModal">
-            {{ selectedRegion || '지역 선택' }}
-        </button>
+        <h2 class="mb-4">매치 일정</h2>
 
-        <!-- 모달 -->
+        <!-- 지역 선택 버튼 -->
+        <div class="text-center mb-4">
+            <button type="button" class="btn btn-outline-dark" @click="openModal">
+                {{ selectedRegion || "지역 선택" }}
+            </button>
+        </div>
+
+        <!-- 캘린더 컴포넌트 -->
+        <div class="card p-4 shadow">
+            <Calender />
+        </div>
+
+        <!-- 지역 선택 모달 -->
         <div class="modal fade" ref="regionModal" tabindex="-1" aria-labelledby="regionModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <!-- 모달 헤더 -->
                     <div class="modal-header">
-                        <h5 class="modal-title" id="regionModalLabel">지역</h5>
+                        <h5 class="modal-title" id="regionModalLabel">지역 선택</h5>
                         <button type="button" class="btn-close" @click="closeModal"></button>
                     </div>
                     <!-- 모달 바디 -->
@@ -21,7 +29,7 @@
                             <li
                                 v-for="region in regions"
                                 :key="region"
-                                class="list-group-item"
+                                class="list-group-item list-group-item-action"
                                 @click="selectRegion(region)"
                             >
                                 {{ region }}
@@ -31,43 +39,25 @@
                 </div>
             </div>
         </div>
-
-        <Calender/>
     </div>
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
-import Calender from '@/components/match/MatchCalender.vue';
-import { Modal } from 'bootstrap';
-import { useMatchStore } from '@/stores/match';
+import { ref, onMounted } from "vue";
+import Calender from "@/components/match/MatchCalender.vue";
+import { Modal } from "bootstrap";
+import { useMatchStore } from "@/stores/match";
 
-const matchstore = useMatchStore()
+const matchstore = useMatchStore();
 
 // 지역 목록
 const regions = [
-    '서울',
-    '경기',
-    '인천',
-    '강원',
-    '대전',
-    '세종',
-    '충남',
-    '충북',
-    '대구',
-    '경북',
-    '부산',
-    '울산',
-    '경남',
-    '광주',
-    '전남',
-    '전북',
-    '제주',
+    "서울", "경기", "인천", "강원", "대전", "세종", "충남", "충북",
+    "대구", "경북", "부산", "울산", "경남", "광주", "전남", "전북", "제주"
 ];
 
 // 선택된 지역
 const selectedRegion = ref("");
-// 모달 참조
 const regionModal = ref(null);
 let modalInstance = null;
 
@@ -81,46 +71,54 @@ const openModal = () => {
 
 // 모달 닫기
 const closeModal = () => {
-    if (modalInstance) {
-        modalInstance.hide();
-    }
+    modalInstance?.hide();
 };
 
-// 지역 선택 시
+// 지역 선택
 const selectRegion = (region) => {
     selectedRegion.value = region;
-    console.log(selectedRegion.value)
-    matchstore.getMatchRegionList(selectedRegion.value);
+    matchstore.getMatchRegionList(region);
     closeModal();
 };
 
-
-onMounted(()=>{
-    matchstore.getMatchRegionList(selectedRegion.value)
-})
+// 초기 데이터 로드
+onMounted(() => {
+    matchstore.getMatchRegionList(selectedRegion.value);
+});
 </script>
 
 <style scoped>
-/* 모달 내용 영역 커스터마이징 */
-.modal-content {
-  border-radius: 10px;
-  overflow: hidden;
+h2 {
+    font-weight: bold;
+    color: #343a40;
 }
 
-/* 리스트 아이템 스타일 */
+.card {
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
 .list-group-item {
-  font-size: 16px;
-  padding: 12px;
-  border-bottom: 1px solid #e0e0e0;
-  cursor: pointer;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
 }
 
-.list-group-item:last-child {
-  border-bottom: none;
-}
-
-/* 리스트 아이템 호버 효과 */
 .list-group-item:hover {
-  background-color: #f8f9fa;
+    background-color: #f1f1f1;
+}
+
+.text-muted {
+    color: #6c757d !important;
+}
+
+button.btn-outline-dark {
+    font-weight: bold;
+    padding: 10px 20px;
+}
+
+button.btn-outline-dark:hover {
+    background-color: #343a40;
+    color: #fff;
 }
 </style>

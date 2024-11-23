@@ -12,6 +12,6 @@ const userstore = useUserStore()
 
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 
 </style>
