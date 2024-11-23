@@ -7,8 +7,8 @@
 
     <!-- 예약 삽입 -->
     <insert id="insertReservation">
-        INSERT INTO reservations (user_id, match_id, reservation_date)
-        VALUES (#{userId}, #{matchId}, #{reservationDate});
+        INSERT INTO reservations (user_id, match_id)
+        VALUES (#{userId}, #{matchId});
     </insert>
 
 
@@ -20,14 +20,14 @@
 
     <!-- 특정 사용자의 예약 조회 -->
     <select id="selectListByUser">
-        SELECT r.id, r.user_id, r.match_id, r.reservation_date, r.created_at, r.updated_at, m.name, m.start_time, m.end_time, m.status
+        SELECT r.id, r.user_id, r.match_id, r.reservation_date, r.updated_at, m.name, m.start_time, m.end_time, m.status
         FROM reservations r, matches m
         WHERE r.user_id =  #{userId} and  m.id = r.match_id;
     </select>
 
 
 	<select id="selectOne">
-		SELECT r.id, r.user_id, r.reservation_date, r.created_at, r.updated_at, m.name
+		SELECT r.id, r.user_id, r.reservation_date, r.updated_at, m.name
         FROM reservations r, matches m
         WHERE r.id =  #{id} and  m.id = r.match_id;
 	</select>

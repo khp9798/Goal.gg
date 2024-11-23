@@ -29,8 +29,9 @@ public class ReservationController {
 	
 	//예약 생성
 	@PostMapping
-	public ResponseEntity<?> create(@RequestBody Reservation r){
-		boolean isCreated = service.insertReservation(r);
+	public ResponseEntity<?> create(@RequestParam String userId, @RequestParam int matchId){
+		System.out.println("등록 성공 ");
+		boolean isCreated = service.insertReservation(userId, matchId);
 		
 		if(isCreated) {
 			return new ResponseEntity<>("create success",HttpStatus.CREATED);

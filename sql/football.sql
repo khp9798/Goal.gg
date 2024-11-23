@@ -88,8 +88,8 @@ CREATE TABLE reservations (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id VARCHAR(50) NOT NULL,                        -- 예약한 사용자 ID
     match_id INT NOT NULL,                       -- 예약한 경기 ID
-    reservation_date DATETIME NOT NULL,          -- 예약 날짜 및 시간
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- 생성 시간
+    
+    reservation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- 생성 시간
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, -- 갱신 시간
     FOREIGN KEY (user_id) REFERENCES users(userid) ON DELETE CASCADE,  -- 사용자 삭제 시 예약도 삭제
     FOREIGN KEY (match_id) REFERENCES matches(id) ON DELETE CASCADE -- 매치 삭제 시 예약도 삭제
@@ -823,5 +823,4 @@ SET SQL_SAFE_UPDATES = 1;
 
 
 
-SELECT r.id, r.user_id, r.match_id, r.reservation_date, r.created_at, r.updated_at, m.name, m.start_time, m.end_time, m.status        FROM reservations r, matches m
-        WHERE r.user_id =  'ssafy' and  m.id = r.match_id;
+

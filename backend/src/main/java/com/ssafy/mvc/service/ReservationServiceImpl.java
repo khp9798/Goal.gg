@@ -17,8 +17,8 @@ public class ReservationServiceImpl implements ReservationService{
 	
 	
 	@Override
-	public boolean insertReservation(Reservation r) {
-		return dao.insertReservation(r)>0;
+	public boolean insertReservation(String userId, int matchId) {
+		return dao.insertReservation(userId,matchId)>0;
 	}
 
 

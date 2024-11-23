@@ -6,7 +6,7 @@ import com.ssafy.mvc.dto.Reservation;
 
 public interface ReservationService {
 	// 에약 생성
-	boolean insertReservation(Reservation r);
+	boolean insertReservation(String userId, int matchId);
 
 	// 예약 삭제
 	boolean deleteReservation(int id);

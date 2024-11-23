@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.ssafy.mvc.dto.ApproveResponse;
+import com.ssafy.mvc.dto.CancelResponse;
 import com.ssafy.mvc.dto.ReadyResponse;
 
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 public class KakaoPayService {
 
     // 카카오페이 결제창 연결
-    public ReadyResponse payReady(String name, int totalPrice) {
+    public ReadyResponse payReady(int id, String name, int totalPrice) {
     
         Map<String, String> parameters = new HashMap<>();
         parameters.put("cid", "TC0ONETIME");                                    // 가맹점 코드(테스트용)
@@ -29,7 +30,7 @@ public class KakaoPayService {
         parameters.put("quantity", "1");                                        // 상품 수량
         parameters.put("total_amount", String.valueOf(totalPrice));             // 상품 총액
         parameters.put("tax_free_amount", "0");                                 // 상품 비과세 금액
-        parameters.put("approval_url", "http://localhost:5173/"); // 결제 성공 시 URL
+        parameters.put("approval_url", "http://localhost:5173/reservation/"+id+"/success"); // 결제 성공 시 URL
         parameters.put("cancel_url", "http://localhost:5173/");      // 결제 취소 시 URL
         parameters.put("fail_url", "http://localhost:5173/");          // 결제 실패 시 URL
 
@@ -68,6 +69,9 @@ public class KakaoPayService {
 
         return approveResponse;
     }
+    
+    
+ 
     
     // 카카오페이 측에 요청 시 헤더부에 필요한 값
     private HttpHeaders getHeaders() {

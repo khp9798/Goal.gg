@@ -33,6 +33,7 @@ public class OrderController {
     public @ResponseBody ReadyResponse payReady(@RequestBody OrderCreateForm orderCreateForm) {
     	System.out.println(orderCreateForm);
         
+    	int id = orderCreateForm.getId();
         String name = orderCreateForm.getName();
         int totalPrice = orderCreateForm.getTotalPrice();
         
@@ -40,7 +41,7 @@ public class OrderController {
         log.info("주문 금액: " + totalPrice);
 
         // 카카오 결제 준비하기
-        ReadyResponse readyResponse = kakaoPayService.payReady(name, totalPrice);
+        ReadyResponse readyResponse = kakaoPayService.payReady(id,name, totalPrice);
         // 세션에 결제 고유번호(tid) 저장
         SessionUtils.addAttribute("tid", readyResponse.getTid());
         log.info("결제 고유번호: " + readyResponse.getTid());

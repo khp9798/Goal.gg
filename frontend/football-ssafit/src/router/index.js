@@ -11,7 +11,8 @@ import StadiumView from '@/views/StadiumVIew.vue'
 import StadiumList from '@/components/stadium/StadiumLIst.vue'
 import StadiumMatch from '@/components/stadium/StadiumMatch.vue'
 import ReservationForm from '@/components/reservation/ReservationForm.vue'
-import MatchRegistForm from '@/components/MatchRegistForm.vue'
+import MatchRegistForm from '@/components/match/MatchRegistForm.vue'
+import ReservationSuccess from '@/components/reservation/ReservationSuccess.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -69,6 +70,11 @@ const router = createRouter({
       path : '/reservation',
       name : 'reservation',
       component : ReservationView
+    },
+    {
+      path : '/reservation/:id/success',
+      name : 'reservationDone',
+      component : ReservationSuccess
     },
     {
       path : '/signup',

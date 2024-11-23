@@ -7,7 +7,7 @@ import com.ssafy.mvc.dto.Reservation;
 public interface ReservationDao {
 
 	//에약 생성
-	int insertReservation(Reservation r);
+	int insertReservation(String userId, int matchId);
 	
 	
 	//예약 삭제

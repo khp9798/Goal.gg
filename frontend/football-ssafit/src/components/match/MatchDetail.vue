@@ -158,9 +158,22 @@ const statusClass = computed(() => {
 // 로그인 상태
 const isLogin = computed(() => !!userstore.loginUser.userid);
 
-// 날짜 포맷
-const date = new Date(matchstore.match.startTime);
-const showdate = `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`;
+const showdate = computed(() => {
+  if (!matchstore.match.startTime) {
+    return "날짜 정보 없음";
+  }
+  
+  const date = new Date(matchstore.match.startTime);
+  
+  // Date 객체가 유효하지 않을 경우 기본값 반환
+  if (isNaN(date.getTime())) {
+    return "유효하지 않은 날짜";
+  }
+  
+  return `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`;
+});
+
+
 
 // 포맷팅된 금액
 const formatNumber = (number) => new Intl.NumberFormat("ko-KR").format(number);
@@ -188,8 +201,10 @@ const closeModal = () => (showModal.value = false);
 
 // 결제 처리
 const initiatePayment = async () => {
+  
   try {
     const response = await axios.post("http://localhost:8080/order/pay/ready", {
+      id : matchstore.match.id,
       name: "테스트 상품",
       totalPrice: 5000,
     });
@@ -197,6 +212,9 @@ const initiatePayment = async () => {
   } catch (error) {
     console.error("결제 요청 실패:", error);
   }
+
+
+  
 };
 
 // 데이터 로드
