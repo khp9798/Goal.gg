@@ -10,10 +10,10 @@
     <!-- 버튼 섹션 -->
     <div class="mb-4 d-flex justify-content-end gap-2">
       <button
-        v-if="userstore.isManagerMode && ['신청 가능', '마감 임박'].includes(matchstore.match.status)"
+        v-if="userstore.isManagerMode && ['신청 가능', '마감 임박'].includes(matchstore.match.status) && matchstore.match.managerId"
         class="btn btn-primary"
         @click="RegisterManager"
-      >
+      > 
         매니저 신청하기
       </button>
 
