@@ -37,7 +37,10 @@ const events = ref([]);
 
 const userstore = useUserStore()
 
-
+onMounted(() => {
+    console.log(props.region)
+    matchStore.getMatchRegionList(props.region === undefined? "":props.region);
+});
 
 watch(
     () => matchStore.matchList,
