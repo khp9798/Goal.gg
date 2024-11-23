@@ -157,14 +157,14 @@ onMounted(async () => {
 
 const positionColor = computed(() => {
   const position = store.myKLeaguer.position
-  if (['ST', 'CF', 'RW', 'LW'].includes(position)) {
-    return "forward"
+  if (['CM', 'CAM', 'CDM', 'LM','RM'].includes(position)) {
+    return "midfield"
   } else if (['RB', 'LB', 'CB', 'RWB', 'LWB'].includes(position)) {
     return "defense"
   } else if (position === 'GK') {
     return "goalkeeper"
   } else {
-    return "midfield"
+    return "forward"
   }
 
 

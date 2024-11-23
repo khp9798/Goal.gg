@@ -23,6 +23,7 @@
         <div class="card flex-grow-1">
           <div class="card-body">
             <h5 class="card-title">구장 정보</h5>
+            <h6>매치 시간 : {{ matchstore.match.startTime }} - {{ matchstore.match.endTime }}</h6>
             <table class="table">
               <thead>
                 <tr>
