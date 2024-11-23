@@ -65,15 +65,15 @@ public class MatchController {
 		return new ResponseEntity<String>("delete failed", HttpStatus.BAD_REQUEST);
 	}
 
-	// 매치 검색
+	// 지역 매치 검색 
 	@GetMapping("/search")
-	public ResponseEntity<?> search(@ModelAttribute SearchCondition search) {
-		List<Match> list = mService.searchByCondition(search);
+	public ResponseEntity<?> search(@RequestParam String region) {
+		List<Match> list = mService.searchByCondition(region);
 
 		if (!list.isEmpty() && list != null) {
 			return new ResponseEntity<>(list, HttpStatus.OK);
 		}
-		System.out.println(search);
+		System.out.println(region);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
 

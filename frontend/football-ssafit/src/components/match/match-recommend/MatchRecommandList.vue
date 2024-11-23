@@ -4,21 +4,21 @@
         <div class="scroll-wrapper">
             <!-- 좌우 스크롤 버튼 -->
             <button class="scroll-btn left" @click="scrollLeft">〈</button>
-            <div ref="scrollContainer" class="scroll-container" @wheel.prevent="handleScroll">
+            <div ref="scrollContainer" class="scroll-container" >
                 <!-- 스크롤 영역 -->
-                <template v-if="store.RecommandMatchList.length > 0 && isAute">
+                <template v-if="store.RecommandMatchList.length > 0 && userstore.isAuth">
                     <MatchRecommandListItem
                         v-for="match in store.RecommandMatchList"
                         :key="match.id"
                         :match="match"
                     />
                 </template>
-                <template v-else-if="store.RecommandMatchList.length <= 0 && isAute">
+                <template v-else-if="store.RecommandMatchList.length <= 0 && userstore.isAuth">
                     <h4>주변에 진행되는 매치가 없습니다...</h4>
                 </template>
                 <template v-else>
                     <MatchRecommandListItem
-                        v-for="match in store.matchList"
+                        v-for="match in store.RecommandMatchList"
                         :key="match.id"
                         :match="match"
                     />
@@ -30,14 +30,14 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUpdate } from 'vue';
+import { ref, onMounted, onBeforeUpdate, onBeforeMount, onUpdated } from 'vue';
 import { useMatchStore } from '@/stores/match';
 import MatchRecommandListItem from './MatchRecommandListItem.vue';
 import { useUserStore } from '@/stores/user';
 
 const store = useMatchStore();
 const userstore = useUserStore();
-const isAute = ref(false);
+
 
 // 스크롤 컨테이너
 const scrollContainer = ref(null);
@@ -54,30 +54,15 @@ const scrollRight = () => {
         scrollContainer.value.scrollLeft += 450; // 오른쪽으로 300px 이동
     }
 };
-const handleScroll = (event) => {
-    if (scrollContainer.value) {
-        scrollContainer.value.scrollLeft += event.deltaY *25; // 휠 이동량을 가로 스크롤로 변환
-    }
-};
+
 
 onMounted(() => {
-    if (!userstore.loginUser.userid) {
-        isAute.value = false;
-        store.getMatchList();
-    } else {
-        isAute.value = true;
+    if(!userstore.loginUser.district || !userstore.loginUser.province){
+        store.getRecommandMatchList("","")
+    }else{
         store.getRecommandMatchList(userstore.loginUser.district, userstore.loginUser.province);
     }
 });
-onBeforeUpdate(()=>{
-    if (!userstore.loginUser.userid) {
-        isAute.value = false;
-        store.getMatchList();
-    } else {
-        isAute.value = true;
-        store.getRecommandMatchList(userstore.loginUser.district, userstore.loginUser.province);
-    }
-})
 </script>
 
 <style scoped>

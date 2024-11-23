@@ -19,15 +19,21 @@ export const useMatchStore = defineStore('match', () => {
 
   const RecommandMatchList = ref([])
 
-  const getMatchList = function(){
-    axios.get(REST_MATCH_API_URL)
-    .then((response)=>{
-      matchList.value = response.data
+  const getMatchRegionList = function(region){
+    axios({
+      url: REST_MATCH_API_URL+"/search",
+      params : {region:region}
+    })
+    .then((res)=>{
+      matchList.value = res.data
     })
     .catch((err)=>{
-      console.log(err.data)
+      console.log("매치 리스트 가져오기 실패")
     })
+    
   }
+
+
 
 
   const getMatch = function(id){
@@ -104,11 +110,10 @@ export const useMatchStore = defineStore('match', () => {
     }).catch((err) => {
       console.log("추천매치목록 가져오기 에러");
       console.log(err);
-      getMatchList();
     });
   };
   
 
-  return { StadiumDayMatchList,getStadiumDayMatch,matchList,getMatchList , match, getMatch, stadiumMatchList, getStadiumMatch,search, matchAvgTier, getMatchAvgTier, RecommandMatchList, getRecommandMatchList }
+  return { StadiumDayMatchList,getStadiumDayMatch,matchList , match, getMatch, stadiumMatchList, getStadiumMatch,search, matchAvgTier, getMatchAvgTier, RecommandMatchList, getRecommandMatchList, getMatchRegionList }
 
 })

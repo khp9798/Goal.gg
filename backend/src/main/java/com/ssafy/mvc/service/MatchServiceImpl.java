@@ -31,8 +31,8 @@ public class MatchServiceImpl implements MatchService{
 	}
 
 	@Override
-	public List<Match> searchByCondition(SearchCondition condition) {
-		return dao.searchByCondition(condition);
+	public List<Match> searchByCondition(String region) {
+		return dao.searchByCondition(region);
 	}
 
 	@Override

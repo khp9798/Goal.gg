@@ -31,12 +31,13 @@
 
 	<!-- 경기 목록 조회 -->
 	<select id="searchByCondition">
-		SELECT * FROM matches
-		<where>
-			<if test="word != 'none'">
-				name LIKE CONCAT('%', #{word}, '%')
-			</if>
-		</where>
+		select m.id, m.name, s.id, m.start_time, m.end_time,
+		m.status, s.name as
+		stadiumName, s.image
+		from matches m, stadium s
+		where
+		m.stadium_id = s.id and s.address like concat('%',#{region},'%');
+		
 	</select>
 
 

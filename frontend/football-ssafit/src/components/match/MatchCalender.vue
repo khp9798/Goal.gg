@@ -21,23 +21,29 @@
 <script setup>
 import VueCal from 'vue-cal';
 import 'vue-cal/dist/vuecal.css';
-import { onMounted, ref, watch } from 'vue';
+import { onBeforeMount, onBeforeUpdate, onMounted, ref, watch } from 'vue';
 import { useMatchStore } from '@/stores/match';
 import router from '@/router';
+import { useUserStore } from '@/stores/user';
+
+const props = defineProps({
+    region : String
+})
 
 const matchStore = useMatchStore();
 
 // vue-cal에 맞는 형식으로 변환
 const events = ref([]);
 
-onMounted(() => {
-    matchStore.getMatchList();
-});
+const userstore = useUserStore()
+
+
 
 watch(
     () => matchStore.matchList,
     (newValue) => {
-        events.value = newValue.map((item) => ({
+        if(newValue.length>0){
+            events.value = newValue.map((item) => ({
             start: item.startTime.replace('T', ' ').slice(0, 16), // 'T'를 ' '로 변환하고 시간 초단위 제거
             end: item.endTime.replace('T', ' ').slice(0, 16),
             title: item.name,
@@ -45,6 +51,11 @@ watch(
             class: item.status === "신청 마감" ? "end" : item.status === "경기 취소" ? "cancle" : "",
             matchId : item.id
         }));
+        }
+        else{
+            events.value = []
+        }
+        
         console.log('변환된 Events:', events.value);
     }
 );

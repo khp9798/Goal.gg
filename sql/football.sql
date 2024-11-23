@@ -179,7 +179,8 @@ INSERT INTO stadium (name, address, price, capacity, image) VALUES
 ('대전 위너스 풋살파크','대전 유성구 원신흥동 576-2',30000,50,'https://d31wz4d3hgve8q.cloudfront.net/media/dg_winners_goal.jpeg?w=1920'),
 ('대전도안아이파크아파트풋살장','대전광역시 서구 도안동 1362',30000,50,'https://cdn.pixabay.com/photo/2020/02/09/11/58/sports-arena-4832845_1280.jpg'),
 ('대전전천후게이트볼경기장축구장','대전광역시 유성구 원촌동 4',30000,50,'https://cdn.pixabay.com/photo/2014/05/17/10/26/brazil-346129_1280.jpg'),
-('대전한국생명공학연구원풋살장','대전광역시 유성구 어은동53한국생명공학연구원풋살장',30000,50,'https://cdn.pixabay.com/photo/2016/08/31/16/28/stadium-1634035_1280.jpg');
+('대전한국생명공학연구원풋살장','대전광역시 유성구 어은동53한국생명공학연구원풋살장',30000,50,'https://cdn.pixabay.com/photo/2016/08/31/16/28/stadium-1634035_1280.jpg'),
+('서울 강동 송파 풋살장','서울특별시 송파구 풍납동 403-3', 12000,30,'https://d31wz4d3hgve8q.cloudfront.net/media/kd_sp_goal.jpeg?w=1920');
 select * from stadium;
 
 
@@ -820,6 +821,5 @@ SET SQL_SAFE_UPDATES = 1;
 
 
 
-SELECT r.id, r.user_id, r.match_id, r.reservation_date, r.created_at, r.updated_at, m.name, m.start_time, m.end_time
-        FROM reservations r, matches m
-        WHERE r.user_id =  'ssafy' and  m.id = r.match_id and m.status in ('신청 가능','마감 임박';
+SELECT r.id, r.user_id, r.match_id, r.reservation_date, r.created_at, r.updated_at, m.name, m.start_time, m.end_time, m.status        FROM reservations r, matches m
+        WHERE r.user_id =  'ssafy' and  m.id = r.match_id;

@@ -20,7 +20,7 @@ public interface MatchDao {
 	
 	
 	//경기 목록 조회
-	List<Match> searchByCondition (SearchCondition condition);
+	List<Match> searchByCondition (String region);
 	
 	//특정 경기 세부 정보 조회
 	Match selectOne (int id);
