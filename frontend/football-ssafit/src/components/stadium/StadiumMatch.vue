@@ -1,8 +1,8 @@
 <template>
     <tr>
         <td>{{ props.match.name }}</td>
-        <td>{{ props.match.startTime }}</td>
-        <td>{{ props.match.endTime }}</td>
+        <td>{{ props.match.startTime.replace('T', ' ').slice(0, 16) }}</td>
+        <td>{{ props.match.endTime.replace('T', ' ').slice(0, 16) }}</td>
         <td>{{ props.match.status }}</td>
     </tr>
 </template>

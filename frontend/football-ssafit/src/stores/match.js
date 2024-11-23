@@ -47,8 +47,6 @@ export const useMatchStore = defineStore('match', () => {
   }
 
   const getStadiumMatch = function(stadiumid){
-    // console.log(stadiumid)
-    // console.log("여기에요 여기")
     axios({
       url : REST_MATCH_API_URL+'/match/'+stadiumid,
       method : 'GET'
@@ -80,7 +78,6 @@ export const useMatchStore = defineStore('match', () => {
     axios({
       url : REST_MATCH_API_URL+"/match/"+stadiumid+'/'+date
     }).then((response)=>{
-      console.log("여기여기")
       console.log(response)
       StadiumDayMatchList.value = response.data
     })

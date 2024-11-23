@@ -40,7 +40,7 @@
               {{ managerName }}님이 매니저로 참여합니다.
             </p>
             <p v-else class="text-danger">
-              아직 매치 매니저가 등록되지 않았습니다.
+              매치 매니저가 등록되지 않았습니다.
             </p>
             <h6>매치 시간: {{ matchstore.match.startTime }} - {{ matchstore.match.endTime }}</h6>
           </div>
