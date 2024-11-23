@@ -13,6 +13,8 @@ import StadiumMatch from '@/components/stadium/StadiumMatch.vue'
 import ReservationForm from '@/components/reservation/ReservationForm.vue'
 import MatchRegistForm from '@/components/match/MatchRegistForm.vue'
 import ReservationSuccess from '@/components/reservation/ReservationSuccess.vue'
+import MatchManager from '@/components/match/MatchManagerList.vue'
+import MatchManagerView from '@/views/MatchManagerView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -90,6 +92,11 @@ const router = createRouter({
       path : '/matchresgistform',
       name : 'matchregistform',
       component : MatchRegistForm
+    },
+    {
+      path : '/matchmanagerview',
+      name : 'matchmanagerview',
+      component : MatchManagerView
     }
   ],
 })

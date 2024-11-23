@@ -35,6 +35,10 @@
                             <RouterLink :to="{ name: 'matchregistform' }" class="nav-link" v-if="userstore.isManagerMode">매치 등록
                             </RouterLink>
                         </li>
+                        <li class="nav-item me-3">
+                            <RouterLink :to="{ name: 'matchmanagerview' }" class="nav-link" v-if="userstore.isManagerMode">담당 매치
+                            </RouterLink>
+                        </li>
                     </ul>
 
                     <!-- 검색 폼 -->

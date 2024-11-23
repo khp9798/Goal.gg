@@ -71,6 +71,11 @@ public class MatchServiceImpl implements MatchService{
 	public List<Match> RecommandMatchList(String district, String province) {
 		return dao.RecommandMatchList(district, province);
 	}
+
+	@Override
+	public List<Match> getMatchManagerList(int id) {
+		return dao.getMatchManagerList(id);
+	}
 	
 	
 
