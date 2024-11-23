@@ -2,6 +2,7 @@ import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import axios from 'axios'
 import { useUserStore } from './user'
+import router from '@/router'
 
 
 const REST_MATCH_API_URL = "http://localhost:8080/matches"
@@ -124,9 +125,22 @@ export const useMatchStore = defineStore('match', () => {
       console.log("매니저 등록 실패")
     })
   }
+  // 매치 등록
+  const registMatch = function(registmatch){
+    axios({
+      url : REST_MATCH_API_URL,
+      method : 'POST',
+      data : registmatch
+    }).then((res)=>{
+      alert("매치 등록에 성공했습니다")
+      router.replace({name : 'home'})
+    }).catch((err)=>{
+      alert("매치 등록에 실패했습니다")
+    })
+  }
   
 
-  return { StadiumDayMatchList,getStadiumDayMatch,matchList , match, getMatch, stadiumMatchList, getStadiumMatch,search, matchAvgTier, getMatchAvgTier, RecommandMatchList, getRecommandMatchList, getMatchRegionList,
+  return { registMatch, StadiumDayMatchList,getStadiumDayMatch,matchList , match, getMatch, stadiumMatchList, getStadiumMatch,search, matchAvgTier, getMatchAvgTier, RecommandMatchList, getRecommandMatchList, getMatchRegionList,
     RegisterManager
    }
 

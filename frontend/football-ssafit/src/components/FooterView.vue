@@ -1,10 +1,10 @@
 <template>
-    <footer class="footer bg-dark text-light py-3 mt-5">
-        <div class="container d-flex justify-content-between align-items-center">
-            <!-- 로고 -->
-            <a href="/" class="text-light text-decoration-none d-flex align-items-center">
-                <img src="../assets/logo.png" alt="Logo" width="30" height="30" class="me-2">
-                <span class="fw-bold">GOAL.GG</span>
+    <footer class="footer mt-5" :class="userstore.isManagerMode ? 'gradient-effect-m' : 'gradient-effect-u'">
+        <div class="col-md-4 d-flex align-items-center">
+            <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
+                <svg class="bi" width="30" height="24">
+                    <use xlink:href="#bootstrap"></use>
+                </svg>
             </a>
             <!-- 저작권 -->
             <span class="text-light">© 2024 GOAL.GG</span>
@@ -13,6 +13,12 @@
 </template>
 
 <script setup>
+import { useUserStore } from '@/stores/user';
+import { onBeforeUpdate, watch } from 'vue';
+
+const userstore =useUserStore();
+
+
 </script>
 
 <style scoped>
@@ -22,5 +28,39 @@
     bottom: 0;
     width: 100%;
     text-align: center;
+}
+
+@keyframes gradient-m {
+    0% {
+        background: linear-gradient(90deg, #07782fe5, #212529);
+    }
+    50% {
+        background: linear-gradient(90deg, #07782fe5, #343a40);
+    }
+    100% {
+        background: linear-gradient(90deg, #07782fe5, #212529);
+    }
+}
+
+.gradient-effect-m {
+    animation: gradient-m 3600s ease-in-out infinite;
+    background-size: 200% 200%;
+}
+
+@keyframes gradient-u {
+    0% {
+        background: linear-gradient(90deg, #000000, #212529);
+    }
+    50% {
+        background: linear-gradient(90deg, #000000, #343a40);
+    }
+    100% {
+        background: linear-gradient(90deg, #000000, #212529);
+    }
+}
+
+.gradient-effect-u {
+    animation: gradient-u 3600s ease-in-out infinite;
+    background-size: 200% 200%;
 }
 </style>

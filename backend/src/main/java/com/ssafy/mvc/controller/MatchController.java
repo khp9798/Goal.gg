@@ -32,6 +32,7 @@ public class MatchController {
 	// 새로운 매치 등록
 	@PostMapping
 	public ResponseEntity<?> createMatch(@RequestBody Match match) {
+		System.out.println(match);
 		boolean isCreated = mService.insertMatch(match);
 
 		if (isCreated) {

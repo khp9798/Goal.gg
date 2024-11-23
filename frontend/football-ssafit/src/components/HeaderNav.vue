@@ -1,6 +1,6 @@
 <template>
     <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm py-2">
+        <nav class="navbar navbar-expand-lg navbar-dark" :class="userstore.isManagerMode ? 'gradient-effect-m' : 'gradient-effect-u'">
             <div class="container-fluid">
                 <!-- 로고 -->
                 <RouterLink :to="{ name: 'home' }" class="navbar-brand d-flex align-items-center">
@@ -29,6 +29,10 @@
                         </li>
                         <li class="nav-item">
                             <RouterLink :to="{ name: 'reservation' }" class="nav-link" @click="getReservationList">예약 확인
+                            </RouterLink>
+                        </li>
+                        <li class="nav-item me-3">
+                            <RouterLink :to="{ name: 'matchregistform' }" class="nav-link" v-if="userstore.isManagerMode">매치 등록
                             </RouterLink>
                         </li>
                     </ul>
@@ -124,14 +128,69 @@ const handleSearch = () => {
     color: #adb5bd;
 }
 
-.form-select:focus,
-.form-control:focus {
-    box-shadow: none;
-    border-color: #6c757d;
+form .form-control {
+    flex: 1;
+    /* 남은 공간 차지 */
+    min-width: 300px;
+    /* 입력 필드 최소 너비 설정 */
 }
 
+form .form-select {
+    background-color: #00000000;
+    /* 검정색 배경 */
+    color: white;
+    /* 흰색 텍스트 */
+    border-color: #ffffff;
+    border-width: 1.5px;
+    /* 테두리 색 */
+}
+
+form .form-select:focus {
+    background-color: #21252900;
+    /* 포커스 시 검정색 유지 */
+    color: white;
+    /* 포커스 시 텍스트 흰색 유지 */
+    border-color: #ffffff;
+    /* 포커스 시 테두리 색 */
+}
 .btn-outline-light:hover {
     background-color: white;
     color: black;
 }
+
+@keyframes gradient-m {
+    0% {
+        background: linear-gradient(90deg, #07782fe5, #212529);
+    }
+    50% {
+        background: linear-gradient(90deg, #07782fe5, #343a40);
+    }
+    100% {
+        background: linear-gradient(90deg, #07782fe5, #212529);
+    }
+}
+
+.gradient-effect-m {
+    animation: gradient-m 3600s ease-in-out infinite;
+    background-size: 200% 200%;
+}
+
+@keyframes gradient-u {
+    0% {
+        background: linear-gradient(90deg, #000000, #212529);
+    }
+    50% {
+        background: linear-gradient(90deg, #000000, #343a40);
+    }
+    100% {
+        background: linear-gradient(90deg, #000000, #212529);
+    }
+}
+
+.gradient-effect-u {
+    animation: gradient-u 3600s ease-in-out infinite;
+    background-size: 200% 200%;
+}
+
+
 </style>
