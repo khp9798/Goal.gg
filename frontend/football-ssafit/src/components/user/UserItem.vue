@@ -8,7 +8,7 @@
 
                 <!-- 유저 정보 -->
                 <div class="col-md-3 text-center">
-                    <img :src="`/src/assets/${userstore.loginUser.tier}.webp`" alt="유저 티어"
+                    <img :src="`/src/assets/tier/${userstore.loginUser.tier}.webp`" alt="유저 티어"
                         class="img-fluid rounded-circle mb-3" width="120" height="120">
                     <h4 class="mb-2">{{ userstore.loginUser.name }}</h4>
                     <p class="text-muted mb-1"><strong>포지션:</strong> {{ userstore.loginUser.position }}</p>
@@ -29,7 +29,7 @@
 
                 <!-- 유저 기본 정보 -->
                 <div class="col-md-3 text-center">
-                    <img src="/src/assets/unranked.webp" alt="기본 티어" class="img-fluid rounded-circle mb-3" width="120"
+                    <img src="/src/assets/tier/unranked.webp" alt="기본 티어" class="img-fluid rounded-circle mb-3" width="120"
                         height="120">
                     <h4 class="mb-2">손흥민</h4>
                     <p class="text-muted mb-1"><strong>포지션:</strong> Forward</p>

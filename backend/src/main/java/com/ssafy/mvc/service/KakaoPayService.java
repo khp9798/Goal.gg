@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.ssafy.mvc.dto.ApproveResponse;
-import com.ssafy.mvc.dto.CancelResponse;
 import com.ssafy.mvc.dto.ReadyResponse;
 
 import lombok.extern.slf4j.Slf4j;

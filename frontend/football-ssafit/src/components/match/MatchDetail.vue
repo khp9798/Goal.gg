@@ -25,7 +25,6 @@
       >
         {{ matchstore.match.status }}
       </button>
-
       <button v-else class="btn btn-secondary" @click="goLoginView">로그인하기</button>
     </div>
 
@@ -33,23 +32,24 @@
     <div class="row g-4">
       <!-- 왼쪽 구장 정보 -->
       <div class="col-md-6">
-        <div class="card h-100 shadow-sm">
+        <div class="card h-100 shadow-sm  text-center p-4">
           <div class="card-body">
-            <h5 class="card-title">구장 정보</h5>
+            <h4 class="card-title">{{ matchstore.match.name }}</h4>
             <p v-if="managerName" class="text-success">
               {{ managerName }}님이 매니저로 참여합니다.
             </p>
             <p v-else class="text-danger">
               매치 매니저가 등록되지 않았습니다.
             </p>
-            <h6>매치 시간: {{ matchstore.match.startTime }} - {{ matchstore.match.endTime }}</h6>
+            <h6>매치 시간: {{ formattedStartTime }} - {{ formattedEndTime }}</h6>
+
           </div>
         </div>
       </div>
 
       <!-- 오른쪽 경기장 정보 -->
       <div class="col-md-6">
-        <div class="card h-100 shadow-sm text-center">
+        <div class="card h-100 shadow-sm text-center p-4">
           <div class="card-body">
             <h4 class="card-title">{{ matchstore.match.stadiumName }}</h4>
             <p>{{ matchstore.match.address }}</p>
@@ -59,7 +59,7 @@
                 <strong>{{ matchstore.matchAvgTier || "unRanked" }}</strong>입니다.
               </p>
               <img
-                :src="matchstore.matchAvgTier ? `/src/assets/${matchstore.matchAvgTier}.webp` : '/src/assets/unranked.webp'"
+                :src="matchstore.matchAvgTier ? `/src/assets/tier/${matchstore.matchAvgTier}.webp` : '/src/assets/tier/unranked.webp'"
                 alt="언랭"
                 width="200px"
                 class="img-fluid"
@@ -183,8 +183,8 @@ const formattedRealPrice = computed(() => formatNumber(price.value - promotion.v
 
 // 매치 매니저 등록
 const RegisterManager = () => {
-  alert("매치 매니저로 신청되었습니다.");
   matchstore.RegisterManager({ ...matchstore.match, managerId: userstore.loginUser.id });
+  alert("매치 매니저로 신청되었습니다.");
 };
 
 // 예약 및 결제
@@ -230,7 +230,36 @@ watch(
   },
   { deep: true }
 );
+
+
+
+
+const formattedStartTime = computed(() => {
+  if (!matchstore.match.startTime) return "시간 정보 없음";
+
+  const startTime = new Date(matchstore.match.startTime);
+  if (isNaN(startTime.getTime())) return "유효하지 않은 시간";
+
+  return `${startTime.getHours().toString().padStart(2, "0")}:${startTime.getMinutes().toString().padStart(2, "0")}`;
+});
+
+const formattedEndTime = computed(() => {
+  if (!matchstore.match.endTime) return "시간 정보 없음";
+
+  const endTime = new Date(matchstore.match.endTime);
+  if (isNaN(endTime.getTime())) return "유효하지 않은 시간";
+
+  return `${endTime.getHours().toString().padStart(2, "0")}:${endTime.getMinutes().toString().padStart(2, "0")}`;
+});
+
+
+
+
+
 </script>
+
+
+
 
 <style scoped>
 /* 카드 섀도우 및 테두리 */

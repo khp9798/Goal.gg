@@ -4,7 +4,7 @@
         <td>{{ formatDate(props.reservation.startTime) }}</td>
         <td>{{ formatDate(props.reservation.endTime) }}</td>
         <td>
-            <span :class="statusClass">{{ props.reservation.status }}</span>
+            <span :class="statusClass">{{ props.reservation.status  }}</span>
         </td>
         <td>{{ formatDate(props.reservation.reservationDate) }}</td>
     </tr>
@@ -33,11 +33,11 @@ const formatDate = (date) => {
 // 상태별 스타일 클래스 계산
 const statusClass = computed(() => {
     const status = props.reservation.status;
-    if (status === "완료") {
+    if (status === '신청 가능') {
         return "badge bg-success";
-    } else if (status === "대기 중") {
+    } else if (status === "경기 취소") {
         return "badge bg-warning text-dark";
-    } else if (status === "취소됨") {
+    } else if (status === "마감 임박") {
         return "badge bg-danger";
     } else {
         return "badge bg-secondary";

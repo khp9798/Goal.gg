@@ -17,17 +17,12 @@
                 <UserstatChart />
             </div>
 
-            <!-- 유저 상세 정보 -->
-            <div class="card p-4 shadow">
-                <h4 class="mb-3">내 정보</h4>
-                <UserDetail />
-            </div>
+            
         </div>
     </div>
 </template>
 
 <script setup>
-import UserDetail from "@/components/user/UserDetail.vue";
 import UserstatChart from "@/components/userstat/UserstatChart.vue";
 import UserstatItem from "@/components/userstat/UserstatItem.vue";
 import router from "@/router";

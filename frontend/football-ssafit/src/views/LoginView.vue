@@ -8,7 +8,7 @@
 
                             <!-- 이미지 영역 -->
                             <div class="col-md-6 col-lg-5 d-none d-md-block">
-                                <img src="https://cdn.spotvnews.co.kr/news/photo/202210/558962_781459_4446.jpg"
+                                <img src="/src/assets/loginSon.jpg"
                                     alt="login form" class="img-fluid h-100 rounded-start" style="object-fit: cover;" />
                             </div>
 

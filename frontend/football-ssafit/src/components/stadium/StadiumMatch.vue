@@ -1,5 +1,5 @@
 <template>
-    <tr>
+    <tr @click="goReservation">
         <td>{{ props.match.name }}</td>
         <td>{{ props.match.startTime.replace('T', ' ').slice(0, 16) }}</td>
         <td>{{ props.match.endTime.replace('T', ' ').slice(0, 16) }}</td>
