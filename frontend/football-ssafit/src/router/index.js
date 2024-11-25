@@ -28,7 +28,6 @@ const router = createRouter({
       path : '/stadium',
       name : 'stadiumview',
       component : StadiumView,
-      // redirect : '/stadium/list',
       children : [
         {
           path : '',

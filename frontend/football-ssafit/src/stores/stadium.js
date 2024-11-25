@@ -14,13 +14,8 @@ export const useStadiumStore = defineStore('stadium', () => {
       url : REST_STADIUM_API_URL,
       method : "GET"
     }).then((response)=>{
-      // console.log("성공")
       stadiumlist.value = response.data
-      // console.log(response)
-      // console.log(stadiumlist.value)
     }).catch((err)=>{
-      // console.log("실패")
-      // console.log(err)
     })
   }
 
@@ -29,12 +24,8 @@ export const useStadiumStore = defineStore('stadium', () => {
       url : REST_STADIUM_API_URL+'/'+stadiumid,
       method : "GET"
     }).then((response)=>{
-      // console.log("성공")
       stadium.value = response.data
-      // console.log(response)
     }).catch((err)=>{
-      // console.log("실패")
-      // console.log(err)
     })
   }
 

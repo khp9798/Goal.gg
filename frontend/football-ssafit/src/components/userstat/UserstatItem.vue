@@ -173,16 +173,7 @@ const positionColor = computed(() => {
 
 })
 
-// const statusClass = computed(()=>{
-//     const status = matchstore.match.status
-//     if (status === "신청 가능") {
-//     return "btn-primary"; // 파란색 버튼
-//   } else if (status === "마감 임박") {
-//     return "btn-danger"; // 빨간색 버튼
-//   } else {
-//     return "btn-secondary"; // 회색 버튼
-//   }
-// });
+
 
 </script>
 

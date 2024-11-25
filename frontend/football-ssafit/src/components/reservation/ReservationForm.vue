@@ -8,16 +8,7 @@
         <p>경기장 : {{matchstore.match.stadiumName}}</p>
         <p>주소 : {{matchstore.match.address}}</p>
       </div>
-  
-      <!-- Coupon Section -->
-      <!-- <div class="d-flex justify-content-between align-items-center mt-4">
-        <span>내 쿠폰</span>
-        <span>쿠폰 없음</span>
-      </div>
-      <div class="d-flex justify-content-between align-items-center mt-2">
-        <span>캐시/포인트</span>
-        <span>0원 사용</span>
-      </div> -->
+
   
       <!-- Payment Section -->
       <div class="mt-4">
@@ -81,9 +72,7 @@ const formattedPrice = computed(() => formatNumber(price.value));
 const formattedPromotion = computed(() => formatNumber(promotion.value));
 const formattedRealPrice = computed(() => formatNumber(price.value - promotion.value));
 
-onMounted(()=>{
-  
-})
+
 
 </script>
 

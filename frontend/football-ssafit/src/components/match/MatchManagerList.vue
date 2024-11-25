@@ -34,8 +34,7 @@
 </template>
 
 <script setup>
-import { computed, onMounted } from "vue";
-import ReservationListItem from "@/components/reservation/ReservationListItem.vue";
+import { onMounted } from "vue";
 import { useReservationStore } from "@/stores/reservation";
 import { useUserStore } from "@/stores/user";
 import router from "@/router";
