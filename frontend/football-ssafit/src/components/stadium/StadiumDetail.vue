@@ -25,13 +25,12 @@
                             class="border rounded"
                             style="height: 300px;"
                             :time="false"
-                            active-view="week"
-                            :disable-views="['years', 'year', 'month', 'day']"
+                            active-view="month"
+                            :disable-views="['years', 'year', 'week', 'day']"
                             locale="ko"
                             :events="events"
                             :show-week-numbers="false"
                             @cell-click="SearchStadiumDayMatch"
-                            @cell-content-click="SearchStadiumDayMatch"
                         >
                             <template #arrow-prev>
                                 <i class="icon material-icons">&lt;</i>
@@ -98,13 +97,24 @@ onMounted(() => {
         const year = date.getFullYear();
         const month = String(date.getMonth() + 1).padStart(2, "0");
         const day = String(date.getDate()).padStart(2, "0");
-        const hours = String(date.getHours()).padStart(2, "0");
-        const minutes = String(date.getMinutes()).padStart(2, "0");
-        const seconds = String(date.getSeconds()).padStart(2, "0");
+        const hours = "00";
+        const minutes = "00";
+        const seconds = "00";
         return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
     };
+    const formatDate2 = (date) => {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, "0");
+        const day = String(date.getDate()).padStart(2, "0");
+        const hours = "23";
+        const minutes = "59";
+        const seconds = "59";
+        return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    };
+    console.log(formatDate(date))
+    console.log(formatDate2(date))
 
-    matchstore.getStadiumDayMatch(formatDate(date), route.params.id);
+    matchstore.getStadiumDayMatch(formatDate(date), formatDate2(date), route.params.id);
 });
 
 const events = ref([]);
@@ -125,20 +135,29 @@ watch(
 
 
 const SearchStadiumDayMatch = (day) => {
-    console.log(day.date)
-    
-    const date = new Date(day.date);
+    const date = new Date(day);
     const formatDate = (date) => {
         const year = date.getFullYear();
         const month = String(date.getMonth() + 1).padStart(2, "0");
         const day = String(date.getDate()).padStart(2, "0");
-        const hours = "18";
+        const hours = "00";
         const minutes = "00";
         const seconds = "00";
         return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
     };
+    const formatDate2 = (date) => {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, "0");
+        const day = String(date.getDate()).padStart(2, "0");
+        const hours = "23";
+        const minutes = "59";
+        const seconds = "59";
+        return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    };
+    console.log(formatDate(date))
+    console.log(formatDate2(date))
 
-    matchstore.getStadiumDayMatch(formatDate(date), route.params.id);
+    matchstore.getStadiumDayMatch(formatDate(date), formatDate2(date), route.params.id);
 };
 </script>
 

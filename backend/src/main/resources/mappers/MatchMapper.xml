@@ -138,7 +138,8 @@
 		FROM matches
 		WHERE stadium_id = #{id}
 		AND
-		DATE(start_time) = DATE(#{date})
+		DATE(start_time) BETWEEN DATE(#{date1}) AND DATE(#{date2})
+		ORDER BY start_time
 	</select>
 
 

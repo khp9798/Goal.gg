@@ -39,7 +39,7 @@ public interface MatchDao {
 	String matchAvgTier(int matchId);
 
 
-	List<Match> selectStadiumDayMatch(int id, String date);
+	List<Match> selectStadiumDayMatch(int id, String date1, String date2);
 	
 	
 	//추천 매치 목록 가져오기

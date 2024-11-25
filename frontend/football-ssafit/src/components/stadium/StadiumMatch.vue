@@ -3,7 +3,7 @@
         <td>{{ props.match.name }}</td>
         <td>{{ props.match.startTime.replace('T', ' ').slice(0, 16) }}</td>
         <td>{{ props.match.endTime.replace('T', ' ').slice(0, 16) }}</td>
-        <td>{{ props.match.status }}</td>
+        <td :class="props.match.status">{{ props.match.status }}</td>
     </tr>
 </template>
 
@@ -24,4 +24,21 @@ const goReservation = function () {
 
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+.마감 {
+    color : rgb(72, 72, 72);
+    font-weight: bold;
+}
+.취소{
+    color : rgb(72, 72, 72);
+    font-weight: bold;
+}
+.가능{
+    color : rgb(44, 111, 255);
+    font-weight: bold;
+}
+.임박{
+    color : red;
+    font-weight: bold;
+}
+</style>

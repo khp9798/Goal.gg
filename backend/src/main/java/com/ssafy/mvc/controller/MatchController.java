@@ -147,9 +147,9 @@ public class MatchController {
 	}
 	
 	// 특정 경기장 특정 날짜 매치 조회
-	@GetMapping("/match/{id}/{date}")
-	public ResponseEntity<?> selectStadiumDayMatch(@PathVariable int id, @PathVariable String date) {
-		List<Match> list = mService.selectStadiumDayMatch(id, date);
+	@GetMapping("/match/{id}/{date1}/{date2}")
+	public ResponseEntity<?> selectStadiumDayMatch(@PathVariable int id, @PathVariable String date1,@PathVariable String date2) {
+		List<Match> list = mService.selectStadiumDayMatch(id, date1, date2);
 //		System.out.println(id);
 //		System.out.println(date);
 //		System.out.println(list);
