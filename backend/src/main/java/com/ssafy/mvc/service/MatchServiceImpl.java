@@ -63,8 +63,8 @@ public class MatchServiceImpl implements MatchService{
 	}
 
 	@Override
-	public List<Match> selectStadiumDayMatch(int id, String date) {
-		return dao.selectStadiumDayMatch(id, date);
+	public List<Match> selectStadiumDayMatch(int id, String date1, String date2) {
+		return dao.selectStadiumDayMatch(id, date1, date2);
 	}
 
 	@Override

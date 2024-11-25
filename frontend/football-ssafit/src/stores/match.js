@@ -77,9 +77,9 @@ export const useMatchStore = defineStore('match', () => {
     })
   }
    
-  const getStadiumDayMatch = function(date, stadiumid){
+  const getStadiumDayMatch = function(date1,date2, stadiumid){
     axios({
-      url : REST_MATCH_API_URL+"/match/"+stadiumid+'/'+date
+      url : REST_MATCH_API_URL+"/match/"+stadiumid+'/'+date1+'/'+date2
     }).then((response)=>{
       console.log(response)
       StadiumDayMatchList.value = response.data

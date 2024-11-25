@@ -1,67 +1,69 @@
 <template>
-  <div class="match-form-container">
-    <h2>매치 등록</h2>
-    <form @submit.prevent="registerMatch">
-      <div class="form-group">
-        <label for="name">매치 이름</label>
-        <input id="name" v-model="match.name" type="text" placeholder="매치 이름을 입력하세요" required />
-      </div>
-      <div class="form-group">
-        <label for="stadium">경기장</label>
-        <div class="stadium-select">
-          <input
-            type="text"
-            readonly
-            placeholder="경기장을 검색하세요"
-            :value="selectedStadium?.name || ''"
-            @click="openModal"
-            required
-          />
-          <button type="button" @click="openModal">검색</button>
+  <div class="match-form-wrapper">
+    <div class="match-form-container">
+      <h2>매치 등록</h2>
+      <form @submit.prevent="registerMatch">
+        <div class="form-group">
+          <label for="name">매치 이름</label>
+          <input id="name" v-model="match.name" type="text" placeholder="매치 이름을 입력하세요" required />
         </div>
-      </div>
-      <div class="form-group">
-        <label for="manager">매니저 ID</label>
-        <input id="manager" type="text" :placeholder="userstore.loginUser.userid" readonly />
-      </div>
-      <div class="form-group">
-        <label for="manager">매니저 이름</label>
-        <input id="manager" type="text" :placeholder="userstore.loginUser.name" readonly />
-      </div>
-      <div class="form-group">
-        <label for="start_time">시작 시간</label>
-        <input id="start_time" v-model="match.startTime" type="datetime-local" required />
-      </div>
-      <div class="form-group">
-        <label for="end_time">종료 시간</label>
-        <input id="end_time" v-model="match.endTime" type="datetime-local" required />
-      </div>
-      
-      <button type="submit">등록</button>
-    </form>
-    <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
+        <div class="form-group">
+          <label for="stadium">경기장</label>
+          <div class="stadium-select">
+            <input
+              type="text"
+              readonly
+              placeholder="경기장을 검색하세요"
+              :value="selectedStadium?.name || ''"
+              @click="openModal"
+              required
+            />
+            <button type="button" @click="openModal">검색</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="manager">매니저 ID</label>
+          <input id="manager" type="text" :placeholder="userstore.loginUser.userid" readonly />
+        </div>
+        <div class="form-group">
+          <label for="manager">매니저 이름</label>
+          <input id="manager" type="text" :placeholder="userstore.loginUser.name" readonly />
+        </div>
+        <div class="form-group">
+          <label for="start_time">시작 시간</label>
+          <input id="start_time" v-model="match.startTime" type="datetime-local" required />
+        </div>
+        <div class="form-group">
+          <label for="end_time">종료 시간</label>
+          <input id="end_time" v-model="match.endTime" type="datetime-local" required />
+        </div>
+        
+        <button type="submit">등록</button>
+      </form>
+      <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
 
-    <!-- 경기장 검색 모달 -->
-    <div v-if="isModalOpen" class="modal">
-      <div class="modal-content">
-        <h3>경기장 검색</h3>
-        <input 
-          type="text" 
-          :value="searchQuery" 
-          @input="updateSearchQuery" 
-          placeholder="경기장 이름을 검색하세요" 
-        />
-        <ul>
-          <li
-            v-for="stadium in filteredStadiums"
-            :key="stadium.id"
-            @click="selectStadium(stadium)"
-            class="stadium-item"
-          >
-            {{ stadium.name }}
-          </li>
-        </ul>
-        <button @click="closeModal">닫기</button>
+      <!-- 경기장 검색 모달 -->
+      <div v-if="isModalOpen" class="modal">
+        <div class="modal-content">
+          <h3>경기장 검색</h3>
+          <input 
+            type="text" 
+            :value="searchQuery" 
+            @input="updateSearchQuery" 
+            placeholder="경기장 이름을 검색하세요" 
+          />
+          <ul>
+            <li
+              v-for="stadium in filteredStadiums"
+              :key="stadium.id"
+              @click="selectStadium(stadium)"
+              class="stadium-item"
+            >
+              {{ stadium.name }}
+            </li>
+          </ul>
+          <button @click="closeModal">닫기</button>
+        </div>
       </div>
     </div>
   </div>
@@ -95,7 +97,6 @@ const isModalOpen = ref(false);
 const searchQuery = ref("");
 const selectedStadium = ref(null);
 const matchstore = useMatchStore()
-
 
 // 필터링된 경기장 목록
 const filteredStadiums = computed(() =>
@@ -157,19 +158,28 @@ const registerMatch = () => {
 const errorMessage = ref("");
 </script>
   
-  <style scoped>
-  .match-form-container {
-    max-width: 600px;
-    margin: 0 auto;
+<style scoped>
+  .match-form-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
     padding: 20px;
+  }
+
+  .match-form-container {
+    width: 100%;
+    max-width: 500px;
+    padding: 40px;
     border: 1px solid #ddd;
     border-radius: 8px;
-    background-color: #f9f9f9;
+    background-color: #e9f7ef;
   }
   
   h2 {
     text-align: center;
     margin-bottom: 20px;
+    color: #2e7d32;
   }
   
   .form-group {
@@ -180,6 +190,7 @@ const errorMessage = ref("");
     display: block;
     margin-bottom: 5px;
     font-weight: bold;
+    color: #2e7d32;
   }
   
   input,
@@ -187,20 +198,20 @@ const errorMessage = ref("");
   button {
     width: 100%;
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid #66bb6a;
     border-radius: 4px;
     font-size: 16px;
   }
   
   button {
-    background-color: #007bff;
+    background-color: #43a047;
     color: white;
     font-weight: bold;
     cursor: pointer;
   }
   
   button:hover {
-    background-color: #0056b3;
+    background-color: #2e7d32;
   }
   
   .stadium-select {
@@ -234,23 +245,24 @@ const errorMessage = ref("");
     width: 400px;
     max-height: 70%;
     overflow-y: auto;
+    border: 2px solid #2e7d32;
   }
   
   .modal-content h3 {
     margin-bottom: 10px;
     text-align: center;
+    color: #2e7d32;
   }
   
   .stadium-item {
     padding: 10px;
-    border: 1px solid #ddd;
+    border: 1px solid #66bb6a;
     border-radius: 4px;
     margin-bottom: 5px;
     cursor: pointer;
   }
   
   .stadium-item:hover {
-    background-color: #f0f0f0;
+    background-color: #e8f5e9;
   }
-  </style>
-  
+</style>
