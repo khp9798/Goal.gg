@@ -43,4 +43,10 @@ public class ReservationServiceImpl implements ReservationService{
 		return dao.ListByMatchId(matchId);
 	}
 
+
+	@Override
+	public List<Reservation> getMatchManagerList(int matchId) {
+		return dao.getMatchManagerList(matchId);
+	}
+
 }

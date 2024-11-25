@@ -21,6 +21,7 @@ export const useMatchStore = defineStore('match', () => {
   const RecommandMatchList = ref([])
 
   const matchManagerList = ref([])
+  
 
   const getMatchRegionList = function(region){
     axios({
@@ -152,10 +153,12 @@ export const useMatchStore = defineStore('match', () => {
     }).catch((err)=>{
     })
   }
+
+
   
 
   return { getMatchManagerList,matchManagerList, registMatch, StadiumDayMatchList,getStadiumDayMatch,matchList , match, getMatch, stadiumMatchList, getStadiumMatch,search, matchAvgTier, getMatchAvgTier, RecommandMatchList, getRecommandMatchList, getMatchRegionList,
-    RegisterManager
+    RegisterManager,
    }
 
 })

@@ -18,4 +18,6 @@ public interface ReservationService {
 	List<Reservation> ListByMatchId(int matchId);
 
 	Reservation selectOne(int id);
+
+	List<Reservation> getMatchManagerList(int matchId);
 }

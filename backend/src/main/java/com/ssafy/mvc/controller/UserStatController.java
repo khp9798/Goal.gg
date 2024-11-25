@@ -37,6 +37,7 @@ public class UserStatController {
 	// 스텟 등록
 	@PostMapping
 	public ResponseEntity<?> registUserStat(@RequestBody UserStat userstat) {
+		System.out.println(userstat);
 		boolean success = userstatservice.registUserStat(userstat);
 		if (success) {
 			return new ResponseEntity<>("유저 스텟 등록에 성공했습니다", HttpStatus.CREATED);

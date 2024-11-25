@@ -18,4 +18,5 @@ public class Match {
     private String image; // 경기장 이미
     private String address; //경기장 주소  
     private String tier; //이 매치의 평균 티어 
+    private String number; //이 매치 현재 인원
 }

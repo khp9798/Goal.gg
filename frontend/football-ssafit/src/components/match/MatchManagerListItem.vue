@@ -1,19 +1,23 @@
 <template>
-    <tr @click="goDetail" class="match-row">
-        <td class="text-truncate" title="{{ props.match.name }}">{{ props.match.name }}</td>
-        <td>{{ formatDate(props.match.startTime) }}</td>
-        <td>{{ formatDate(props.match.endTime) }}</td>
-        <td>
+    <tr class="match-row">
+        <td  @click="goDetail" class="text-truncate" title="{{ props.match.name }}">{{ props.match.name }}</td>
+        <td @click="goDetail">{{ formatDate(props.match.startTime) }}</td>
+        <td @click="goDetail">{{ formatDate(props.match.endTime) }}</td>
+        <td @click="goDetail">
             <span>{{ props.match.stadiumName }}</span>
         </td>
-        <td>{{ props.match.address }}</td>
+        <td @click="goDetail">{{ props.match.address }}</td>
+        <td @click="goDetail">{{props.match.number}}/18</td>
+        <td @click="goDetail">{{ props.match.status }}</td>
+        <td ><button class="btn-primary" @click="goEvaluateUserStat(props.match.id)">유저 능력치 평가하기</button></td>
     </tr>
 </template>
 
 <script setup>
 import router from "@/router";
+import { useReservationStore } from "@/stores/reservation";
 import { computed } from "vue";
-
+const reservationstore = useReservationStore()
 
 // Props 정의
 const props = defineProps({
@@ -29,6 +33,11 @@ const goDetail = () => {
 const formatDate = (date) => {
     return date.replace("T", " ").slice(0, 16);
 };
+
+const goEvaluateUserStat = function(matchid){
+    reservationstore.getMatchManagerEvaluateList(matchid)
+    router.push({name : 'userstatevaluateview', params : {id : matchid}} )
+}
 
 // // 상태별 스타일 클래스 계산
 // const statusClass = computed(() => {

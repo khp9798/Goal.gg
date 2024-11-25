@@ -81,4 +81,18 @@ public class ReservationController {
 		
 		return new ResponseEntity<>("잘못된 아이디입니다.",HttpStatus.BAD_REQUEST);
 	}
+	
+	
+	//해당 매치 참가자 명단 조회
+	@GetMapping("/{matchId}/users")
+	public ResponseEntity<?> getMatchManagerEvaluateList(@PathVariable int matchId) {
+		System.out.println(matchId);
+		List<Reservation> list = service.getMatchManagerList(matchId);
+
+		if (!list.isEmpty() && list != null) {
+			return new ResponseEntity<>(list, HttpStatus.OK);
+		}
+//		System.out.println(id);
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+	}
 }

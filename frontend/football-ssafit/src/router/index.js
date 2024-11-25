@@ -15,6 +15,9 @@ import MatchRegistForm from '@/components/match/MatchRegistForm.vue'
 import ReservationSuccess from '@/components/reservation/ReservationSuccess.vue'
 import MatchManager from '@/components/match/MatchManagerList.vue'
 import MatchManagerView from '@/views/MatchManagerView.vue'
+import UserstatEvaluateForm from '@/components/userstat/UserstatEvaluateItem.vue'
+import UserstatEvaluateView from '@/views/UserstatEvaluateView.vue'
+import UserstatEvaluateItem from '@/components/userstat/UserstatEvaluateItem.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -97,7 +100,17 @@ const router = createRouter({
       path : '/matchmanagerview',
       name : 'matchmanagerview',
       component : MatchManagerView
-    }
+    },
+    {
+      path : '/userstatevaluateitem',
+      name : 'userstatevaluateitem',
+      component : UserstatEvaluateItem
+    },
+    {
+      path : '/userstatevaluateview:id',
+      name : 'userstatevaluateview',
+      component : UserstatEvaluateView
+    },
   ],
 })
 

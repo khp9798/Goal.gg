@@ -10,6 +10,9 @@ export const useReservationStore = defineStore('reservation', () => {
 
   const reservation = ref({})
 
+  const matchManagerEvaluateList = ref([])
+
+
 
   const getList = function(userid){
     axios({
@@ -30,7 +33,17 @@ export const useReservationStore = defineStore('reservation', () => {
     })
   }
 
+  const getMatchManagerEvaluateList = function(matchId){
+    axios({
+      url : REST_RESERVATION_URL+'/'+matchId+'/users',
+      method : 'GET',
+    }).then((res)=>{
+      matchManagerEvaluateList.value = res.data
+    }).catch((err)=>{
+    })
+  }
+
   
 
-  return { reservationList,getList, reservation, getReservation }
+  return { getMatchManagerEvaluateList,matchManagerEvaluateList,reservationList,getList, reservation, getReservation }
 })

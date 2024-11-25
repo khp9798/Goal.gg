@@ -1,6 +1,6 @@
 <template>
     <div class="container mt-5">
-        <h2 class="mb-4">예약 리스트</h2>
+        <h2 class="mb-4">담당 매치 리스트</h2>
 
         <div class="card p-4 shadow">
             <!-- 예약 리스트 테이블 -->
@@ -13,6 +13,9 @@
                             <th scope="col">종료 시간</th>
                             <th scope="col">경기장</th>
                             <th scope="col">주소</th>
+                            <th scope="col">인원</th>
+                            <th scope="col">상태</th>
+                            <th scope="col">능력치 평가</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -53,6 +56,7 @@ onMounted(() => {
         router.push({ name: "loginview" });
     } else {
         matchstore.getMatchManagerList(userstore.loginUser.id);
+        console.log(matchstore.matchManagerList)
     }
 });
 </script>
