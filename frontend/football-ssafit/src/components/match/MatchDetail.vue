@@ -9,25 +9,15 @@
 
     <!-- 버튼 섹션 -->
     <div class="mb-4 d-flex justify-content-end gap-2">
-      <button
-        
-      :class="userstore.isManagerMode && 
-        ['신청 가능', '마감 임박'].includes(matchstore.match.status) && 
-        !matchstore.match.managerId 
-        ? 'btn btn-primary' 
-        : 'btn btn-secondary disabled'"
-
-        @click="RegisterManager"
-      > 
+      <button :class="userstore.isManagerMode &&
+        ['신청 가능', '마감 임박'].includes(matchstore.match.status) &&
+        !matchstore.match.managerId
+        ? 'btn btn-primary'
+        : 'btn btn-secondary disabled'" @click="RegisterManager">
         매니저 신청하기
       </button>
 
-      <button
-        v-if="isLogin"
-        class="btn"
-        :class="statusClass"
-        @click="goReservation"
-      >
+      <button v-if="isLogin" class="btn" :class="statusClass" @click="goReservation">
         {{ matchstore.match.status }}
       </button>
       <button v-else class="btn btn-secondary" @click="goLoginView">로그인하기</button>
@@ -47,17 +37,6 @@
               매치 매니저가 등록되지 않았습니다.
             </p>
             <h6>매치 시간: {{ formattedStartTime }} - {{ formattedEndTime }}</h6>
-
-          </div>
-        </div>
-      </div>
-
-      <!-- 오른쪽 경기장 정보 -->
-      <div class="col-md-6">
-        <div class="card h-100 shadow-sm text-center p-4">
-          <div class="card-body">
-            <h4 class="card-title">{{ matchstore.match.stadiumName }}</h4>
-            <p>{{ matchstore.match.address }}</p>
             <div class="tier">
               <p>
                 예상 평균 레벨은
@@ -65,14 +44,27 @@
               </p>
               <img
                 :src="matchstore.matchAvgTier ? `/src/assets/tier/${matchstore.matchAvgTier}.webp` : '/src/assets/tier/unranked.webp'"
-                alt="언랭"
-                width="200px"
-                class="img-fluid"
-              />
+                alt="언랭" width="200px" class="img-fluid" />
             </div>
           </div>
         </div>
       </div>
+
+      <!-- 오른쪽 경기장 정보 -->
+      <div class="col-md-6">
+        <div class="card h-100 shadow-sm text-center p-4">
+          <div class="card-body text-center">
+            <h4 class="card-title">{{ matchstore.match.stadiumName }}</h4>
+            <p>{{ matchstore.match.address }}</p>
+            <div class="map-container">
+              <KakaoMap :lat="xy.lat" :lng="xy.lng" @onLoadKakaoMap="onLoadKakaoMap">
+                <KakaoMapMarker :lat="xy.lat" :lng="xy.lng" />
+              </KakaoMap>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
 
     <!-- 경기 규칙 섹션 -->
@@ -132,10 +124,41 @@
 import router from "@/router";
 import { useMatchStore } from "@/stores/match";
 import { useUserStore } from "@/stores/user";
-import { computed, ref, onMounted, watch, onBeforeUpdate } from "vue";
+import { computed, ref, onMounted, watch, onBeforeUpdate, onBeforeMount } from "vue";
 import { useRoute } from "vue-router";
 import axios from "axios";
 import MatchRule from "./MatchRule.vue";
+import { KakaoMap, KakaoMapMarker } from "vue3-kakao-maps";
+
+
+//카카오맵 api
+const xy = ref({ lat: 33.450701, lng: 126.570667 });
+
+const onLoadKakaoMap =async (mapRef) => {
+  if (window.kakao && kakao.maps.services) {
+    const geocoder = new kakao.maps.services.Geocoder();
+    console.log("kakao onload")
+    await matchstore.getMatch(route.params.id)
+    const address = await matchstore.match.address
+    console.log(address)
+    
+    geocoder.addressSearch(address, function (result, status) {
+      if (status === kakao.maps.services.Status.OK) {
+        console.log(result)
+        xy.value = {
+          lat: parseFloat(result[0].y),
+          lng: parseFloat(result[0].x),
+        };
+          mapRef.setCenter(new kakao.maps.LatLng(xy.value.lat, xy.value.lng));
+      } else {
+        console.error('주소 검색 실패:', status);
+      }
+    });
+  } else {
+    console.error('Kakao Maps API가 로드되지 않았습니다.');
+  }
+};
+
 
 // Stores & Route
 const matchstore = useMatchStore();
@@ -167,14 +190,14 @@ const showdate = computed(() => {
   if (!matchstore.match.startTime) {
     return "날짜 정보 없음";
   }
-  
+
   const date = new Date(matchstore.match.startTime);
-  
+
   // Date 객체가 유효하지 않을 경우 기본값 반환
   if (isNaN(date.getTime())) {
     return "유효하지 않은 날짜";
   }
-  
+
   return `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`;
 });
 
@@ -206,10 +229,10 @@ const closeModal = () => (showModal.value = false);
 
 // 결제 처리
 const initiatePayment = async () => {
-  
+
   try {
     const response = await axios.post("http://localhost:8080/order/pay/ready", {
-      id : matchstore.match.id,
+      id: matchstore.match.id,
       name: "테스트 상품",
       totalPrice: 5000,
     });
@@ -219,18 +242,15 @@ const initiatePayment = async () => {
   }
 
 
-  
+
 };
 
 // 데이터 로드
-onMounted(() => {
-  matchstore.getMatch(route.params.id);
+onMounted(async () => {
   matchstore.getMatchAvgTier(route.params.id);
+  console.log("mount end")
 });
-onBeforeUpdate(()=>{
-  matchstore.getMatch(route.params.id);
-  matchstore.getMatchAvgTier(route.params.id);
-})
+
 
 watch(
   () => matchstore.match,
@@ -275,5 +295,20 @@ const formattedEndTime = computed(() => {
 .card {
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.map-container {
+  width: 100%;
+  max-width: 100%; /* 부모 컨테이너를 넘어가지 않도록 제한 */
+  height: 300px; /* 적절한 높이 지정 */
+  overflow: hidden; /* 내용이 넘어가는 경우 잘리도록 설정 */
+  border-radius: 10px; /* 둥근 모서리 추가 */
+  position: relative; /* 자식 요소 배치 기준 설정 */
+}
+
+.map-container > div {
+  width: 100%;
+  height: 100%; /* 부모 크기에 맞게 설정 */
+  position: absolute;
 }
 </style>

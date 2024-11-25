@@ -10,6 +10,8 @@
     
     <!-- 푸터 -->
     <FooterView />
+
+    
   </div>
 </template>
 
