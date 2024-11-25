@@ -10,8 +10,13 @@
     <!-- 버튼 섹션 -->
     <div class="mb-4 d-flex justify-content-end gap-2">
       <button
-        v-if="userstore.isManagerMode && ['신청 가능', '마감 임박'].includes(matchstore.match.status) && matchstore.match.managerId"
-        class="btn btn-primary"
+        
+      :class="userstore.isManagerMode && 
+        ['신청 가능', '마감 임박'].includes(matchstore.match.status) && 
+        !matchstore.match.managerId 
+        ? 'btn btn-primary' 
+        : 'btn btn-secondary disabled'"
+
         @click="RegisterManager"
       > 
         매니저 신청하기
@@ -127,7 +132,7 @@
 import router from "@/router";
 import { useMatchStore } from "@/stores/match";
 import { useUserStore } from "@/stores/user";
-import { computed, ref, onMounted, watch } from "vue";
+import { computed, ref, onMounted, watch, onBeforeUpdate } from "vue";
 import { useRoute } from "vue-router";
 import axios from "axios";
 import MatchRule from "./MatchRule.vue";
@@ -222,6 +227,10 @@ onMounted(() => {
   matchstore.getMatch(route.params.id);
   matchstore.getMatchAvgTier(route.params.id);
 });
+onBeforeUpdate(()=>{
+  matchstore.getMatch(route.params.id);
+  matchstore.getMatchAvgTier(route.params.id);
+})
 
 watch(
   () => matchstore.match,

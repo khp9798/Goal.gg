@@ -31,11 +31,11 @@
                             <RouterLink :to="{ name: 'reservation' }" class="nav-link" @click="getReservationList">예약 확인
                             </RouterLink>
                         </li>
-                        <li class="nav-item me-3">
+                        <li class="nav-item">
                             <RouterLink :to="{ name: 'matchregistform' }" class="nav-link" v-if="userstore.isManagerMode">매치 등록
                             </RouterLink>
                         </li>
-                        <li class="nav-item me-3">
+                        <li class="nav-item">
                             <RouterLink :to="{ name: 'matchmanagerview' }" class="nav-link" v-if="userstore.isManagerMode">담당 매치
                             </RouterLink>
                         </li>

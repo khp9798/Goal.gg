@@ -68,6 +68,7 @@ CREATE TABLE matches (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, -- 갱신 시간
     FOREIGN KEY (stadium_id) REFERENCES stadium(id) ON DELETE CASCADE -- 경기장 삭제 시 매치도 삭제
 );
+select * from matches;
 
 CREATE TABLE userstat (
     id INT AUTO_INCREMENT PRIMARY KEY,           -- 고유 ID
@@ -183,7 +184,7 @@ INSERT INTO stadium (name, address, price, capacity, image) VALUES
 ('대전한국생명공학연구원풋살장','대전광역시 유성구 어은동53한국생명공학연구원풋살장',30000,50,'https://cdn.pixabay.com/photo/2016/08/31/16/28/stadium-1634035_1280.jpg'),
 ('서울 강동 송파 풋살장','서울특별시 송파구 풍납동 403-3', 12000,30,'https://d31wz4d3hgve8q.cloudfront.net/media/kd_sp_goal.jpeg?w=1920');
 select * from stadium;
-
+select * from matches;
 
 INSERT INTO matches (name, stadium_id, capacity, start_time, end_time, status)
 VALUES
@@ -214,7 +215,11 @@ VALUES
 ('축구 경기 9', 9, 18, '2024-11-25 19:00:00', '2024-11-25 21:00:00', '신청 가능'),
 ('축구 경기 10', 10, 18, '2024-11-18 13:00:00', '2024-11-18 15:00:00', '경기 취소'),
 ('축구 경기 11', 10, 18, '2024-11-18 13:00:00', '2024-11-18 15:00:00', '신청 가능'),
-('서울 강동 풋살장 경기', 19, 18, '2024-11-26 14:00:00', '2024-11-26 16:00:00', '신청 가능');
+('서울 강동 풋살장 경기', 19, 18, '2024-11-26 14:00:00', '2024-11-26 16:00:00', '신청 가능'),
+('서울 강동 풋살장 경기', 19, 18, '2024-11-26 14:00:00', '2024-11-26 16:00:00', '마감 임박'),
+('서울 강동 풋살장 경기', 19, 18, '2024-11-26 14:00:00', '2024-11-26 16:00:00', '신청 마감'),
+('서울 강동 풋살장 경기', 19, 18, '2024-11-26 14:00:00', '2024-11-26 16:00:00', '경기 취소');
+
 
 
 

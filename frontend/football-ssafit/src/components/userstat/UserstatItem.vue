@@ -114,6 +114,9 @@ onMounted(async () => {
     .filter(key => keys.includes(key)) // keys에 포함된 key만 필터링
     .map(key => store.myKLeaguer[key]); // 해당 key의 value를 가져옴
 
+    // 로그인 안했을 때 스탯
+  const UnloginedUser1 = ref([55,55,60,60,63])
+  const UnloginedUser2 = ref([70,65,60,65,70])
 
   // `radarChart` ref를 통해 DOM에 접근
   if (radarChart.value) {
@@ -121,17 +124,17 @@ onMounted(async () => {
     new Chart(ctx, {
       type: "radar",
       data: {
-        labels: ["Shoot", "Pass", "Speed", "Stamina", "Dribble"],
+        labels: ["슛", "패스", "속력", "체력", "드리블"],
         datasets: [
           {
-            label: "User Stats",
-            data: data.value,
+            label: userStore.loginUser.name!= undefined ? userStore.loginUser.name+" 능력치" : "김싸피 능력치",
+            data: data.value.length > 0 ? data.value : UnloginedUser1.value,
             backgroundColor: "rgba(0, 128, 255, 0.4)",
             pointBackgroundColor: "black",
           },
           {
-            label: store.myKLeaguer.name + " Stats",
-            data: targetdata.value,
+            label: store.myKLeaguer.name!= undefined ? store.myKLeaguer.name + " 능력치" : "손흥민 능력치",
+            data: targetdata.value.length > 0 ? targetdata.value : UnloginedUser2.value,
             backgroundColor: "rgba(128,0,0, 0.4)",
             pointBackgroundColor: "black",
           },

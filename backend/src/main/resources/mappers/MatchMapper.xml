@@ -50,6 +50,7 @@
 		m.end_time,
 		m.status,
 		m.stadium_id,
+		m.manager_id,
 		s.name AS stadiumName,
 		s.image,
 		s.address,

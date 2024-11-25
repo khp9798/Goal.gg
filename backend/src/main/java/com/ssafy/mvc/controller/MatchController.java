@@ -44,6 +44,7 @@ public class MatchController {
 	// 경기 정보 수정
 	@PutMapping
 	public ResponseEntity<?> updateMatch(@RequestBody Match match) {
+		System.out.println(match);
 		if (match == null) {
 			return new ResponseEntity<String>("match 객체가 null값 입니다.", HttpStatus.BAD_REQUEST);
 		}
@@ -74,7 +75,7 @@ public class MatchController {
 		if (!list.isEmpty() && list != null) {
 			return new ResponseEntity<>(list, HttpStatus.OK);
 		}
-		System.out.println(region);
+//		System.out.println(region);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
 
@@ -109,7 +110,7 @@ public class MatchController {
 	// 특정 매치 조회
 	@GetMapping("/{id}")
 	public ResponseEntity<?> selectOne(@PathVariable int id) {
-		System.out.println(id);
+//		System.out.println(id);
 		Match match = mService.selectOne(id);
 //		System.out.println(match);
 
@@ -125,7 +126,7 @@ public class MatchController {
 	@GetMapping("/tier/{matchId}")
 	public ResponseEntity<?> getMatchAvgTier(@PathVariable int matchId){
 		String avgTier = mService.matchAvgTier(matchId);
-		System.out.println(avgTier);
+//		System.out.println(avgTier);
 		if(avgTier!=null) {
 			return new ResponseEntity<>(avgTier,HttpStatus.OK);
 		}
@@ -136,8 +137,8 @@ public class MatchController {
 	@GetMapping("/match/{id}")
 	public ResponseEntity<?> selectStadiumMatch(@PathVariable int id) {
 		List<Match> list = mService.selectStadiumMatch(id);
-		System.out.println(id);
-		System.out.println(list);
+//		System.out.println(id);
+//		System.out.println(list);
 		if (list != null) {
 			return new ResponseEntity<>(list, HttpStatus.OK);
 		}
@@ -149,9 +150,9 @@ public class MatchController {
 	@GetMapping("/match/{id}/{date}")
 	public ResponseEntity<?> selectStadiumDayMatch(@PathVariable int id, @PathVariable String date) {
 		List<Match> list = mService.selectStadiumDayMatch(id, date);
-		System.out.println(id);
-		System.out.println(date);
-		System.out.println(list);
+//		System.out.println(id);
+//		System.out.println(date);
+//		System.out.println(list);
 		if (list != null) {
 			return new ResponseEntity<>(list, HttpStatus.OK);
 		}
@@ -163,8 +164,8 @@ public class MatchController {
 	
 	@GetMapping("/recommand")
 	public ResponseEntity<?> RecommandMatchList(@RequestParam String district,@RequestParam String province){
-		System.out.println("시 : "+province);
-		System.out.println("구 : "+district);
+//		System.out.println("시 : "+province);
+//		System.out.println("구 : "+district);
 		List<Match> recommandList = mService.RecommandMatchList(district, province);
 		
 		if(!recommandList.isEmpty() && recommandList!=null) {
@@ -182,7 +183,7 @@ public class MatchController {
 		if (!list.isEmpty() && list != null) {
 			return new ResponseEntity<>(list, HttpStatus.OK);
 		}
-		System.out.println(id);
+//		System.out.println(id);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
 

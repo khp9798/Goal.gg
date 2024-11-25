@@ -31,6 +31,7 @@
                             :events="events"
                             :show-week-numbers="false"
                             @cell-click="SearchStadiumDayMatch"
+                            @cell-content-click="SearchStadiumDayMatch"
                         >
                             <template #arrow-prev>
                                 <i class="icon material-icons">&lt;</i>
@@ -118,6 +119,7 @@ watch(
       matchId: item.id,
     }));
     console.log("변환된 Events:", events.value); // 로그로 데이터 확인
+    
   }
 );
 
