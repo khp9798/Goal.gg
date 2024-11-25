@@ -39,19 +39,6 @@ const goEvaluateUserStat = function(matchid){
     router.push({name : 'userstatevaluateview', params : {id : matchid}} )
 }
 
-// // 상태별 스타일 클래스 계산
-// const statusClass = computed(() => {
-//     const status = props.reservation.status;
-//     if (status === "완료") {
-//         return "badge bg-success";
-//     } else if (status === "대기 중") {
-//         return "badge bg-warning text-dark";
-//     } else if (status === "취소됨") {
-//         return "badge bg-danger";
-//     } else {
-//         return "badge bg-secondary";
-//     }
-// });
 </script>
 
 <style scoped>

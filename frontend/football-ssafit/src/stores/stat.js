@@ -42,7 +42,6 @@ export const useStatStore = defineStore('stat', () => {
       });
       userstatavg.value = res.data;
     } catch (error) {
-      // console.error("스탯 조회 실패:", error.response?.data || error.message);
       userstatavg.value = {}; // 에러 발생 시 초기화
     }
   };
@@ -58,7 +57,6 @@ export const useStatStore = defineStore('stat', () => {
         console.log("mykleague")
         console.log(myKLeaguer.value)
       }).catch((err)=>{
-        // console.log(err)
       })
     } catch (error){
       

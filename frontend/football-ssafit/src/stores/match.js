@@ -40,13 +40,12 @@ export const useMatchStore = defineStore('match', () => {
 
 
 
-  const getMatch = function(id){
-    axios.get(REST_MATCH_API_URL+"/"+id)
+  const getMatch = async function(id){
+    await axios.get(REST_MATCH_API_URL+"/"+id)
     .then((response)=>{
       match.value = response.data
     })
     .catch((err)=>{
-      // console.log(err.response.data)
     })
   }
 
