@@ -7,7 +7,7 @@
             <span>{{ props.match.stadiumName }}</span>
         </td>
         <td @click="goDetail">{{ props.match.address }}</td>
-        <td @click="goDetail">{{props.match.number}}/18</td>
+        <td @click="goDetail" class="address-column">{{props.match.number}}/18</td>
         <td @click="goDetail">{{ props.match.status }}</td>
         <td ><button class="btn-primary" @click="goEvaluateUserStat(props.match.id)">유저 능력치 평가하기</button></td>
     </tr>
@@ -26,6 +26,7 @@ const props = defineProps({
 
 // 상세 페이지 이동 함수
 const goDetail = () => {
+    
     router.push({ name: "matchDetail", params: { id: props.match.id } });
 };
 
@@ -35,8 +36,13 @@ const formatDate = (date) => {
 };
 
 const goEvaluateUserStat = function(matchid){
-    reservationstore.getMatchManagerEvaluateList(matchid)
-    router.push({name : 'userstatevaluateview', params : {id : matchid}} )
+    console.log(matchid)
+    if(props.match.number==='0'){
+        alert("아직 신청 인원이 없습니다.")
+    } else{
+        reservationstore.getMatchManagerEvaluateList(matchid)
+        router.push({name : 'userstatevaluateview', params : {id : matchid}} )
+    }
 }
 
 </script>
@@ -55,6 +61,13 @@ const goEvaluateUserStat = function(matchid){
 /* 텍스트 잘림 방지 */
 .text-truncate {
     max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+}
+td.address-column {
+    max-width: 200px; /* 원하는 최대 너비 설정 */
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;

@@ -46,7 +46,6 @@ const props = defineProps({
 const route = useRoute()
 
 const userstatstore = useStatStore();
-const reservationstore = useReservationStore();
 
 const statLabels = {
     shoot: '슛',

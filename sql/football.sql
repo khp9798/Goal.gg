@@ -95,7 +95,9 @@ CREATE TABLE reservations (
     reservation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- 생성 시간
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, -- 갱신 시간
     FOREIGN KEY (user_id) REFERENCES users(userid) ON DELETE CASCADE,  -- 사용자 삭제 시 예약도 삭제
-    FOREIGN KEY (match_id) REFERENCES matches(id) ON DELETE CASCADE -- 매치 삭제 시 예약도 삭제
+    FOREIGN KEY (match_id) REFERENCES matches(id) ON DELETE CASCADE, -- 매치 삭제 시 예약도 삭제
+	UNIQUE (user_id, match_id)
+
 );
 
 CREATE TABLE reviews (
@@ -329,19 +331,7 @@ INSERT INTO reservations (user_id, match_id, reservation_date) VALUES
 ('jane_smith', 22, '2024-11-18 09:20:00'),
 ('michael_admin', 22, '2024-11-18 09:20:00'),
 ('lucas_manager', 22, '2024-11-18 09:20:00'),
-('emily_forward', 22, '2024-11-18 09:20:00'),
-('ssafy', 2, '2024-11-18 09:10:00'),
-('ssafy', 2, '2024-11-18 09:15:00'),
-('ssafy',2, '2024-11-18 09:20:00'),
-('ssafy', 2, '2024-11-18 09:25:00'),
-('ssafy', 2, '2024-11-18 09:30:00'),
-('ssafy', 2, '2024-11-18 09:35:00'),
-('ssafy', 2, '2024-11-18 09:40:00'),
-('ssafy', 2, '2024-11-18 09:45:00'),
-('ssafy', 2, '2024-11-18 09:50:00'),
-('ssafy', 2, '2024-11-18 09:55:00'),
-('ssafy', 2, '2024-11-18 10:00:00'),
-('ssafy', 2, '2024-11-18 10:05:00');
+('emily_forward', 22, '2024-11-18 09:20:00');
 
  INSERT INTO kleagueplayers (name, playercode, team, nation, position, shoot, pass, speed, stamina, dribble, playerimg) VALUES
 

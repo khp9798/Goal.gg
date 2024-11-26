@@ -43,9 +43,9 @@ public class ReservationController {
 	
 	
 	//예약 삭제
-	@DeleteMapping("/{id}")
-	public ResponseEntity<?> delete(@PathVariable int id){
-		boolean isDeleted = service.deleteReservation(id);
+	@DeleteMapping("/cancel")
+	public ResponseEntity<?> delete(@RequestParam String userId, @RequestParam int matchId){
+		boolean isDeleted = service.deleteReservation(userId,matchId);
 		
 		if(isDeleted) {
 			return new ResponseEntity<>("delete success",HttpStatus.OK);
@@ -94,5 +94,20 @@ public class ReservationController {
 		}
 //		System.out.println(id);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+	}
+	
+	
+	
+	
+	//로그인한 유저가 해당 매치의 참가하는지 조회
+	@PostMapping("/check")
+	public ResponseEntity<?> check(@RequestParam String userId, @RequestParam int matchId){
+		boolean check = service.isParticipate(userId, matchId);
+		
+		if(check) {
+			return new ResponseEntity<>("이미 참여한 경기",HttpStatus.BAD_REQUEST);
+		}
+		return new ResponseEntity<>("예약할 수 있음",HttpStatus.ACCEPTED);
+		
 	}
 }

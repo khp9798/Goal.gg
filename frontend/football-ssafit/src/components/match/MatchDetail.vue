@@ -17,8 +17,11 @@
         매니저 신청하기
       </button>
 
-      <button v-if="isLogin" class="btn" :class="statusClass" @click="goReservation">
+      <button v-if="isLogin && !matchstore.match.isParticipate" class="btn" :class="statusClass" @click="goReservation">
         {{ matchstore.match.status }}
+      </button>
+      <button v-else-if="isLogin && matchstore.match.isParticipate" class="btn btn-danger" @click="CanceleReservation">
+        신청 취소
       </button>
       <button v-else class="btn btn-secondary" @click="goLoginView">로그인하기</button>
     </div>
@@ -32,6 +35,7 @@
             <h4 class="card-title">{{ matchstore.match.name }}</h4>
             <p v-if="managerName" class="text-success">
               {{ managerName }}님이 매니저로 참여합니다.
+             
             </p>
             <p v-else class="text-danger">
               매치 매니저가 등록되지 않았습니다.
@@ -129,6 +133,7 @@ import { useRoute } from "vue-router";
 import axios from "axios";
 import MatchRule from "./MatchRule.vue";
 import { KakaoMap, KakaoMapMarker } from "vue3-kakao-maps";
+import { useReservationStore } from "@/stores/reservation";
 
 
 //카카오맵 api
@@ -139,6 +144,7 @@ const onLoadKakaoMap =async (mapRef) => {
     const geocoder = new kakao.maps.services.Geocoder();
     console.log("kakao onload")
     await matchstore.getMatch(route.params.id)
+    await reservationstore.isParticipate(userstore.loginUser.userid,route.params.id)
     const address = await matchstore.match.address
     console.log(address)
     
@@ -164,6 +170,7 @@ const onLoadKakaoMap =async (mapRef) => {
 const matchstore = useMatchStore();
 const userstore = useUserStore();
 const route = useRoute();
+const reservationstore = useReservationStore()
 
 // 상태 값
 const showModal = ref(false);
@@ -219,7 +226,7 @@ const RegisterManager = () => {
 const goReservation = () => {
   if (["신청 마감", "경기 취소"].includes(matchstore.match.status)) {
     alert(matchstore.match.status === "신청 마감" ? "경기가 마감되었습니다." : "취소된 경기입니다.");
-  } else {
+  }  else {
     showModal.value = true;
   }
 };
@@ -249,6 +256,7 @@ const initiatePayment = async () => {
 onMounted(async () => {
   matchstore.getMatchAvgTier(route.params.id);
   console.log("mount end")
+  
 });
 
 
@@ -283,6 +291,11 @@ const formattedEndTime = computed(() => {
 
 
 
+
+//예약 취소 메서드
+const CanceleReservation = function(){
+  reservationstore.cancelReservation(userstore.loginUser.userid,matchstore.match.id)
+}
 
 
 </script>

@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div >
         <MatchManagerList/>
     </div>
 </template>

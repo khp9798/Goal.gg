@@ -33,8 +33,8 @@ public class ReservationServiceImpl implements ReservationService{
 	}
 
 	@Override
-	public boolean deleteReservation(int id) {
-		return dao.deleteReservation(id)>0;
+	public boolean deleteReservation(String userId, int matchId) {
+		return dao.deleteReservation(userId, matchId)>0;
 	}
 
 
@@ -47,6 +47,12 @@ public class ReservationServiceImpl implements ReservationService{
 	@Override
 	public List<Reservation> getMatchManagerList(int matchId) {
 		return dao.getMatchManagerList(matchId);
+	}
+
+
+	@Override
+	public boolean isParticipate(String userId, int matchId) {
+		return dao.isParticipate(userId, matchId)>0;
 	}
 
 }

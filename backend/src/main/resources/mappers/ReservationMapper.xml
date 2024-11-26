@@ -15,7 +15,7 @@
     <!-- 예약 삭제 -->
     <delete id="deleteReservation">
         DELETE FROM reservations
-        WHERE id = #{id};
+        WHERE user_id = #{userId} and match_id = #{matchId};
     </delete>
 
     <!-- 특정 사용자의 예약 조회 -->
@@ -42,6 +42,11 @@
 	<select id="getMatchManagerList">
 		select * from reservations
 		where match_id = #{matchId}
+	</select>
+	
+	
+	<select id="isParticipate">
+		select count(*) from reservations where user_id = #{userId} and match_id = #{matchId};
 	</select>
 	
 </mapper>

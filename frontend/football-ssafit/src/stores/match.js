@@ -3,6 +3,7 @@ import { defineStore } from 'pinia'
 import axios from 'axios'
 import { useUserStore } from './user'
 import router from '@/router'
+import { useReservationStore } from './reservation'
 
 
 const REST_MATCH_API_URL = "http://localhost:8080/matches"
@@ -22,7 +23,7 @@ export const useMatchStore = defineStore('match', () => {
 
   const matchManagerList = ref([])
   
-
+  const reservationstore = useReservationStore()
   const getMatchRegionList = function(region){
     axios({
       url: REST_MATCH_API_URL+"/search",

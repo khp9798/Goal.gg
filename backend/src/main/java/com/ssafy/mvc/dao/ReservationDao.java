@@ -11,7 +11,7 @@ public interface ReservationDao {
 	
 	
 	//예약 삭제
-	int deleteReservation(int id);
+	int deleteReservation(String userId, int matchId);
 	
 	
 	//예약 조회
@@ -25,5 +25,8 @@ public interface ReservationDao {
 
 
 	List<Reservation> getMatchManagerList(int matchId);
+	
+	
+	int isParticipate(String userId, int matchId);
 	
 }
