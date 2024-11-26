@@ -1,6 +1,6 @@
 <template>
   <div class="card-container">
-    <div class="card" v-for="user in reservationstore.matchManagerEvaluateList" :key="user.userId">
+    <div class="card" v-for="user in reservationstore.useravgstatList">
       <UserstatEvaluateItem :user="user" />
     </div>
   </div>

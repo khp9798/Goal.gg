@@ -7,6 +7,7 @@ CREATE SCHEMA if not exists football;
 
 use football;
 
+
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,           -- 시스템 내부 고유 식별자
     userid VARCHAR(50) NOT NULL UNIQUE,          -- 로그인용 아이디
@@ -82,7 +83,8 @@ CREATE TABLE userstat (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, -- 수정 시간
     match_id INT,                                 -- 경기를 참조하는 ID
     FOREIGN KEY (user_id) REFERENCES users(userid) ON DELETE CASCADE, -- 사용자 삭제 시 스탯도 삭제
-    FOREIGN KEY (match_id) REFERENCES matches(id) ON DELETE CASCADE -- 경기 삭제 시 스탯도 삭제
+    FOREIGN KEY (match_id) REFERENCES matches(id) ON DELETE CASCADE, -- 경기 삭제 시 스탯도 삭제
+    UNIQUE (user_id, match_id)
 );
 
 CREATE TABLE reservations (

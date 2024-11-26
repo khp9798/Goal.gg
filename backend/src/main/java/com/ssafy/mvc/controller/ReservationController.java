@@ -30,7 +30,7 @@ public class ReservationController {
 	//예약 생성
 	@PostMapping
 	public ResponseEntity<?> create(@RequestParam String userId, @RequestParam int matchId){
-		System.out.println("등록 성공 ");
+//		System.out.println("등록 성공 ");
 		boolean isCreated = service.insertReservation(userId, matchId);
 		
 		if(isCreated) {
@@ -60,7 +60,7 @@ public class ReservationController {
 	@GetMapping
 	public ResponseEntity<?> selectAll(@RequestParam String userid){
 		List<Reservation> list = service.selectListByUser(userid);
-		System.out.println(userid);
+//		System.out.println(userid);
 		
 		if(!list.isEmpty() && list!=null) {
 			return new ResponseEntity<>(list,HttpStatus.OK);
@@ -86,7 +86,7 @@ public class ReservationController {
 	//해당 매치 참가자 명단 조회
 	@GetMapping("/{matchId}/users")
 	public ResponseEntity<?> getMatchManagerEvaluateList(@PathVariable int matchId) {
-		System.out.println(matchId);
+//		System.out.println(matchId);
 		List<Reservation> list = service.getMatchManagerList(matchId);
 
 		if (!list.isEmpty() && list != null) {

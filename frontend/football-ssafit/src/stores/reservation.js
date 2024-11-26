@@ -38,12 +38,34 @@ export const useReservationStore = defineStore('reservation', () => {
       url : REST_RESERVATION_URL+'/'+matchId+'/users',
       method : 'GET',
     }).then((res)=>{
+      useravgstatList.value = []
       matchManagerEvaluateList.value = res.data
+      
+      matchManagerEvaluateList.value.forEach(element => {
+        getavg(element.userId)
+
+      });
+      console.log(useravgstatList.value)
+      console.log(usermatchstatList.value)
     }).catch((err)=>{
     })
   }
 
+  let index = 0;
+  const useravgstatList = ref([])
+  const getavg = function(userId){
+    axios({
+      url: "http://localhost:8080/userstat" + "/avg",
+      params: { userId },
+    }).then((response)=>{
+      // console.log(index++)
+      useravgstatList.value[index++] = response.data
+      // console.log(response)
+    }).catch((err)=>{
+      console.log(err)
+    })
+  }
   
 
-  return { getMatchManagerEvaluateList,matchManagerEvaluateList,reservationList,getList, reservation, getReservation }
+  return { useravgstatList,getMatchManagerEvaluateList,matchManagerEvaluateList,reservationList,getList, reservation, getReservation }
 })

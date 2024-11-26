@@ -30,7 +30,7 @@ public class StadiumController {
 	@GetMapping
 	public ResponseEntity<?> selectAllStadium(){
 		List<Stadium> list = stadiumservice.selectAllStadium();
-		System.out.println(list);
+//		System.out.println(list);
 		if(!list.isEmpty()) {
 			return new ResponseEntity<>(list,HttpStatus.OK);
 		}
@@ -48,7 +48,7 @@ public class StadiumController {
 	
 	@GetMapping("/search")
 	public ResponseEntity<?> searchByCondition(@ModelAttribute SearchCondition condition){
-		System.out.println(condition);
+//		System.out.println(condition);
 		List<Stadium> list = stadiumservice.searchByCondition(condition);
 		if(!list.isEmpty()) {
 			return new ResponseEntity<>(list,HttpStatus.OK);

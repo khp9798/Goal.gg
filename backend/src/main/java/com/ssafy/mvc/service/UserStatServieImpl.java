@@ -43,4 +43,9 @@ public class UserStatServieImpl implements UserStatService {
 		return userstatdao.selectMyLeage(stat);
 	}
 
+	@Override
+	public UserStat selectUserAvgStat(String userId) {
+		return userstatdao.selectUserAvgStat(userId);
+	}
+
 }

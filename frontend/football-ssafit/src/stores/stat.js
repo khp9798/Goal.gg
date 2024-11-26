@@ -83,6 +83,7 @@ export const useStatStore = defineStore('stat', () => {
   }
 
   const registUserStat = function(userstat){
+    console.log(userstat)
     try{
       axios({
         url: REST_STAT_API_URL,
@@ -94,7 +95,7 @@ export const useStatStore = defineStore('stat', () => {
       })
       .catch((err)=>{
         console.log("실패")
-
+        alert("이미 기록된 정보가 있습니다")
       })
     } catch(err){
 
