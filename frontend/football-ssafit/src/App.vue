@@ -8,6 +8,7 @@
       <RouterView />
     </main>
     
+    <ChatBot/>
     <!-- 푸터 -->
     <FooterView />
 
@@ -19,6 +20,7 @@
 import { RouterView } from "vue-router";
 import HeaderNav from "./components/HeaderNav.vue";
 import FooterView from "./components/FooterView.vue";
+import ChatBot from "./components/ChatBot.vue";
 </script>
 
 <style scoped>
