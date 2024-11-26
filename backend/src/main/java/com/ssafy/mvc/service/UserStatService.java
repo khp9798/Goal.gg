@@ -19,5 +19,7 @@ public interface UserStatService {
 
 	List<KLeaguePlayers> selectMyLeague(Map<String, Integer> stat);
 
+	UserStat selectUserAvgStat(String userId);
+
 
 }

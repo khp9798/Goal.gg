@@ -23,7 +23,7 @@
                         <vue-cal
                             ref="vueCalRef"
                             class="border rounded"
-                            style="height: 300px;"
+                            style="height: 500px;"
                             :time="false"
                             active-view="month"
                             :disable-views="['years', 'year', 'week', 'day']"

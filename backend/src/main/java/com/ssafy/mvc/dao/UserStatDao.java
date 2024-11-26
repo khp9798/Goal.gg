@@ -20,4 +20,6 @@ public interface UserStatDao {
 
 	List<KLeaguePlayers> selectMyLeage(Map<String, Integer> stat);
 
+	UserStat selectUserAvgStat(String userId);
+
 }

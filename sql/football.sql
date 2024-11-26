@@ -7,6 +7,7 @@ CREATE SCHEMA if not exists football;
 
 use football;
 
+
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,           -- 시스템 내부 고유 식별자
     userid VARCHAR(50) NOT NULL UNIQUE,          -- 로그인용 아이디
@@ -82,7 +83,8 @@ CREATE TABLE userstat (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, -- 수정 시간
     match_id INT,                                 -- 경기를 참조하는 ID
     FOREIGN KEY (user_id) REFERENCES users(userid) ON DELETE CASCADE, -- 사용자 삭제 시 스탯도 삭제
-    FOREIGN KEY (match_id) REFERENCES matches(id) ON DELETE CASCADE -- 경기 삭제 시 스탯도 삭제
+    FOREIGN KEY (match_id) REFERENCES matches(id) ON DELETE CASCADE, -- 경기 삭제 시 스탯도 삭제
+    UNIQUE (user_id, match_id)
 );
 
 CREATE TABLE reservations (
@@ -93,7 +95,9 @@ CREATE TABLE reservations (
     reservation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- 생성 시간
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, -- 갱신 시간
     FOREIGN KEY (user_id) REFERENCES users(userid) ON DELETE CASCADE,  -- 사용자 삭제 시 예약도 삭제
-    FOREIGN KEY (match_id) REFERENCES matches(id) ON DELETE CASCADE -- 매치 삭제 시 예약도 삭제
+    FOREIGN KEY (match_id) REFERENCES matches(id) ON DELETE CASCADE, -- 매치 삭제 시 예약도 삭제
+	UNIQUE (user_id, match_id)
+
 );
 
 CREATE TABLE reviews (
@@ -109,6 +113,7 @@ CREATE TABLE reviews (
 );
 
 DELIMITER //
+select * from matches;
 
 CREATE EVENT update_status_to_closed
 ON SCHEDULE EVERY 1 second
@@ -186,6 +191,7 @@ INSERT INTO stadium (name, address, price, capacity, image) VALUES
 select * from stadium;
 select * from matches;
 
+
 INSERT INTO matches (name, stadium_id, capacity, start_time, end_time, status)
 VALUES
 -- 신청 가능: 시작 시간이 아직 1시간 이상 남은 경우
@@ -221,11 +227,13 @@ VALUES
 ('서울 강동 풋살장 경기', 19, 18, '2024-11-26 14:00:00', '2024-11-26 16:00:00', '마감 임박'),
 ('서울 강동 풋살장 경기', 19, 18, '2024-11-26 14:00:00', '2024-11-26 16:00:00', '신청 마감'),
 ('서울 강동 풋살장 경기', 19, 18, '2024-11-26 14:00:00', '2024-11-26 16:00:00', '경기 취소');
+INSERT INTO matches (name, stadium_id, manager_id, capacity, start_time, end_time, status)
+VALUES
+-- 신청 가능: 시작 시간이 아직 1시간 이상 남은 경우
+('테스트경기', 1,1, 18, '2024-11-26 18:00:00', '2024-11-26 20:00:00', '신청 가능');
 
 
-
-
-
+select * from userstat;
 
 
 INSERT INTO userstat (user_id, shoot, pass, speed, stamina, dribble, match_id) VALUES
@@ -302,24 +310,28 @@ INSERT INTO reviews (user_id, match_id, rating, comment) VALUES
 ('david_goalkeeper', 9, 2, 'Not enough players showed up. Disorganized.'),
 ('oliver_striker', 10, 1, 'Worst experience. Poor communication.');
 
+select * from matches;
+            (SELECT COUNT(*) FROM reservations r, matches m WHERE r.match_id = m.id); -- 매치에 참여한 인원수
 
+    SELECT 
+            (SELECT COUNT(*) FROM reservations r WHERE r.match_id = m.id) AS participant_count, -- 매치에 참여한 인원수
+        m.*,               -- matches 테이블의 모든 컬럼
+        s.name AS stadium_name, -- stadium의 name
+        s.address AS address -- stadium의 address
+    FROM matches m
+    JOIN stadium s
+    ON m.stadium_id = s.id
+    WHERE m.manager_id = 1;
 
-
-
+select * from users;
 INSERT INTO reservations (user_id, match_id, reservation_date) VALUES
 -- match_id = 1 (Seoul match, 총 12개)
-('ssafy', 2, '2024-11-18 09:10:00'),
-('ssafy', 2, '2024-11-18 09:15:00'),
-('ssafy',2, '2024-11-18 09:20:00'),
-('ssafy', 2, '2024-11-18 09:25:00'),
-('ssafy', 2, '2024-11-18 09:30:00'),
-('ssafy', 2, '2024-11-18 09:35:00'),
-('ssafy', 2, '2024-11-18 09:40:00'),
-('ssafy', 2, '2024-11-18 09:45:00'),
-('ssafy', 2, '2024-11-18 09:50:00'),
-('ssafy', 2, '2024-11-18 09:55:00'),
-('ssafy', 2, '2024-11-18 10:00:00'),
-('ssafy', 2, '2024-11-18 10:05:00');
+('ssafy', 22, '2024-11-18 09:10:00'),
+('john_doe', 22, '2024-11-18 09:15:00'),
+('jane_smith', 22, '2024-11-18 09:20:00'),
+('michael_admin', 22, '2024-11-18 09:20:00'),
+('lucas_manager', 22, '2024-11-18 09:20:00'),
+('emily_forward', 22, '2024-11-18 09:20:00');
 
  INSERT INTO kleagueplayers (name, playercode, team, nation, position, shoot, pass, speed, stamina, dribble, playerimg) VALUES
 

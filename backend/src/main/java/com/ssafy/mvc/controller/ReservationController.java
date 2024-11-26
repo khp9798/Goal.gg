@@ -30,7 +30,7 @@ public class ReservationController {
 	//예약 생성
 	@PostMapping
 	public ResponseEntity<?> create(@RequestParam String userId, @RequestParam int matchId){
-		System.out.println("등록 성공 ");
+//		System.out.println("등록 성공 ");
 		boolean isCreated = service.insertReservation(userId, matchId);
 		
 		if(isCreated) {
@@ -43,9 +43,9 @@ public class ReservationController {
 	
 	
 	//예약 삭제
-	@DeleteMapping("/{id}")
-	public ResponseEntity<?> delete(@PathVariable int id){
-		boolean isDeleted = service.deleteReservation(id);
+	@DeleteMapping("/cancel")
+	public ResponseEntity<?> delete(@RequestParam String userId, @RequestParam int matchId){
+		boolean isDeleted = service.deleteReservation(userId,matchId);
 		
 		if(isDeleted) {
 			return new ResponseEntity<>("delete success",HttpStatus.OK);
@@ -60,7 +60,7 @@ public class ReservationController {
 	@GetMapping
 	public ResponseEntity<?> selectAll(@RequestParam String userid){
 		List<Reservation> list = service.selectListByUser(userid);
-		System.out.println(userid);
+//		System.out.println(userid);
 		
 		if(!list.isEmpty() && list!=null) {
 			return new ResponseEntity<>(list,HttpStatus.OK);
@@ -80,5 +80,34 @@ public class ReservationController {
 		}
 		
 		return new ResponseEntity<>("잘못된 아이디입니다.",HttpStatus.BAD_REQUEST);
+	}
+	
+	
+	//해당 매치 참가자 명단 조회
+	@GetMapping("/{matchId}/users")
+	public ResponseEntity<?> getMatchManagerEvaluateList(@PathVariable int matchId) {
+//		System.out.println(matchId);
+		List<Reservation> list = service.getMatchManagerList(matchId);
+
+		if (!list.isEmpty() && list != null) {
+			return new ResponseEntity<>(list, HttpStatus.OK);
+		}
+//		System.out.println(id);
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+	}
+	
+	
+	
+	
+	//로그인한 유저가 해당 매치의 참가하는지 조회
+	@PostMapping("/check")
+	public ResponseEntity<?> check(@RequestParam String userId, @RequestParam int matchId){
+		boolean check = service.isParticipate(userId, matchId);
+		
+		if(check) {
+			return new ResponseEntity<>("이미 참여한 경기",HttpStatus.BAD_REQUEST);
+		}
+		return new ResponseEntity<>("예약할 수 있음",HttpStatus.ACCEPTED);
+		
 	}
 }

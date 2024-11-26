@@ -32,7 +32,7 @@ public class MatchController {
 	// 새로운 매치 등록
 	@PostMapping
 	public ResponseEntity<?> createMatch(@RequestBody Match match) {
-		System.out.println(match);
+//		System.out.println(match);
 		boolean isCreated = mService.insertMatch(match);
 
 		if (isCreated) {
@@ -44,7 +44,7 @@ public class MatchController {
 	// 경기 정보 수정
 	@PutMapping
 	public ResponseEntity<?> updateMatch(@RequestBody Match match) {
-		System.out.println(match);
+//		System.out.println(match);
 		if (match == null) {
 			return new ResponseEntity<String>("match 객체가 null값 입니다.", HttpStatus.BAD_REQUEST);
 		}
@@ -186,5 +186,7 @@ public class MatchController {
 //		System.out.println(id);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
+	
+
 
 }

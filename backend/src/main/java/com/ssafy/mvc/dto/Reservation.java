@@ -16,5 +16,4 @@ public class Reservation {
     private LocalDateTime startTime;  // 경기 시작 시간
     private LocalDateTime endTime;    // 경기 종료 시간
     private String status; //예약 경기의 상태 
-	
 }

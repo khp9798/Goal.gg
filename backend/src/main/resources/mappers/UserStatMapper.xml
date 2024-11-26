@@ -114,5 +114,21 @@ ORDER BY shape_distance ASC;
 
 
 	</select>
+	
+	<select id="selectUserAvgStat">
+	SELECT
+    s.user_id,
+    AVG(shoot) AS shoot,
+    AVG(pass) AS pass,
+    AVG(speed) AS speed,
+    AVG(stamina) AS stamina,
+    AVG(dribble) AS dribble
+FROM 
+    userstat s, users u
+WHERE 
+    s.user_id = #{user_id} AND u.userid = s.user_id
+GROUP BY 
+    user_id;
+	</select>
 
 </mapper>

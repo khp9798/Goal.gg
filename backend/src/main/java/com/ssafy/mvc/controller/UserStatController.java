@@ -37,6 +37,7 @@ public class UserStatController {
 	// 스텟 등록
 	@PostMapping
 	public ResponseEntity<?> registUserStat(@RequestBody UserStat userstat) {
+		System.out.println(userstat);
 		boolean success = userstatservice.registUserStat(userstat);
 		if (success) {
 			return new ResponseEntity<>("유저 스텟 등록에 성공했습니다", HttpStatus.CREATED);
@@ -68,24 +69,9 @@ public class UserStatController {
 	@GetMapping("/avg")
 	public ResponseEntity<?> selectUserAvgStat(@RequestParam String userId) {
 //		System.out.println(userId);
-		List<UserStat> list = userstatservice.selectUserAllStat(userId);
-//		System.out.println(list);
-		int size = list.size();
-		int shoot = 0;
-		int pass = 0;
-		int speed = 0;
-		int stamina = 0;
-		int dribble = 0;
-		if (list.size() != 0) {
-			for (int i = 0; i < list.size(); i++) {
-				shoot += list.get(i).getShoot();
-				pass += list.get(i).getPass();
-				speed += list.get(i).getSpeed();
-				stamina += list.get(i).getStamina();
-				dribble += list.get(i).getDribble();
-			}
-			
-			UserStat stat = new UserStat(0, null, 0, shoot/=size, pass/=size, speed/=size, stamina/=size, dribble/=size, null, null, null);
+		UserStat stat = userstatservice.selectUserAvgStat(userId);
+		System.out.println(stat);
+		if (stat!= null) {
 			System.out.println(stat);
 			return new ResponseEntity<>(stat, HttpStatus.OK);
 		}
@@ -129,7 +115,7 @@ public class UserStatController {
 			stat.put("stamina", stamina /= size);
 			stat.put("dribble", dribble /= size);
 			List<KLeaguePlayers> players = userstatservice.selectMyLeague(stat);
-			System.out.println(players);
+//			System.out.println(players);
 			Random random = new Random();
 			KLeaguePlayers player = players.get(random.nextInt(players.size()));
 			return new ResponseEntity<>(player, HttpStatus.OK);

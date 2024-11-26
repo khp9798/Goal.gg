@@ -1,8 +1,8 @@
 <template>
     <div class="container mt-5">
-        <h2 class="mb-4">예약 리스트</h2>
+        <h2 class="mb-4">담당 매치 리스트</h2>
 
-        <div class="card p-4 shadow">
+        <div class="card p-1 shadow">
             <!-- 예약 리스트 테이블 -->
             <div v-if="matchstore.matchManagerList.length > 0" class="table-responsive">
                 <table class="table table-striped table-hover text-center">
@@ -12,7 +12,10 @@
                             <th scope="col">시작 시간</th>
                             <th scope="col">종료 시간</th>
                             <th scope="col">경기장</th>
-                            <th scope="col">주소</th>
+                            <th scope="col" style="width: 20%;">주소</th>
+                            <th scope="col">인원</th>
+                            <th scope="col">상태</th>
+                            <th scope="col">능력치 평가</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -20,6 +23,8 @@
                             v-for="match in matchstore.matchManagerList"
                             :key="match.id"
                             :match="match"
+                            class="address-column"
+                            
                         />
                     </tbody>
                 </table>
@@ -52,6 +57,7 @@ onMounted(() => {
         router.push({ name: "loginview" });
     } else {
         matchstore.getMatchManagerList(userstore.loginUser.id);
+        console.log(matchstore.matchManagerList)
     }
 });
 </script>
@@ -80,9 +86,17 @@ h2 {
 th,
 td {
     vertical-align: middle;
+    
 }
 
 .text-muted {
     color: #6c757d !important;
+}
+
+td.address-column {
+    max-width: 200px; /* 원하는 최대 너비 설정 */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 </style>

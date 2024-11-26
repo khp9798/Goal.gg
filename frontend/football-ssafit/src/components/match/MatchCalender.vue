@@ -1,117 +1,155 @@
-<!-- https://antoniandre.github.io/vue-cal/         vue-cal 공식문서 -->
-
 <template>
     <div>
-        <vue-cal style="height: 600px;" :time-from="8 * 60" :time-to="24 * 60"  active-view="month"
-            :disable-views="['years', 'year', 'week']" locale="ko" :events="events"
-            events-count-on-month-view
-            @event-click="onEventClick">
-            
-            <template #arrow-prev>
-                <i class="icon material-icons">&lt;</i>
-            </template>
-            <template #arrow-next>
-                <i class="icon material-icons">&gt;</i>
-            </template>
-        </vue-cal>
-
+      <vue-cal
+        style="height: 600px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);"
+        :time-from="8 * 60"
+        :time-to="24 * 60"
+        active-view="month"
+        :disable-views="['years', 'year', 'week']"
+        locale="ko"
+        :events="events"
+        events-count-on-month-view
+        @event-click="onEventClick"
+      >
+        <template #arrow-prev>
+          <i class="icon material-icons" style="cursor: pointer;">&lt;</i>
+        </template>
+        <template #arrow-next>
+          <i class="icon material-icons" style="cursor: pointer;">&gt;</i>
+        </template>
+      </vue-cal>
     </div>
-</template>
-
-<script setup>
-import VueCal from 'vue-cal';
-import 'vue-cal/dist/vuecal.css';
-import { onBeforeMount, onBeforeUpdate, onMounted, ref, watch } from 'vue';
-import { useMatchStore } from '@/stores/match';
-import router from '@/router';
-import { useUserStore } from '@/stores/user';
-
-const props = defineProps({
-    region : String
-})
-
-const matchStore = useMatchStore();
-
-// vue-cal에 맞는 형식으로 변환
-const events = ref([]);
-
-const userstore = useUserStore()
-
-onMounted(() => {
-    console.log(props.region)
-    matchStore.getMatchRegionList(props.region === undefined? "":props.region);
-});
-
-watch(
+  </template>
+  
+  <script setup>
+  import VueCal from 'vue-cal';
+  import 'vue-cal/dist/vuecal.css';
+  import { ref, onMounted, watch } from 'vue';
+  import { useMatchStore } from '@/stores/match';
+  import router from '@/router';
+  
+  const props = defineProps({
+    region: String
+  });
+  
+  const matchStore = useMatchStore();
+  const events = ref([]);
+  
+  onMounted(() => {
+    matchStore.getMatchRegionList(props.region ?? '');
+  });
+  
+  watch(
     () => matchStore.matchList,
     (newValue) => {
-        if(newValue.length>0){
-            events.value = newValue.map((item) => ({
-            start: item.startTime.replace('T', ' ').slice(0, 16), // 'T'를 ' '로 변환하고 시간 초단위 제거
-            end: item.endTime.replace('T', ' ').slice(0, 16),
-            title: item.name,
-            content: `${item.stadiumName} <i class="icon material-icons" style="color : ${item.status === "마감 임박" ? 'red' : 'black'}; font-weight:${item.status === "마감 임박" ? 'bold' : ''}">${item.status}</i>`,
-            class: item.status === "신청 마감" ? "end" : item.status === "경기 취소" ? "cancle" : "start", 
-            matchId : item.id
+      if (newValue.length > 0) {
+        events.value = newValue.map((item) => ({
+          start: item.startTime.replace('T', ' ').slice(0, 16),
+          end: item.endTime.replace('T', ' ').slice(0, 16),
+          title: item.name,
+          content: `${item.stadiumName} <span class="event-status">${item.status}</span>`,
+          class: item.status === '신청 마감'
+            ? 'status-closed'
+            : item.status === '경기 취소'
+            ? 'status-canceled'
+            : item.status === '마감 임박'
+            ? 'status-warning'
+            : 'status-available',
+          matchId: item.id
         }));
-        }
-        else{
-            events.value = []
-        }
-        
-        console.log('변환된 Events:', events.value);
+      } else {
+        events.value = [];
+      }
     }
-);
-
-// 이벤트 클릭 핸들러
-const onEventClick = (event) => {
-    console.log('클릭된 이벤트:', event);
-    // 다른 페이지로 이동 (예: /event/:id)
-    router.push({name:'matchDetail',params : {id : event.matchId}});
-};
-</script>
-
-
-<style>
-
-
-
-/* 매치 상태로 백그라운드 컬러를 다르게 설정 */
-.end{
-    background-color: #9E9E9E !important; /* 밝은 빨강 */
-  color: white !important;            /* 텍스트 흰색 */
-  opacity: 0.5;                       /* 투명도 */
-  text-decoration: none;              /* 밑줄 제거 */
-    border: 1px dashed #757575;           /* 점선 테두리 */
-
-}
-
-.cancle {
-    background-color: #9E9E9E !important; /* 회색 */
-  color: #FFFFFF !important;            /* 텍스트 흰색 */
-  opacity: 0.5;                         /* 더 강한 투명도 */
-  border: 1px solid #3e3e3e;           /* 점선 테두리 */
-  text-decoration: line-through;        /* 취소선 */
-
-}
-.start {
-  border: 1px solid #757575;           /* 점선 테두리 */
-
-  text-decoration: none;              /* 밑줄 제거 */
+  );
   
-}
-
-
-
-/* Green-theme. */
-.vuecal__menu, .vuecal__cell-events-count {background-color: #42b983;}
-.vuecal__title-bar {background-color: #e4f5ef;}
-.vuecal__cell--today, .vuecal__cell--current {background-color: rgba(20, 150, 107, 0.4);}
-.vuecal:not(.vuecal--day-view) .vuecal__cell--selected {background-color: rgba(146, 190, 52, 0.4);}
-.vuecal__cell--selected:before {border-color: rgba(66, 185, 131, 0.5);}
-/* Cells and buttons get highlighted when an event is dragged over it. */
-.vuecal__cell--highlighted:not(.vuecal__cell--has-splits),
-.vuecal__cell-split--highlighted {background-color: rgba(195, 255, 225, 0.5);}
-.vuecal__arrow.vuecal__arrow--highlighted,
-.vuecal__view-btn.vuecal__view-btn--highlighted {background-color: rgba(136, 236, 191, 0.25);}
-</style>
+  const onEventClick = (event) => {
+    router.push({ name: 'matchDetail', params: { id: event.matchId } });
+  };
+  </script>
+  <style>
+  /* 전반적인 카드 스타일 */
+  .vuecal {
+    border: 1px solid #ddd;
+    background-color: #ffffff;
+    border-radius: 12px;
+    font-family: 'Inter', sans-serif;
+  }
+  
+  /* 상태별 색상 */
+  .status-available {
+    background-color: #42b983 !important; /* 초록색 */
+    color: white !important;
+    font-weight: bold;
+    border: 1px solid #3ca772;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(66, 185, 131, 0.4);
+  }
+  
+  .status-warning {
+    background-color: #ffc107 !important; /* 노란색 */
+    color: black !important;
+    font-weight: bold;
+    border: 1px solid #e6a700;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(255, 193, 7, 0.4);
+  }
+  
+  .status-canceled {
+    background-color: #f44336 !important; /* 빨간색 */
+    color: white !important;
+    font-weight: bold;
+    text-decoration: line-through;
+    border: 1px solid #d32f2f;
+    border-radius: 8px;
+    opacity: 0.7;
+    box-shadow: 0 2px 4px rgba(244, 67, 54, 0.4);
+  }
+  
+  .status-closed {
+    background-color: #9e9e9e !important; /* 회색 */
+    color: white !important;
+    font-weight: bold;
+    border: 1px solid #757575;
+    border-radius: 8px;
+    opacity: 0.6;
+    box-shadow: 0 2px 4px rgba(158, 158, 158, 0.4);
+  }
+  
+  /* 달력 제목 바 */
+  .vuecal__title-bar {
+    background-color: #42b983;
+    color: white ;
+    border-radius: 12px 12px 0 0;
+    padding: 10px 20px;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  /* 달력 화살표 */
+  .vuecal__arrow {
+    background-color: #42b983;
+    color: white;
+    border-radius: 50%;
+    padding: 8px;
+    cursor: pointer;
+  }
+  
+  .vuecal__arrow:hover {
+    background-color: #3ca772;
+  }
+  
+  /* 오늘 날짜 */
+  .vuecal__cell--today {
+    background-color: rgba(66, 185, 131, 0.1);
+    border: 1px solid #42b983;
+    font-weight: bold;
+  }
+  
+  /* 이벤트에 마우스를 올렸을 때 효과 */
+  .vuecal__event:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  </style>

@@ -9,7 +9,7 @@ public interface ReservationService {
 	boolean insertReservation(String userId, int matchId);
 
 	// 예약 삭제
-	boolean deleteReservation(int id);
+	boolean deleteReservation(String userId, int matchId);
 
 	// 예약 조회
 	List<Reservation> selectListByUser(String userid);
@@ -18,4 +18,8 @@ public interface ReservationService {
 	List<Reservation> ListByMatchId(int matchId);
 
 	Reservation selectOne(int id);
+
+	List<Reservation> getMatchManagerList(int matchId);
+	
+	boolean isParticipate(String userId, int matchId);
 }
