@@ -1,0 +1,19 @@
+# Secrets and local environment overrides
+.env
+.env.*
+!.env.example
+**/.env
+**/.env.*
+!**/.env.example
+application-local.properties
+**/application-local.properties
+
+# Generated files
+.DS_Store
+**/.DS_Store
+node_modules/
+**/node_modules/
+dist/
+**/dist/
+target/
+**/target/

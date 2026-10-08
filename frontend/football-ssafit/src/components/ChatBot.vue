@@ -14,7 +14,7 @@
         <div class="chatbot-messages">
           <div v-for="(message, index) in messages" :key="index" class="message">
             <strong class="role">{{ message.role === 'user' ? 'You' : 'Bot' }}:</strong>
-            <div v-if="message.role === 'bot'" class="bot-response" v-html="formatResponse(message.content)"></div>
+            <p v-if="message.role === 'bot'" class="bot-response">{{ message.content }}</p>
             <p v-else>{{ message.content }}</p>
           </div>
         </div>
@@ -40,12 +40,6 @@
   // 대화창 열기/닫기
   const toggleChat = () => {
     isChatOpen.value = !isChatOpen.value;
-  };
-  
-  // 응답 포맷팅
-  const formatResponse = (content) => {
-    const lines = content.split("\n").filter((line) => line.trim() !== "");
-    return lines.map((line) => `<p>${line}</p>`).join("");
   };
   
   // 메시지 전송
@@ -142,9 +136,10 @@
     color: #ff4500; /* 사용자 이름은 주황색 포인트 */
   }
   
-  .bot-response p {
+  .bot-response {
     margin: 5px 0;
     line-height: 1.5; /* 가독성을 위한 줄 간격 */
+    white-space: pre-wrap;
   }
   
   /* 입력창 */
@@ -175,4 +170,3 @@
     background-color: #555; /* 조금 더 밝은 회색 */
   }
   </style>
-  
